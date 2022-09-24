@@ -1,0 +1,180 @@
+// ignore_for_file: prefer_const_constructors
+import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
+import 'package:http/http.dart' as http;
+import 'package:alumni_sandbox/back_end/user.dart';
+import 'dart:io';
+import 'dart:typed_data';
+import 'package:fluttertoast/fluttertoast.dart';
+
+class Login extends StatefulWidget {
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+// Instance of the Stateful Widget
+class _LoginState extends State<Login> {
+  TextEditingController email_address = new TextEditingController();
+  TextEditingController password = new TextEditingController();
+  TextEditingController full_name = new TextEditingController();
+  bool userLogin = false;
+
+  Future _login() async {
+    final response = await http
+        .post(Uri.parse("https://192.168.0.110/backend_app/login.php"), body: {
+      "email_address": email_address.text,
+      "password": password.text,
+    });
+
+    var data = json.decode(response.body);
+
+    if (data == "Success") {
+      Fluttertoast.showToast(
+          msg: "Welcome",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM);
+
+      Navigator.pushNamed(context, "/menu");
+    } else {
+      Fluttertoast.showToast(
+          msg: "Wrong Credentials",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        body: SafeArea(
+          child: SingleChildScrollView(
+              reverse: true,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Lottie.asset("assets/json/28893-book-loading.json",
+                      width: 250),
+                  SizedBox(
+                    height: 25,
+                  ),
+                  Text(
+                    "WELCOME",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
+                  SizedBox(height: 5),
+                  Text(
+                    "Sign in to your account",
+                    style: TextStyle(
+                      fontSize: 15,
+                    ),
+                  ),
+                  SizedBox(height: 30),
+
+                  //Email Text Field
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    child: Container(
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(128, 255, 255, 255),
+                          border: Border.all(
+                              color: Color.fromARGB(255, 255, 255, 255)),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Padding(
+                            padding: const EdgeInsets.only(left: 20.0),
+                            child: TextField(
+                              controller: email_address,
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.email),
+                                border: InputBorder.none,
+                                hintText: "Enter your Email",
+                              ),
+                            ))),
+                  ),
+                  SizedBox(height: 20),
+
+                  // Password Field
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    child: Container(
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(0, 161, 160, 160),
+                          border: Border.all(color: Colors.white),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Padding(
+                            padding: const EdgeInsets.only(left: 20.0),
+                            child: TextField(
+                              controller: password,
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.password_sharp),
+                                border: InputBorder.none,
+                                hintText: "Enter Password",
+                              ),
+                            ))),
+                  ),
+                  SizedBox(height: 20),
+
+                  // Sign in Button
+                  GestureDetector(
+                      onTap: () {
+                        _login();
+                        //Navigator.pushNamed(context, "/menu");
+                      },
+                      child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 70.0),
+                          child: Container(
+                              padding: EdgeInsets.all(15),
+                              decoration: BoxDecoration(
+                                color: Color.fromARGB(255, 0, 119, 255),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Center(
+                                  child: Text("Sign In",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18,
+                                      )))))),
+                  SizedBox(height: 10),
+
+                  // Forgot Password
+                  GestureDetector(
+                      /* onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => DashBoard()));*/
+
+                      child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Forgot Password?",
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 0, 138, 251),
+                            fontWeight: FontWeight.bold),
+                      )
+                    ],
+                  ))
+                ],
+              )),
+        ));
+  }
+}
+
+class CustomHttpOverrides extends HttpOverrides {
+  ByteData data;
+  CustomHttpOverrides(this.data);
+
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    final SecurityContext clientContext = SecurityContext()
+      ..setTrustedCertificatesBytes(data.buffer.asUint8List());
+    return super.createHttpClient(clientContext);
+  }
+}
