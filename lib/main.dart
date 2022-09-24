@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:alumni_sandbox/screens/forum/forum.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:alumni_sandbox/screens/alumni/alumni.dart';
 import 'package:alumni_sandbox/screens/alumni/alumni_profile.dart';
 import 'package:alumni_sandbox/screens/feed/feed.dart';
@@ -10,7 +9,6 @@ import 'package:alumni_sandbox/screens/job/job_list.dart';
 import 'package:alumni_sandbox/screens/menu.dart';
 import 'package:alumni_sandbox/screens/onboarding.dart';
 import 'package:alumni_sandbox/screens/job/job.dart';
-import 'package:alumni_sandbox/screens/feed/post.dart';
 import 'package:flutter/material.dart';
 
 import 'screens/job/job_post.dart';

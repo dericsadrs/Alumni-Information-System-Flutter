@@ -3,7 +3,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 Future<User> fetchUser() async {
-  final response = await http.get(Uri.parse('https://'));
+  final response = await http
+      .get(Uri.parse('https://192.168.0.110/backend_app/getuser.php'));
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
