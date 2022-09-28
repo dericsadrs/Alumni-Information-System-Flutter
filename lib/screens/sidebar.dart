@@ -42,6 +42,16 @@ class SideNavBar extends StatelessWidget {
             onTap: () => null,
           ),
           ListTile(
+            leading: Icon(Icons.school),
+            title: Text('List of Courses'),
+            onTap: () => null,
+          ),
+          ListTile(
+            leading: Icon(Icons.person),
+            title: Text('Your Profile'),
+            onTap: () => null,
+          ),
+          ListTile(
             leading: Icon(Icons.description),
             title: Text('Policies'),
             onTap: () => null,

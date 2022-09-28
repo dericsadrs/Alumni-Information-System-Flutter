@@ -5,7 +5,7 @@ import 'package:alumni_sandbox/screens/alumni/alumni.dart';
 import 'package:alumni_sandbox/screens/alumni/alumni_profile.dart';
 import 'package:alumni_sandbox/screens/feed/feed.dart';
 import 'package:alumni_sandbox/screens/feed/post.dart';
-import 'package:alumni_sandbox/screens/job/job_list.dart';
+
 import 'package:alumni_sandbox/screens/menu.dart';
 import 'package:alumni_sandbox/screens/onboarding.dart';
 import 'package:alumni_sandbox/screens/job/job.dart';
@@ -37,11 +37,10 @@ void main() {
         "/": (context) => const Onboarding(),
         "/menu": (context) => const Menu(),
         "/alumni": (context) => Alumni(),
-        "/alumni_profile": (context) => AlumniProfile(),
+        //"/alumni_profile": (context) => AlumniProfile(),
         "/feed": (context) => Feed(),
         "/job": (context) => Job(),
         "/post": (context) => Post(),
-        "/joblist": (context) => JobList(),
         "/jobpost": (context) => JobPost(),
         "/forum": (context) => Forum(),
       },

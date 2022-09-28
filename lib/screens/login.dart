@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:http/http.dart' as http;
-import 'package:alumni_sandbox/back_end/user.dart';
+import 'package:alumni_sandbox/back_end/alumniUser.dart';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:fluttertoast/fluttertoast.dart';

@@ -1,6 +1,9 @@
+import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
-class AlumniProfile extends StatelessWidget {
+class AlumniUser {
   final String title;
   final String full_name;
   final String university;
@@ -20,8 +23,7 @@ class AlumniProfile extends StatelessWidget {
   final String birthday;
   final String nickname;
 
-  const AlumniProfile({
-    Key? key,
+  const AlumniUser({
     required this.title,
     required this.full_name,
     required this.university,
@@ -40,16 +42,26 @@ class AlumniProfile extends StatelessWidget {
     required this.college_batch,
     required this.birthday,
     required this.nickname,
-  }) : super(key: key);
+  });
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Alumni Profile'),
-        centerTitle: true,
-      ),
-  
-    );
-  }
+  static AlumniUser fromJson(json) => AlumniUser(
+        title: json['title'],
+        full_name: json['full_name'],
+        university: json['university'],
+        course_name: json['course_name'],
+        email_address: json['email_address'],
+        gender: json['gender'],
+        address: json['address'],
+        contact_number: json['contact_number'],
+        civil_status: json['civil_status'],
+        job_business: json['job_business'],
+        business_address: json['business_address'],
+        high_school: json['high_school'],
+        high_school_yg: json['high_school_yg'],
+        senior_highschool: json['senior_highschool'],
+        senior_highschool_yg: json['senior_highschool_yg'],
+        college_batch: json['college_batch'],
+        birthday: json['birthday'],
+        nickname: json['nickname'],
+      );
 }

@@ -1,42 +1,81 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
 
-class Job extends StatelessWidget {
+import 'package:alumni_sandbox/back_end/joblists.dart';
+import 'package:alumni_sandbox/back_end/joblists.dart';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+class Job extends StatefulWidget {
   const Job({Key? key}) : super(key: key);
+
   @override
+  State<Job> createState() => _JobState();
+}
+
+class _JobState extends State<Job> {
+  late Future<List<JobsLists>> futureJobs = getJobs();
+  @override
+  void initState() {
+    super.initState();
+    futureJobs = getJobs();
+  }
+
+  static Future<List<JobsLists>> getJobs() async {
+    const url = 'https://192.168.0.110/backend_app/getJobs.php';
+    final response = await http.get(Uri.parse(url));
+    final body = jsonDecode(response.body);
+    return body.map<JobsLists>(JobsLists.fromJson).toList();
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.pushNamed(context, "/jobpost");
+      appBar: AppBar(
+        title: Text('Alumni'),
+        actions: [IconButton(onPressed: null, icon: Icon(Icons.search))],
+      ),
+      body: Center(
+        child: FutureBuilder<List<JobsLists>>(
+          future: futureJobs,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
+            } else if (snapshot.hasError) {
+              return Text("${snapshot.error}");
+            } else if (snapshot.hasData) {
+              final alumnis = snapshot.data!;
+              return buildview(alumnis);
+            } else {
+              return const Text("No User Data");
+            }
           },
-          child: Icon(Icons.feed),
         ),
-        appBar: AppBar(
-          title: Text('Job'),
-          centerTitle: true,
-        ),
-        body: ListView.builder(
-            itemCount: 5,
-            itemBuilder: (BuildContext context, int index) {
-              return Card(
-                  elevation: 3.0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Padding(
-                      padding: EdgeInsets.all(12),
-                      child: ListTile(
-                          onTap: () {
-                            Navigator.pushNamed(context, "/joblist");
-                          },
-                          dense: true,
-                          trailing: Icon(Icons.keyboard_arrow_right),
-                          title: Text(
-                            "Job Title Here",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          subtitle: Text(
-                              " LOOKING FOR EXPERIENCED FLUTTER DEVELOPER"))));
-            }));
+      ),
+    );
   }
+
+  Widget buildview(List<JobsLists> alumnis) => ListView.builder(
+      itemCount: alumnis.length,
+      itemBuilder: (context, index) {
+        final user = alumnis[index];
+
+        return GestureDetector(
+            onTap: () {},
+            child: Card(
+                elevation: 3,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Padding(
+                    padding: EdgeInsets.all(12),
+                    child: ListTile(
+                      leading: CircleAvatar(),
+                      trailing: Icon(Icons.keyboard_arrow_right_rounded),
+                      title: Text(
+                        user.job_title,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Text(user.job_description),
+                      dense: true,
+                    ))));
+      });
 }
