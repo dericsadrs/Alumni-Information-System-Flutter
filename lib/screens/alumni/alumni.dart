@@ -4,6 +4,8 @@ import 'package:alumni_sandbox/back_end/alumniUser.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import 'alumni_profile.dart';
+
 class Alumni extends StatefulWidget {
   const Alumni({Key? key}) : super(key: key);
 
@@ -62,20 +64,29 @@ class _AlumniState extends State<Alumni> {
 
         return GestureDetector(
             onTap: () {
-              /* Navigator.push(
+              Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => AlumniProfile(
-                            full_name: user.full_name,
-                            email_address: user.address,
-                            university: user.university,
-                            address: user.address,
-                            course: user.course,
-                            year_graduated: user.year_graduated,
-                            civil_status: user.civil_status,
-                            job: user.job,
                             title: user.title,
-                          )));*/
+                            full_name: user.full_name,
+                            university: user.university,
+                            course_name: user.course_name,
+                            email_address: user.email_address,
+                            gender: user.gender,
+                            address: user.address,
+                            contact_number: user.contact_number,
+                            civil_status: user.civil_status,
+                            job_business: user.job_business,
+                            business_address: user.business_address,
+                            high_school: user.high_school,
+                            high_school_yg: user.high_school_yg,
+                            senior_highschool: user.senior_highschool,
+                            senior_highschool_yg: user.senior_highschool_yg,
+                            college_batch: user.college_batch,
+                            birthday: user.birthday,
+                            nickname: user.nickname,
+                          )));
             },
             child: Card(
                 elevation: 3,

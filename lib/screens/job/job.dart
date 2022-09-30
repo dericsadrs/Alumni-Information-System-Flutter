@@ -1,7 +1,6 @@
 import 'dart:convert';
+import 'package:alumni_sandbox/back_end/joblists.dart';
 
-import 'package:alumni_sandbox/back_end/joblists.dart';
-import 'package:alumni_sandbox/back_end/joblists.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -21,7 +20,7 @@ class _JobState extends State<Job> {
   }
 
   static Future<List<JobsLists>> getJobs() async {
-    const url = 'https://192.168.0.110/backend_app/getJobs.php';
+    const url = 'https://192.168.0.110/backend_app/jobs/getJobs.php';
     final response = await http.get(Uri.parse(url));
     final body = jsonDecode(response.body);
     return body.map<JobsLists>(JobsLists.fromJson).toList();
@@ -30,8 +29,15 @@ class _JobState extends State<Job> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Alumni'),
-        actions: [IconButton(onPressed: null, icon: Icon(Icons.search))],
+        title: const Text('Jobs'),
+        centerTitle: true,
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.pushNamed(context, "/jobpost");
+        },
+        label: const Text('Post A Job'),
+        icon: const Icon(Icons.add),
       ),
       body: Center(
         child: FutureBuilder<List<JobsLists>>(
@@ -61,21 +67,28 @@ class _JobState extends State<Job> {
         return GestureDetector(
             onTap: () {},
             child: Card(
-                elevation: 3,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
+              elevation: 3,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Padding(
+                padding: EdgeInsets.all(12),
+                child: ListTile(
+                  trailing: TextButton(
+                    onPressed: () {},
+                    child: Text("Apply"),
+                  ),
+                  title: Text(
+                    user.name,
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  ),
+                  subtitle: Text(
+                    user.content,
+                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                  ),
+                  dense: true,
                 ),
-                child: Padding(
-                    padding: EdgeInsets.all(12),
-                    child: ListTile(
-                      leading: CircleAvatar(),
-                      trailing: Icon(Icons.keyboard_arrow_right_rounded),
-                      title: Text(
-                        user.job_title,
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Text(user.job_description),
-                      dense: true,
-                    ))));
+              ),
+            ));
       });
 }

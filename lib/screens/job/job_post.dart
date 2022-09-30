@@ -6,7 +6,7 @@ class JobPost extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Post a Job Opening'),
+          title: Text('Job Post'),
           centerTitle: true,
         ),
         body: Column(children: [
@@ -14,38 +14,7 @@ class JobPost extends StatelessWidget {
             height: 25,
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30.0),
-            child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  border: Border.all(color: Colors.white),
-                  borderRadius: BorderRadius.circular(10),
-                ), // BoxDecoration
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: Container(
-                        height: 50,
-                      ), // Container
-                    ),
-                    Expanded(
-                      child: TextField(
-                          keyboardType: TextInputType.multiline,
-                          minLines: 1,
-                          maxLines: 10,
-                          decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: ' Job Title Here')),
-                    ),
-                  ],
-                )),
-          ),
-          SizedBox(
-            height: 25,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30.0),
+            padding: const EdgeInsets.symmetric(horizontal: 50.0),
             child: Container(
                 decoration: BoxDecoration(
                   color: Colors.grey[200],
@@ -67,7 +36,7 @@ class JobPost extends StatelessWidget {
                           maxLines: 10,
                           decoration: InputDecoration(
                               border: InputBorder.none,
-                              hintText: ' Job Information Here')),
+                              hintText: ' Announce Something')),
                     ),
                   ],
                 )),
