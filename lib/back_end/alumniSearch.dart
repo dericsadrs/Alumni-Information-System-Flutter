@@ -1,4 +1,5 @@
-class AlumniUser {
+// ignore: file_names
+class AlumniSearch {
   final String title;
   final String full_name;
   final String university;
@@ -18,7 +19,7 @@ class AlumniUser {
   final String birthday;
   final String nickname;
 
-  const AlumniUser({
+  const AlumniSearch({
     required this.title,
     required this.full_name,
     required this.university,
@@ -39,7 +40,7 @@ class AlumniUser {
     required this.nickname,
   });
 
-  static AlumniUser fromJson(json) => AlumniUser(
+  static AlumniSearch fromJson(json) => AlumniSearch(
         title: json['title'],
         full_name: json['full_name'],
         university: json['university'],

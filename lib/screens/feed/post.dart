@@ -1,7 +1,15 @@
+import 'package:alumni_sandbox/screens/feed/feed.dart';
 import 'package:flutter/material.dart';
 
 class Post extends StatelessWidget {
-  const Post({Key? key}) : super(key: key);
+  Post feedObject = Post();
+
+  Post({super.key});
+
+  void getStuff() {
+    Post feedObject = Post();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

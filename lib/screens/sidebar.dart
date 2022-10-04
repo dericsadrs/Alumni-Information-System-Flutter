@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 
-class SideNavBar extends StatelessWidget {
+class SideNavBar extends StatefulWidget {
+  @override
+  State<SideNavBar> createState() => _SideNavBarState();
+}
+
+class _SideNavBarState extends State<SideNavBar> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -49,7 +54,7 @@ class SideNavBar extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.person),
             title: Text('Your Profile'),
-            onTap: () => null,
+            onTap: () => Navigator.pushNamed(context, "/yourprofile"),
           ),
           ListTile(
             leading: Icon(Icons.description),

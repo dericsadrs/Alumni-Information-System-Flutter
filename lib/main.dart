@@ -1,14 +1,14 @@
 import 'dart:io';
 
+import 'package:alumni_sandbox/screens/alumni/alumni_search.dart';
 import 'package:alumni_sandbox/screens/forum/forum.dart';
 import 'package:alumni_sandbox/screens/alumni/alumni.dart';
-
 import 'package:alumni_sandbox/screens/feed/feed.dart';
 import 'package:alumni_sandbox/screens/feed/post.dart';
-
 import 'package:alumni_sandbox/screens/menu.dart';
 import 'package:alumni_sandbox/screens/onboarding.dart';
 import 'package:alumni_sandbox/screens/job/job.dart';
+
 import 'package:flutter/material.dart';
 
 import 'screens/job/job_post.dart';
@@ -35,14 +35,20 @@ void main() {
       routes: {
         // When navigating to the "/" route, build the FirstScreen widget.
         "/": (context) => const Onboarding(),
+
+        // Basic Functionalities
+
         "/menu": (context) => const Menu(),
         "/alumni": (context) => Alumni(),
-        //"/alumni_profile": (context) => AlumniProfile(),
+        "/findalumni": (context) => FindAlumni(),
         "/feed": (context) => Feed(),
         "/job": (context) => Job(),
         "/post": (context) => Post(),
         "/jobpost": (context) => JobPost(),
         "/forum": (context) => Forum(),
+
+        //Sidebar
+        //"/yourprofile": (context) => YourProfile(),
       },
     ),
   );

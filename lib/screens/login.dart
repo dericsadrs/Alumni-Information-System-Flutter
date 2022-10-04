@@ -4,67 +4,47 @@ import 'package:alumni_sandbox/back_end/currentUser.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:http/http.dart' as http;
-
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class Login extends StatefulWidget {
+  const Login({super.key});
+
   @override
   State<Login> createState() => _LoginState();
 }
 
 // Instance of the Stateful Widget
 class _LoginState extends State<Login> {
-  //late Future<List<CurrentUser>> currentUser = getCurrentUser();
   TextEditingController email_address = new TextEditingController();
   TextEditingController password = new TextEditingController();
 
-  /* static Future<List<CurrentUser>> getCurrentUser() async {
-    const url = 'https://192.168.0.110/backend_app/user/getCurrentUser.php';
-
-     final verify_respond = await http.post(
-        Uri.parse(url)),
-        body; {
-          "email_address": email_address.text,
-          "password": password.text,
-  };
-  final verify_body = jsonDecode(verify_respond.body);
-  return verify_body.map<CurrentUser>(Curr)
-
-  };*/
-
   Future _login() async {
     final response = await http.post(
-        Uri.parse("https://192.168.0.110/backend_app/user/login.php"),
+        Uri.parse("https://192.168.0.110/backend_app/user/userLogin.php"),
         body: {
           "email_address": email_address.text,
           "password": password.text,
         });
-
-    final verify_respond = await http.post(
-        Uri.parse("https://192.168.0.110/backend_app/user/getCurrentUser.php"),
-        body: {
-          "email_address": email_address.text,
-          "password": password.text,
-        });
-    ;
     var data = json.decode(response.body);
-
-    if (data == "Success") {
+    print(data);
+    if (data['loginStatus'] == true) {
       Fluttertoast.showToast(
           msg: "Welcome",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM);
 
-      final verified_body = jsonDecode(verify_respond.body);
+      // ignore: use_build_context_synchronously
       Navigator.pushNamed(context, "/menu");
-      print(verified_body);
-      //return verified_body.map<CurrentUser>(CurrentUser.fromJson).toList();
-    } else {
-      print(data);
+    } else if (data['loginStatus'] == false) {
       Fluttertoast.showToast(
           msg: "Wrong Credentials",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM);
+    } else {
+      Fluttertoast.showToast(
+          msg: "Error!",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM);
     }

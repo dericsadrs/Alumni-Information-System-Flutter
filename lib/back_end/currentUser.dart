@@ -1,9 +1,5 @@
-import 'dart:async';
-import 'dart:convert';
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-
 class CurrentUser {
+  final String id;
   final String title;
   final String full_name;
   final String university;
@@ -23,7 +19,8 @@ class CurrentUser {
   final String birthday;
   final String nickname;
 
-  const CurrentUser({
+  CurrentUser({
+    required this.id,
     required this.title,
     required this.full_name,
     required this.university,
@@ -45,6 +42,7 @@ class CurrentUser {
   });
 
   static CurrentUser fromJson(json) => CurrentUser(
+        id: json['id'],
         title: json['title'],
         full_name: json['full_name'],
         university: json['university'],

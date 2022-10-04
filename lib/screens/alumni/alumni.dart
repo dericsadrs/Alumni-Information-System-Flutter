@@ -35,7 +35,14 @@ class _AlumniState extends State<Alumni> {
       appBar: AppBar(
         title: Text('Alumni'),
         centerTitle: true,
-        actions: [IconButton(onPressed: null, icon: Icon(Icons.search))],
+        actions: <Widget>[
+          IconButton(
+            icon: new Icon(Icons.person_search_rounded),
+            onPressed: () {
+              Navigator.pushNamed(context, "/findalumni");
+            },
+          ),
+        ],
       ),
       body: Center(
         child: FutureBuilder<List<AlumniUser>>(
