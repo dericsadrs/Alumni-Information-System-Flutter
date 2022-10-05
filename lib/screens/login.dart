@@ -1,12 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 import 'dart:convert';
+
 import 'package:alumni_sandbox/back_end/currentUser.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
 import 'package:http/http.dart' as http;
-import 'dart:io';
-import 'dart:typed_data';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -22,14 +21,20 @@ class _LoginState extends State<Login> {
 
   Future _login() async {
     final response = await http.post(
-        Uri.parse("https://192.168.0.110/backend_app/user/userLogin.php"),
-        body: {
-          "email_address": email_address.text,
-          "password": password.text,
-        });
+      Uri.parse("https://192.168.0.110/backend_app/user/userLogin.php"),
+      body: {
+        "email_address": email_address.text,
+        "password": password.text,
+      },
+    );
     var data = json.decode(response.body);
-    print(data);
+
     if (data['loginStatus'] == true) {
+      print(data['id']);
+
+      ///CurrentUser newUSer = CurrentUser(id: data['id']);
+      //String dataPass = jsonEncode(newUSer);
+      //print(dataPass);
       Fluttertoast.showToast(
           msg: "Welcome",
           toastLength: Toast.LENGTH_SHORT,
@@ -170,17 +175,5 @@ class _LoginState extends State<Login> {
                 ],
               )),
         ));
-  }
-}
-
-class CustomHttpOverrides extends HttpOverrides {
-  ByteData data;
-  CustomHttpOverrides(this.data);
-
-  @override
-  HttpClient createHttpClient(SecurityContext? context) {
-    final SecurityContext clientContext = SecurityContext()
-      ..setTrustedCertificatesBytes(data.buffer.asUint8List());
-    return super.createHttpClient(clientContext);
   }
 }

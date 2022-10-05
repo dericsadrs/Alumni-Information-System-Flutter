@@ -1,20 +1,12 @@
-import 'package:alumni_sandbox/screens/feed/feed.dart';
 import 'package:flutter/material.dart';
 
-class Post extends StatelessWidget {
-  Post feedObject = Post();
-
-  Post({super.key});
-
-  void getStuff() {
-    Post feedObject = Post();
-  }
-
+class FeedPost extends StatelessWidget {
+  const FeedPost({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Post'),
+          title: Text('Feed Post'),
           centerTitle: true,
         ),
         body: Column(children: [
@@ -63,7 +55,7 @@ class Post extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Center(
-                          child: Text("POST",
+                          child: Text("Post",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,

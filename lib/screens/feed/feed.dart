@@ -62,7 +62,7 @@ class _FeedState extends State<Feed> {
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          Navigator.pushNamed(context, "/jobpost");
+          Navigator.pushNamed(context, "/feedpost");
         },
         label: const Text('Write Something'),
         icon: const Icon(Icons.add),

@@ -37,29 +37,19 @@ class _SideNavBarState extends State<SideNavBar> {
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.app_registration_rounded),
-            title: Text('Apply for an Alumni ID'),
-            onTap: () => null,
-          ),
-          ListTile(
             leading: Icon(Icons.card_giftcard),
             title: Text('Perks & Benefits '),
-            onTap: () => null,
+            onTap: () => Navigator.pushNamed(context, "/perks"),
           ),
           ListTile(
             leading: Icon(Icons.school),
             title: Text('List of Courses'),
-            onTap: () => null,
+            onTap: () => Navigator.pushNamed(context, "/courses"),
           ),
           ListTile(
             leading: Icon(Icons.person),
             title: Text('Your Profile'),
             onTap: () => Navigator.pushNamed(context, "/yourprofile"),
-          ),
-          ListTile(
-            leading: Icon(Icons.description),
-            title: Text('Policies'),
-            onTap: () => null,
           ),
           ListTile(
             leading: Icon(Icons.settings),

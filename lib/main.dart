@@ -1,13 +1,16 @@
 import 'dart:io';
 
 import 'package:alumni_sandbox/screens/alumni/alumni_search.dart';
+import 'package:alumni_sandbox/screens/feed/feed_post.dart';
 import 'package:alumni_sandbox/screens/forum/forum.dart';
 import 'package:alumni_sandbox/screens/alumni/alumni.dart';
 import 'package:alumni_sandbox/screens/feed/feed.dart';
-import 'package:alumni_sandbox/screens/feed/post.dart';
+
 import 'package:alumni_sandbox/screens/menu.dart';
 import 'package:alumni_sandbox/screens/onboarding.dart';
 import 'package:alumni_sandbox/screens/job/job.dart';
+import 'package:alumni_sandbox/screens/sidebar_lists/courses.dart';
+import 'package:alumni_sandbox/screens/sidebar_lists/perks.dart';
 
 import 'package:flutter/material.dart';
 
@@ -43,9 +46,11 @@ void main() {
         "/findalumni": (context) => FindAlumni(),
         "/feed": (context) => Feed(),
         "/job": (context) => Job(),
-        "/post": (context) => Post(),
+        "/feedpost": (context) => FeedPost(),
         "/jobpost": (context) => JobPost(),
-        "/forum": (context) => Forum(),
+        "/courses": (context) => Courses(),
+        "/perks": (context) => Perks(),
+        //"/forum": (context) => Forum(),
 
         //Sidebar
         //"/yourprofile": (context) => YourProfile(),

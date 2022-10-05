@@ -74,12 +74,10 @@ class _YourProfileState extends State<YourProfile> {
                       leading: CircleAvatar(),
                       trailing: Icon(Icons.keyboard_arrow_right_rounded),
                       title: Text(
-                        user.full_name,
+                        "COOL",
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      subtitle: Text(
-                        user.course_name,
-                      ),
+                      subtitle: Text("SUMMER"),
                       dense: true,
                     ))));
       });
