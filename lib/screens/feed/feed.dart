@@ -64,13 +64,17 @@ class _FeedState extends State<Feed> {
         onPressed: () {
           Navigator.pushNamed(context, "/feedpost");
         },
-        label: const Text('Write Something'),
-        icon: const Icon(Icons.add),
+        label: const Text('Write'),
+        icon: const Icon(Icons.add_comment),
       ),
-      appBar: AppBar(
-        title: Text('Feed'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: Text('Feed'), centerTitle: true, actions: <Widget>[
+        IconButton(
+          icon: new Icon(Icons.replay_outlined),
+          onPressed: () {
+            getFeed();
+          },
+        ),
+      ]),
       body: Center(
         child: FutureBuilder<List<FeedList>>(
           future: FeedFuture,

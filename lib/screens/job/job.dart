@@ -1,10 +1,12 @@
 import 'dart:convert';
+import 'package:alumni_sandbox/back_end/currentUser.dart';
 import 'package:alumni_sandbox/back_end/joblists.dart';
+import 'package:alumni_sandbox/screens/login.dart';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class Job extends StatefulWidget {
+class Job extends Login {
   const Job({Key? key}) : super(key: key);
 
   @override
@@ -13,6 +15,7 @@ class Job extends StatefulWidget {
 
 class _JobState extends State<Job> {
   late Future<List<JobsLists>> futureJobs = getJobs();
+
   @override
   void initState() {
     super.initState();
@@ -49,6 +52,8 @@ class _JobState extends State<Job> {
               return Text("${snapshot.error}");
             } else if (snapshot.hasData) {
               final alumnis = snapshot.data!;
+              CurrentUser().displayData();
+
               return buildview(alumnis);
             } else {
               return const Text("No User Data");

@@ -1,84 +1,111 @@
-import 'dart:convert';
-
 import 'package:alumni_sandbox/back_end/currentUser.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
-class YourProfile extends StatefulWidget {
-  const YourProfile({Key? key}) : super(key: key);
-
-  @override
-  State<YourProfile> createState() => _YourProfileState();
-}
-
-class _YourProfileState extends State<YourProfile> {
-  late Future<List<CurrentUser>> YourProfileFuture = getCurrentUser();
-
-  @override
-  void initState() {
-    super.initState();
-    YourProfileFuture = getCurrentUser();
-  }
-
-  static Future<List<CurrentUser>> getCurrentUser() async {
-    const url = 'https://192.168.0.110/backend_app/user/userLogin.php';
-    final response = await http.get(Uri.parse(url));
-    print(response.body);
-    final body = jsonDecode(response.body);
-    return body.map<CurrentUser>(CurrentUser.fromJson).toList();
-  }
-
+class YourProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('YourProfile'),
+        title: const Text('Alumni Profile'),
         centerTitle: true,
-        actions: [IconButton(onPressed: null, icon: Icon(Icons.search))],
       ),
-      body: Center(
-        child: FutureBuilder<List<CurrentUser>>(
-          future: YourProfileFuture,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
-            } else if (snapshot.hasError) {
-              return Text("${snapshot.error}");
-            } else if (snapshot.hasData) {
-              final YourProfiles = snapshot.data!;
-              return buildview(YourProfiles);
-            } else {
-              return const Text("No User Data");
-            }
+      body: Container(
+        padding: EdgeInsets.only(left: 16, top: 25, right: 16),
+        child: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
           },
+          child: ListView(
+            children: [
+              SizedBox(
+                height: 15,
+              ),
+              Center(
+                child: Stack(
+                  children: [
+                    Container(
+                      width: 130,
+                      height: 130,
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              width: 4,
+                              color: Theme.of(context).scaffoldBackgroundColor),
+                          boxShadow: [
+                            BoxShadow(
+                                spreadRadius: 2,
+                                blurRadius: 10,
+                                color: Colors.black.withOpacity(0.1),
+                                offset: Offset(0, 10))
+                          ],
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage(
+                                  "assets/images/background-1.png"))),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 25,
+              ),
+              Center(
+                  child: Column(children: [
+                Text(
+                  CurrentUser.full_name,
+                  style: TextStyle(fontSize: 30),
+                ),
+                Text(
+                  CurrentUser.email_address,
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+              ])),
+              SizedBox(
+                height: 25,
+              ),
+              ListTile(
+                leading: Icon(Icons.account_balance_sharp),
+                title: Text(CurrentUser.university),
+              ),
+              ListTile(
+                leading: Icon(Icons.school),
+                title: Text(CurrentUser.course_name),
+                subtitle: Text("Year Graduated: " + CurrentUser.college_batch),
+              ),
+              ListTile(
+                leading: Icon(Icons.corporate_fare),
+                title: Text(CurrentUser.job_business),
+              ),
+              ListTile(
+                leading: Icon(Icons.pin_drop),
+                title: Text(CurrentUser.business_address),
+              ),
+              ListTile(
+                leading: Icon(Icons.contact_mail),
+                title: Text(
+                  CurrentUser.address,
+                ),
+                subtitle: Text(CurrentUser.contact_number),
+              ),
+              Divider(
+                height: 40,
+              ),
+              Text("Education: "),
+              ListTile(
+                leading: Icon(Icons.school),
+                title: Text("Senior High: " + CurrentUser.senior_highschool),
+                subtitle:
+                    Text("Year Graduated: " + CurrentUser.senior_highschool_yg),
+              ),
+              ListTile(
+                leading: Icon(Icons.school),
+                title: Text("Junior High: " + CurrentUser.high_school),
+                subtitle: Text("Year Graduated: " + CurrentUser.high_school_yg),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
-
-  Widget buildview(List<CurrentUser> YourProfiles) => ListView.builder(
-      itemCount: YourProfiles.length,
-      itemBuilder: (context, index) {
-        final user = YourProfiles[index];
-
-        return GestureDetector(
-            onTap: () {},
-            child: Card(
-                elevation: 3,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Padding(
-                    padding: EdgeInsets.all(12),
-                    child: ListTile(
-                      leading: CircleAvatar(),
-                      trailing: Icon(Icons.keyboard_arrow_right_rounded),
-                      title: Text(
-                        "COOL",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Text("SUMMER"),
-                      dense: true,
-                    ))));
-      });
 }

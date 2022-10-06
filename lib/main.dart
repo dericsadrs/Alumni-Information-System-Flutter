@@ -11,6 +11,7 @@ import 'package:alumni_sandbox/screens/onboarding.dart';
 import 'package:alumni_sandbox/screens/job/job.dart';
 import 'package:alumni_sandbox/screens/sidebar_lists/courses.dart';
 import 'package:alumni_sandbox/screens/sidebar_lists/perks.dart';
+import 'package:alumni_sandbox/screens/sidebar_lists/your_profile.dart';
 
 import 'package:flutter/material.dart';
 
@@ -53,7 +54,7 @@ void main() {
         //"/forum": (context) => Forum(),
 
         //Sidebar
-        //"/yourprofile": (context) => YourProfile(),
+        "/yourprofile": (context) => YourProfile(),
       },
     ),
   );

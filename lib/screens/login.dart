@@ -30,11 +30,29 @@ class _LoginState extends State<Login> {
     var data = json.decode(response.body);
 
     if (data['loginStatus'] == true) {
-      print(data['id']);
+      CurrentUser().getData(
+        data['id'],
+        data['title'],
+        data['full_name'],
+        data['university'],
+        data['course_name'],
+        data['email_address'],
+        data['gender'],
+        data['address'],
+        data['contact_number'],
+        data['civil_status'],
+        data['job_business'],
+        data['business_address'],
+        data['high_school'],
+        data['high_school_yg'],
+        data['senior_highschool'],
+        data['senior_highschool_yg'],
+        data['college_batch'],
+        data['birthday'],
+        data['nickname'],
+      );
+      CurrentUser().displayData();
 
-      ///CurrentUser newUSer = CurrentUser(id: data['id']);
-      //String dataPass = jsonEncode(newUSer);
-      //print(dataPass);
       Fluttertoast.showToast(
           msg: "Welcome",
           toastLength: Toast.LENGTH_SHORT,

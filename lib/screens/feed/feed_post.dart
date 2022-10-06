@@ -1,7 +1,30 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
 
-class FeedPost extends StatelessWidget {
+import 'package:alumni_sandbox/back_end/currentUser.dart';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+class FeedPost extends StatefulWidget {
   const FeedPost({Key? key}) : super(key: key);
+
+  @override
+  State<FeedPost> createState() => _FeedPostState();
+}
+
+class _FeedPostState extends State<FeedPost> {
+  TextEditingController content = new TextEditingController();
+
+  Future addPost() async {
+    final response = await http.post(
+        Uri.parse("https://192.168.0.110/backend_app/feed/postFeed.php"),
+        body: {
+          "id": CurrentUser.id,
+          "content": content.text,
+        });
+    var postData = jsonDecode(response.body);
+    print(postData);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -11,7 +34,7 @@ class FeedPost extends StatelessWidget {
         ),
         body: Column(children: [
           SizedBox(
-            height: 25,
+            height: 70,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 50.0),
@@ -31,6 +54,7 @@ class FeedPost extends StatelessWidget {
                     ),
                     Expanded(
                       child: TextField(
+                          controller: content,
                           keyboardType: TextInputType.multiline,
                           minLines: 1,
                           maxLines: 10,
@@ -45,9 +69,11 @@ class FeedPost extends StatelessWidget {
             height: 25,
           ),
           GestureDetector(
-              onTap: () {},
+              onTap: () {
+                addPost();
+              },
               child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 70.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 100.0),
                   child: Container(
                       padding: EdgeInsets.all(15),
                       decoration: BoxDecoration(

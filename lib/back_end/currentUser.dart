@@ -1,48 +1,66 @@
 class CurrentUser {
-  String id;
-  /*String title;
-  String full_name;
-  String university;
-  String course_name;
-  String email_address;
-  String gender;
-  String address;
-  String contact_number;
-  String civil_status;
-  String job_business;
-  String business_address;
-  String high_school;
-  String high_school_yg;
-  String senior_highschool;
-  String senior_highschool_yg;
-  String college_batch;
-  String birthday;
-  String nickname;*/
+  static late String id;
+  static late String title;
+  static late String full_name;
+  static late String university;
+  static late String course_name;
+  static late String email_address;
+  static late String gender;
+  static late String address;
+  static late String contact_number;
+  static late String civil_status;
+  static late String job_business;
+  static late String business_address;
+  static late String high_school;
+  static late String high_school_yg;
+  static late String senior_highschool;
+  static late String senior_highschool_yg;
+  static late String college_batch;
+  static late String birthday;
+  static late String nickname;
 
-  CurrentUser({required this.id
-      /*this.title,
-    this.full_name,
-    this.university,
-     this.course_name,
-     this.email_address,
-     this.gender,
-     this.address,
-     this.contact_number,
-     this.civil_status,
-     this.job_business,
-     this.business_address,
-     this.high_school,
-     this.high_school_yg,
-     this.senior_highschool,
-     this.senior_highschool_yg,
-     this.college_batch,
-     this.birthday,
-     this.nickname,*/
-      });
+  void getData(
+      id,
+      title,
+      full_name,
+      university,
+      course_name,
+      email_address,
+      gender,
+      address,
+      contact_number,
+      civil_status,
+      job_business,
+      business_address,
+      high_school,
+      high_school_yg,
+      senior_highschool,
+      senior_higschool_yg,
+      college_batch,
+      birthday,
+      nickname) {
+    CurrentUser.id = id;
+    CurrentUser.title = title;
+    CurrentUser.full_name = full_name;
+    CurrentUser.university = university;
+    CurrentUser.course_name = course_name;
+    CurrentUser.email_address = email_address;
+    CurrentUser.gender = gender;
+    CurrentUser.address = address;
+    CurrentUser.contact_number = contact_number;
+    CurrentUser.civil_status = civil_status;
+    CurrentUser.job_business = job_business;
+    CurrentUser.business_address = business_address;
+    CurrentUser.high_school = high_school;
+    CurrentUser.high_school_yg = high_school;
+    CurrentUser.senior_highschool = senior_highschool;
+    CurrentUser.senior_highschool_yg = senior_higschool_yg;
+    CurrentUser.college_batch = college_batch;
+    CurrentUser.birthday = birthday;
+    CurrentUser.nickname = nickname;
+  }
 
-  CurrentUser.fromJson(Map<String, dynamic> json) : id = json['id'];
-  /* title = json['email'],
-        full_name = json['full_name'];*/
-
-  Map<String, dynamic> toJson() => {};
+  void displayData() {
+    print(id);
+  }
 }
