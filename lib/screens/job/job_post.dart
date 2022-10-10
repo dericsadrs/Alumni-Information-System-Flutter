@@ -1,9 +1,32 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
 
-class JobPost extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:alumni_sandbox/back_end/currentUser.dart';
+
+class JobPost extends StatefulWidget {
   const JobPost({Key? key}) : super(key: key);
+
+  @override
+  State<JobPost> createState() => _JobPostState();
+}
+
+class _JobPostState extends State<JobPost> {
   @override
   Widget build(BuildContext context) {
+    TextEditingController jobContent = new TextEditingController();
+
+    Future addJob() async {
+      final response = await http.post(
+          Uri.parse("https://192.168.0.110/backend_app/jobs/postJobs.php"),
+          body: {
+            "id": CurrentUser.id,
+            "jobContent": jobContent.text,
+          });
+      var postData = jsonDecode(response.body);
+      print(postData);
+    }
+
     return Scaffold(
         appBar: AppBar(
           title: Text('Job Post'),
@@ -31,6 +54,7 @@ class JobPost extends StatelessWidget {
                     ),
                     Expanded(
                       child: TextField(
+                          controller: jobContent,
                           keyboardType: TextInputType.multiline,
                           minLines: 1,
                           maxLines: 10,
@@ -45,7 +69,9 @@ class JobPost extends StatelessWidget {
             height: 25,
           ),
           GestureDetector(
-              onTap: () {},
+              onTap: () {
+                addJob();
+              },
               child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 70.0),
                   child: Container(

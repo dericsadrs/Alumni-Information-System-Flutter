@@ -1,3 +1,4 @@
+import 'package:alumni_sandbox/back_end/currentUser.dart';
 import 'package:flutter/material.dart';
 
 class SideNavBar extends StatefulWidget {
@@ -14,8 +15,8 @@ class _SideNavBarState extends State<SideNavBar> {
         padding: EdgeInsets.zero,
         children: [
           UserAccountsDrawerHeader(
-            accountName: Text('Deric San Andres'),
-            accountEmail: Text('Ateneo De Naga'),
+            accountName: Text(CurrentUser.full_name),
+            accountEmail: Text(CurrentUser.university),
             currentAccountPicture: CircleAvatar(
               child: ClipOval(
                 child: Image.network(
