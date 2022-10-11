@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AlumniProfile extends StatelessWidget {
+class AlumniProfile extends StatefulWidget {
   final String title;
   final String full_name;
   final String university;
@@ -42,6 +42,11 @@ class AlumniProfile extends StatelessWidget {
     required this.nickname,
   }) : super(key: key);
 
+  @override
+  State<AlumniProfile> createState() => _AlumniProfileState();
+}
+
+class _AlumniProfileState extends State<AlumniProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,11 +97,11 @@ class AlumniProfile extends StatelessWidget {
               Center(
                   child: Column(children: [
                 Text(
-                  full_name,
+                  widget.full_name,
                   style: TextStyle(fontSize: 30),
                 ),
                 Text(
-                  email_address,
+                  widget.email_address,
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ])),
@@ -105,27 +110,27 @@ class AlumniProfile extends StatelessWidget {
               ),
               ListTile(
                 leading: Icon(Icons.account_balance_sharp),
-                title: Text(university),
+                title: Text(widget.university),
               ),
               ListTile(
                 leading: Icon(Icons.school),
-                title: Text(course_name),
-                subtitle: Text("Year Graduated: " + college_batch),
+                title: Text(widget.course_name),
+                subtitle: Text("Year Graduated: " + widget.college_batch),
               ),
               ListTile(
                 leading: Icon(Icons.corporate_fare),
-                title: Text(job_business),
+                title: Text(widget.job_business),
               ),
               ListTile(
                 leading: Icon(Icons.pin_drop),
-                title: Text(business_address),
+                title: Text(widget.business_address),
               ),
               ListTile(
                 leading: Icon(Icons.contact_mail),
                 title: Text(
-                  address,
+                  widget.address,
                 ),
-                subtitle: Text(contact_number),
+                subtitle: Text(widget.contact_number),
               ),
               Divider(
                 height: 40,
@@ -133,13 +138,14 @@ class AlumniProfile extends StatelessWidget {
               Text("Education: "),
               ListTile(
                 leading: Icon(Icons.school),
-                title: Text("Senior High: " + senior_highschool),
-                subtitle: Text("Year Graduated: " + senior_highschool_yg),
+                title: Text("Senior High: " + widget.senior_highschool),
+                subtitle:
+                    Text("Year Graduated: " + widget.senior_highschool_yg),
               ),
               ListTile(
                 leading: Icon(Icons.school),
-                title: Text("Junior High: " + high_school),
-                subtitle: Text("Year Graduated: " + high_school_yg),
+                title: Text("Junior High: " + widget.high_school),
+                subtitle: Text("Year Graduated: " + widget.high_school_yg),
               ),
             ],
           ),

@@ -1,11 +1,11 @@
 import 'dart:io';
-
 import 'package:alumni_sandbox/screens/alumni/alumni_search.dart';
+import 'package:alumni_sandbox/screens/feed/feed_editing.dart';
 import 'package:alumni_sandbox/screens/feed/feed_post.dart';
 import 'package:alumni_sandbox/screens/forum/forum.dart';
 import 'package:alumni_sandbox/screens/alumni/alumni.dart';
 import 'package:alumni_sandbox/screens/feed/feed.dart';
-
+import 'package:alumni_sandbox/screens/forum/post_question.dart';
 import 'package:alumni_sandbox/screens/menu.dart';
 import 'package:alumni_sandbox/screens/onboarding.dart';
 import 'package:alumni_sandbox/screens/job/job.dart';
@@ -51,10 +51,13 @@ void main() {
         "/jobpost": (context) => JobPost(),
         "/courses": (context) => Courses(),
         "/perks": (context) => Perks(),
-        //"/forum": (context) => Forum(),
+        "/forum": (context) => Forum(),
 
         //Sidebar
         "/yourprofile": (context) => YourProfile(),
+
+        "/feededit": (context) => FeedEdit(),
+        "/postquestion": (context) => Question(),
       },
     ),
   );

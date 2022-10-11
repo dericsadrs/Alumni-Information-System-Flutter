@@ -4,32 +4,29 @@ import 'package:alumni_sandbox/back_end/currentUser.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class FeedPost extends StatefulWidget {
-  const FeedPost({Key? key}) : super(key: key);
+class Question extends StatefulWidget {
+  const Question({Key? key}) : super(key: key);
 
   @override
-  State<FeedPost> createState() => _FeedPostState();
+  State<Question> createState() => _QuestionState();
 }
 
-class _FeedPostState extends State<FeedPost> {
-  TextEditingController content = new TextEditingController();
+class _QuestionState extends State<Question> {
+  TextEditingController question = new TextEditingController();
 
   Future addPost() async {
     final response = await http.post(
-        Uri.parse("https://192.168.0.110/backend_app/feed/postFeed.php"),
-        body: {
-          "id": CurrentUser.id,
-          "content": content.text,
-        });
-    var postData = jsonDecode(response.body);
-    print(postData);
+        Uri.parse("https://192.168.0.110/backend_app/forum/postQuestion.php"),
+        body: {"user_id": CurrentUser.id, "question": question.text});
+    var postQuestion = jsonDecode(response.body);
+    print(postQuestion);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Feed Post'),
+          title: Text('Post a Question'),
           centerTitle: true,
         ),
         body: SingleChildScrollView(
@@ -67,7 +64,7 @@ class _FeedPostState extends State<FeedPost> {
                     ),
                     Expanded(
                       child: TextFormField(
-                          controller: content,
+                          controller: question,
                           keyboardType: TextInputType.multiline,
                           minLines: 1,
                           maxLines: null,

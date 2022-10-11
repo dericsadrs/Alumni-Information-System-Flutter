@@ -31,43 +31,55 @@ class _JobState extends State<Job> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Jobs'),
-        centerTitle: true,
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          Navigator.pushNamed(context, "/jobpost");
-        },
-        label: const Text('Post A Job'),
-        icon: const Icon(Icons.add),
-      ),
-      body: Center(
-        child: FutureBuilder<List<JobsLists>>(
-          future: futureJobs,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
-            } else if (snapshot.hasError) {
-              return Text("${snapshot.error}");
-            } else if (snapshot.hasData) {
-              final alumnis = snapshot.data!;
-              CurrentUser().displayData();
-
-              return buildview(alumnis);
-            } else {
-              return const Text("No User Data");
-            }
-          },
+        appBar: AppBar(
+          title: const Text('Jobs'),
+          centerTitle: true,
+          actions: <Widget>[
+            IconButton(
+              icon: new Icon(Icons.edit_note),
+              onPressed: () {
+                Navigator.pushNamed(context, "/findalumni");
+              },
+            ),
+          ],
         ),
-      ),
-    );
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+            Navigator.pushNamed(context, "/jobpost");
+          },
+          label: const Text('Post A Job'),
+          icon: const Icon(Icons.add),
+        ),
+        body: RefreshIndicator(
+          onRefresh: RefreshJob,
+          child: Center(
+            child: FutureBuilder<List<JobsLists>>(
+              future: futureJobs,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  return Text("${snapshot.error}");
+                } else if (snapshot.hasData) {
+                  final jobs = snapshot.data!;
+                  CurrentUser().displayData();
+
+                  return buildview(jobs);
+                } else {
+                  return const Text("No User Data");
+                }
+              },
+            ),
+          ),
+        ));
   }
 
-  Widget buildview(List<JobsLists> alumnis) => ListView.builder(
-      itemCount: alumnis.length,
+  Widget buildview(List<JobsLists> jobs) => ListView.builder(
+      itemCount: jobs.length,
       itemBuilder: (context, index) {
-        final user = alumnis[index];
+        int reverseIndex = jobs.length - 1 - index;
+
+        final jobPost = jobs[reverseIndex];
 
         return GestureDetector(
             onTap: () {},
@@ -84,11 +96,11 @@ class _JobState extends State<Job> {
                     child: Text("Apply"),
                   ),
                   title: Text(
-                    user.name,
+                    jobPost.name,
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   ),
                   subtitle: Text(
-                    user.content,
+                    jobPost.content,
                     style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
                   ),
                   dense: true,
@@ -96,4 +108,14 @@ class _JobState extends State<Job> {
               ),
             ));
       });
+
+  Future<void> RefreshJob() async {
+    setState(() {
+      Navigator.pushReplacement(
+          context,
+          PageRouteBuilder(
+              pageBuilder: (a, b, c) => Job(),
+              transitionDuration: Duration(seconds: 2)));
+    });
+  }
 }

@@ -42,7 +42,7 @@ class _OnboardingState extends State<Onboarding> {
                 animatedTexts: [
                   FadeAnimatedText("ALUMNI INFORMATION SYSTEM",
                       textStyle: const TextStyle(
-                          fontSize: 21, fontWeight: FontWeight.bold)),
+                          fontSize: 19, fontWeight: FontWeight.bold)),
                 ])
           ],
         ));

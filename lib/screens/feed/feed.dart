@@ -32,7 +32,9 @@ class _FeedState extends State<Feed> {
   Widget buildview(List<FeedList> Feeds) => ListView.builder(
       itemCount: Feeds.length,
       itemBuilder: (context, index) {
-        final user_feeds = Feeds[index];
+        int reverseIndex = Feeds.length - 1 - index;
+
+        final user_feeds = Feeds[reverseIndex];
 
         return GestureDetector(
             onTap: () {},
@@ -60,39 +62,51 @@ class _FeedState extends State<Feed> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          Navigator.pushNamed(context, "/feedpost");
-        },
-        label: const Text('Write'),
-        icon: const Icon(Icons.add_comment),
-      ),
-      appBar: AppBar(title: Text('Feed'), centerTitle: true, actions: <Widget>[
-        IconButton(
-          icon: new Icon(Icons.replay_outlined),
+        floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
-            getFeed();
+            Navigator.pushNamed(context, "/feedpost");
           },
+          label: const Text('Write'),
+          icon: const Icon(Icons.add_comment),
         ),
-      ]),
-      body: Center(
-        child: FutureBuilder<List<FeedList>>(
-          future: FeedFuture,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
-            } else if (snapshot.hasError) {
-              return Text("${snapshot.error}");
-            } else if (snapshot.hasData) {
-              final feeds = snapshot.data!;
+        appBar:
+            AppBar(title: Text('Feed'), centerTitle: true, actions: <Widget>[
+          IconButton(
+            icon: new Icon(Icons.edit_note),
+            onPressed: () {
+              Navigator.pushNamed(context, "/feededit");
+            },
+          ),
+        ]),
+        body: Center(
+          child: RefreshIndicator(
+            onRefresh: RefreshFeed,
+            child: FutureBuilder<List<FeedList>>(
+              future: FeedFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  return Text("${snapshot.error}");
+                } else if (snapshot.hasData) {
+                  final feeds = snapshot.data!;
+                  return buildview(feeds);
+                } else {
+                  return const Text("No User Data");
+                }
+              },
+            ),
+          ),
+        ));
+  }
 
-              return buildview(feeds);
-            } else {
-              return const Text("No User Data");
-            }
-          },
-        ),
-      ),
-    );
+  Future<void> RefreshFeed() async {
+    setState(() {
+      Navigator.pushReplacement(
+          context,
+          PageRouteBuilder(
+              pageBuilder: (a, b, c) => Feed(),
+              transitionDuration: Duration(seconds: 2)));
+    });
   }
 }
