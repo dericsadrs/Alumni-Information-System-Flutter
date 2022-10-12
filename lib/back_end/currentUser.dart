@@ -18,6 +18,7 @@ class CurrentUser {
   static late String college_batch;
   static late String birthday;
   static late String nickname;
+  static late String image_path;
 
   void getData(
       id,
@@ -38,7 +39,8 @@ class CurrentUser {
       senior_higschool_yg,
       college_batch,
       birthday,
-      nickname) {
+      nickname,
+      image_path) {
     CurrentUser.id = id;
     CurrentUser.title = title;
     CurrentUser.full_name = full_name;
@@ -58,6 +60,7 @@ class CurrentUser {
     CurrentUser.college_batch = college_batch;
     CurrentUser.birthday = birthday;
     CurrentUser.nickname = nickname;
+    CurrentUser.image_path = image_path;
   }
 
   void displayData() {

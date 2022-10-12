@@ -50,6 +50,7 @@ class _LoginState extends State<Login> {
         data['college_batch'],
         data['birthday'],
         data['nickname'],
+        data['image_path'],
       );
       CurrentUser().displayData();
 

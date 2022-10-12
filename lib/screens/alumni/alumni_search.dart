@@ -12,20 +12,14 @@ class FindAlumni extends StatefulWidget {
 }
 
 class _FindAlumniState extends State<FindAlumni> {
-  TextEditingController name = TextEditingController();
-  late Future<List<AlumniSearch>> findAlumniFuture = FindAlumni();
+  late Future<List<AlumniSearch>> alumniFuture = searchAlumni();
+  TextEditingController name = new TextEditingController();
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  // ignore: non_constant_identifier_names
-  Future<List<AlumniSearch>> FindAlumni() async {
+  Future<List<AlumniSearch>> searchAlumni() async {
     const url = 'https://192.168.0.110/backend_app/alumni/searchAlumni.php';
-    final send = await http.post(Uri.parse(url), body: {"name": name.text});
-
-    final body = jsonDecode(send.body);
+    final response = await http.post(Uri.parse(url), body: {"name": name.text});
+    final body = jsonDecode(response.body);
+    print(body);
     return body.map<AlumniSearch>(AlumniSearch.fromJson).toList();
   }
 
@@ -47,24 +41,25 @@ class _FindAlumniState extends State<FindAlumni> {
                       suffixIcon: IconButton(
                         icon: const Icon(Icons.find_in_page),
                         onPressed: () {
-                          FindAlumni();
+                          searchAlumni();
                         },
                       ),
-                      hintText: 'Search...',
+                      hintText: 'Find an alumni...',
                       border: InputBorder.none),
                 ),
               ))),
       body: Center(
         child: FutureBuilder<List<AlumniSearch>>(
-          future: findAlumniFuture,
+          future: alumniFuture,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const CircularProgressIndicator();
             } else if (snapshot.hasError) {
               return Text("${snapshot.error}");
             } else if (snapshot.hasData) {
-              final finds = snapshot.data!;
-              return buildview(finds);
+              final alumnis = snapshot.data!;
+
+              return buildview(alumnis);
             } else {
               return const Text("No User Data");
             }
@@ -74,13 +69,41 @@ class _FindAlumniState extends State<FindAlumni> {
     );
   }
 
-  Widget buildview(List<AlumniSearch> finds) => ListView.builder(
-      itemCount: finds.length,
+  Widget buildview(List<AlumniSearch> alumnis) => ListView.builder(
+      itemCount: alumnis.length,
       itemBuilder: (context, index) {
-        final userfound = finds[index];
+        final user = alumnis[index];
 
         return GestureDetector(
-            onTap: () {},
+            onTap: () {
+              null;
+            },
+            /*
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => AlumniProfile(
+                            title: user.title,
+                            full_name: user.full_name,
+                            university: user.university,
+                            course_name: user.course_name,
+                            email_address: user.email_address,
+                            gender: user.gender,
+                            address: user.address,
+                            contact_number: user.contact_number,
+                            civil_status: user.civil_status,
+                            job_business: user.job_business,
+                            business_address: user.business_address,
+                            high_school: user.high_school,
+                            high_school_yg: user.high_school_yg,
+                            senior_highschool: user.senior_highschool,
+                            senior_highschool_yg: user.senior_highschool_yg,
+                            college_batch: user.college_batch,
+                            birthday: user.birthday,
+                            nickname: user.nickname,
+                            image_path: user.image_path,
+                          )));
+            },*/
             child: Card(
                 elevation: 3,
                 shape: RoundedRectangleBorder(
@@ -89,14 +112,16 @@ class _FindAlumniState extends State<FindAlumni> {
                 child: Padding(
                     padding: EdgeInsets.all(12),
                     child: ListTile(
-                      leading: CircleAvatar(),
+                      leading: CircleAvatar(
+                        backgroundImage: AssetImage(user.image_path),
+                      ), //child: Image(image: AssetImage(user.image_path))),
                       trailing: Icon(Icons.keyboard_arrow_right_rounded),
                       title: Text(
-                        userfound.full_name,
+                        user.full_name,
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       subtitle: Text(
-                        userfound.course_name,
+                        user.course_name,
                       ),
                       dense: true,
                     ))));

@@ -40,8 +40,7 @@ class YourProfile extends StatelessWidget {
                           shape: BoxShape.circle,
                           image: DecorationImage(
                               fit: BoxFit.cover,
-                              image: AssetImage(
-                                  "assets/images/background-1.png"))),
+                              image: AssetImage(CurrentUser.image_path))),
                     ),
                   ],
                 ),

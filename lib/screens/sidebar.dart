@@ -15,27 +15,32 @@ class _SideNavBarState extends State<SideNavBar> {
         padding: EdgeInsets.zero,
         children: [
           UserAccountsDrawerHeader(
-            accountName: Text(CurrentUser.full_name),
+            accountName: Text(
+              CurrentUser.full_name,
+              style: TextStyle(),
+            ),
             accountEmail: Text(CurrentUser.university),
             currentAccountPicture: CircleAvatar(
               child: ClipOval(
-                child: Image.network(
-                  'https://oflutter.com/wp-content/uploads/2021/02/girl-profile.png',
+                child: Image.asset(
+                  CurrentUser.image_path,
                   fit: BoxFit.cover,
                   width: 90,
                   height: 90,
                 ),
               ),
             ),
-            decoration: BoxDecoration(
+          ),
+
+          //<a href="https://www.freepik.com/free-vector/college-building-educational-institution-banner_5581911.htm#query=university&position=33&from_view=keyword">Image by vectorpocket</a> on Freepik
+          /* decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: Colors.blue,
               image: DecorationImage(
                   fit: BoxFit.fill,
-                  image: NetworkImage(
-                      'https://oflutter.com/wp-content/uploads/2021/02/profile-bg3.jpg')),
+                  image: AssetImage("assets/images/3616.jpg")),
             ),
-          ),
+          ),*/
           Divider(),
           ListTile(
             leading: Icon(Icons.card_giftcard),
