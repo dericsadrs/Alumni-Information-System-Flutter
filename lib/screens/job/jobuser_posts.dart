@@ -6,25 +6,24 @@ import 'package:flutter/material.dart';
 
 import '../../back_end/currentUser.dart';
 
-class FeedEdit extends StatefulWidget {
-  const FeedEdit({Key? key}) : super(key: key);
+class EditJob extends StatefulWidget {
+  const EditJob({Key? key}) : super(key: key);
 
   @override
-  State<FeedEdit> createState() => _FeedEditState();
+  State<EditJob> createState() => _FeedEditState();
 }
 
-class _FeedEditState extends State<FeedEdit> {
-  TextEditingController editContent = new TextEditingController();
-  late Future<List<FeedEditDelete>> futureUserFeed = getUserFeed();
+class _FeedEditState extends State<EditJob> {
+  late Future<List<FeedEditDelete>> futureUserJobs = getUserJob();
 
   @override
   void initState() {
     super.initState();
-    futureUserFeed = getUserFeed();
+    futureUserJobs = getUserJob();
   }
 
-  static Future<List<FeedEditDelete>> getUserFeed() async {
-    const url = 'https://192.168.0.110/backend_app/feed/fetchUserFeed.php';
+  static Future<List<FeedEditDelete>> getUserJob() async {
+    const url = 'https://192.168.0.110/backend_app/jobs/fetchUserJob.php';
     final response =
         await http.post(Uri.parse(url), body: {"user_id": CurrentUser.id});
     final body = jsonDecode(response.body);
@@ -32,18 +31,7 @@ class _FeedEditState extends State<FeedEdit> {
   }
 
   Future deletePost(String passID) async {
-    const url = 'https://192.168.0.110/backend_app/feed/deleteFeed.php';
-    final response = await http.post(Uri.parse(url), body: {"user_id": passID});
-    final body = jsonDecode(response.body);
-    Fluttertoast.showToast(
-        msg: "Post Deleted",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM);
-    RefreshFeed();
-  }
-
-  Future EditPost(String passID) async {
-    const url = 'https://192.168.0.110/backend_app/feed/deleteFeed.php';
+    const url = 'https://192.168.0.110/backend_app/jobs/deleteJob.php';
     final response = await http.post(Uri.parse(url), body: {"user_id": passID});
     final body = jsonDecode(response.body);
     Fluttertoast.showToast(
@@ -58,7 +46,7 @@ class _FeedEditState extends State<FeedEdit> {
       Navigator.pushReplacement(
           context,
           PageRouteBuilder(
-              pageBuilder: (a, b, c) => FeedEdit(),
+              pageBuilder: (a, b, c) => EditJob(),
               transitionDuration: Duration(seconds: 2)));
     });
   }
@@ -73,15 +61,15 @@ class _FeedEditState extends State<FeedEdit> {
           onRefresh: RefreshJob,
           child: Center(
             child: FutureBuilder<List<FeedEditDelete>>(
-              future: futureUserFeed,
+              future: futureUserJobs,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const CircularProgressIndicator();
                 } else if (snapshot.hasError) {
                   return Text("${snapshot.error}");
                 } else if (snapshot.hasData) {
-                  final userFeeds = snapshot.data!;
-                  return buildview(userFeeds);
+                  final userJobs = snapshot.data!;
+                  return buildview(userJobs);
                 } else {
                   return const Text("No User Data");
                 }
@@ -91,12 +79,12 @@ class _FeedEditState extends State<FeedEdit> {
         ));
   }
 
-  Widget buildview(List<FeedEditDelete> userFeeds) => ListView.builder(
-      itemCount: userFeeds.length,
+  Widget buildview(List<FeedEditDelete> userJobs) => ListView.builder(
+      itemCount: userJobs.length,
       itemBuilder: (context, index) {
-        int reverseIndex = userFeeds.length - 1 - index;
+        int reverseIndex = userJobs.length - 1 - index;
 
-        final userFeed = userFeeds[reverseIndex];
+        final jobUser = userJobs[reverseIndex];
 
         return GestureDetector(
             onTap: () {},
@@ -111,19 +99,19 @@ class _FeedEditState extends State<FeedEdit> {
                   trailing: Column(children: [
                     TextButton(
                       onPressed: () {
-                        deletePost(userFeed.id);
+                        deletePost(jobUser.id);
                       },
                       child: Text("Delete"),
                     ),
                   ]),
                   title: Text(
-                    userFeed.content,
+                    jobUser.content,
                     style: TextStyle(
                       fontSize: 15,
                     ),
                   ),
                   subtitle: Text(
-                    userFeed.date_published,
+                    jobUser.date_published,
                   ),
                   dense: true,
                 ),
@@ -136,7 +124,7 @@ class _FeedEditState extends State<FeedEdit> {
       Navigator.pushReplacement(
           context,
           PageRouteBuilder(
-              pageBuilder: (a, b, c) => FeedEdit(),
+              pageBuilder: (a, b, c) => EditJob(),
               transitionDuration: Duration(seconds: 2)));
     });
   }

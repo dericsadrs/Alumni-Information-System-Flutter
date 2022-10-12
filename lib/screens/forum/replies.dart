@@ -1,23 +1,26 @@
 import 'dart:convert';
 
 import 'package:alumni_sandbox/back_end/forumLists.dart';
+import 'package:alumni_sandbox/screens/forum/replyPost.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
 
-class Replies extends StatefulWidget {
-  final String question_id;
-  final String user_id;
-  final String name;
-  final String date_published;
+import '../../back_end/currentUser.dart';
 
-  const Replies(
-      {Key? key,
-      required this.question_id,
-      required this.user_id,
-      required this.name,
-      required this.date_published})
-      : super(key: key);
+class Replies extends StatefulWidget {
+  final String name;
+  final String question;
+  final String question_id;
+
+  const Replies({
+    Key? key,
+    // ignore: non_constant_identifier_names
+    required this.question_id,
+    required this.name,
+    required this.question,
+  }) : super(key: key);
 
   @override
   State<Replies> createState() => _RepliesState();
@@ -25,6 +28,7 @@ class Replies extends StatefulWidget {
 
 class _RepliesState extends State<Replies> {
   late Future<List<ReplyLists>> replyFuture = fetchReplies();
+  TextEditingController reply = new TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -38,20 +42,50 @@ class _RepliesState extends State<Replies> {
         "question_id": widget.question_id,
       },
     );
-
     final body = jsonDecode(response.body);
     return body.map<ReplyLists>(ReplyLists.fromJson).toList();
   }
 
-  /*Future _addReplies() async {
+  /* Future addQuestion() async {
     final response = await http.post(
-      Uri.parse("https://192.168.0.110/backend_app/user/userLogin.php"),
-      body: {
-      
-    );*/
+        Uri.parse("https://192.168.0.110/backend_app/feed/postFeed.php"),
+        body: {
+          "id": CurrentUser.id,
+          "question_id": widget.question_id,
+          "content": reply.text,
+        });
+    var postFeed = jsonDecode(response.body);
+
+    if (postFeed == true) {
+      Fluttertoast.showToast(
+          msg: "You've Replied to the question",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM);
+    } else if (postFeed == false) {
+      Fluttertoast.showToast(
+          msg: "Oops Something went wrong ",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM);
+    }
+  }*/
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ReplyPost(
+                        question_id: widget.question_id,
+                        name: widget.name,
+                        question: widget.question,
+                      )));
+        },
+        label: const Text('Write'),
+        icon: const Icon(Icons.add_comment),
+      ),
       appBar: AppBar(
         title: Text('Replies'),
         centerTitle: true,
@@ -114,7 +148,7 @@ class _RepliesState extends State<Replies> {
                               Text(
                                 reply.reply,
                                 style: TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.bold),
+                                    fontSize: 12, fontWeight: FontWeight.bold),
                               ),
                               SizedBox(
                                 height: 5,

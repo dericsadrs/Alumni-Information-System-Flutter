@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 
 class AlumniProfile extends StatefulWidget {
@@ -19,28 +21,30 @@ class AlumniProfile extends StatefulWidget {
   final String college_batch;
   final String birthday;
   final String nickname;
+  final String image_path;
 
-  const AlumniProfile({
-    Key? key,
-    required this.title,
-    required this.full_name,
-    required this.university,
-    required this.course_name,
-    required this.email_address,
-    required this.gender,
-    required this.address,
-    required this.contact_number,
-    required this.civil_status,
-    required this.job_business,
-    required this.business_address,
-    required this.high_school,
-    required this.high_school_yg,
-    required this.senior_highschool,
-    required this.senior_highschool_yg,
-    required this.college_batch,
-    required this.birthday,
-    required this.nickname,
-  }) : super(key: key);
+  const AlumniProfile(
+      {Key? key,
+      required this.title,
+      required this.full_name,
+      required this.university,
+      required this.course_name,
+      required this.email_address,
+      required this.gender,
+      required this.address,
+      required this.contact_number,
+      required this.civil_status,
+      required this.job_business,
+      required this.business_address,
+      required this.high_school,
+      required this.high_school_yg,
+      required this.senior_highschool,
+      required this.senior_highschool_yg,
+      required this.college_batch,
+      required this.birthday,
+      required this.nickname,
+      required this.image_path})
+      : super(key: key);
 
   @override
   State<AlumniProfile> createState() => _AlumniProfileState();
@@ -61,7 +65,7 @@ class _AlumniProfileState extends State<AlumniProfile> {
             FocusScope.of(context).unfocus();
           },
           child: ListView(
-            children: [
+            children: <Widget>[
               SizedBox(
                 height: 15,
               ),
@@ -85,8 +89,7 @@ class _AlumniProfileState extends State<AlumniProfile> {
                           shape: BoxShape.circle,
                           image: DecorationImage(
                               fit: BoxFit.cover,
-                              image: AssetImage(
-                                  "assets/images/background-1.png"))),
+                              image: AssetImage(widget.image_path))),
                     ),
                   ],
                 ),

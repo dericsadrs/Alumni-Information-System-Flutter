@@ -5,43 +5,43 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
-class FeedPost extends StatefulWidget {
-  const FeedPost({Key? key}) : super(key: key);
+class ReplyPost extends StatefulWidget {
+  final String name;
+  final String question;
+  final String question_id;
+
+  const ReplyPost({
+    Key? key,
+    // ignore: non_constant_identifier_names
+    required this.question_id,
+    required this.name,
+    required this.question,
+  }) : super(key: key);
 
   @override
-  State<FeedPost> createState() => _FeedPostState();
+  State<ReplyPost> createState() => _ReplyPostState();
 }
 
-class _FeedPostState extends State<FeedPost> {
-  TextEditingController content = new TextEditingController();
+class _ReplyPostState extends State<ReplyPost> {
+  TextEditingController contentReply = new TextEditingController();
 
-  Future addPost() async {
+  Future addReply() async {
     final response = await http.post(
-        Uri.parse("https://192.168.0.110/backend_app/feed/postFeed.php"),
+        Uri.parse("https://192.168.0.110/backend_app/forum/postReply.php"),
         body: {
-          "id": CurrentUser.id,
-          "content": content.text,
+          "user_id": CurrentUser.id,
+          "question_id": widget.question_id,
+          "reply": contentReply.text,
         });
-    var postFeed = jsonDecode(response.body);
-
-    if (postFeed == true) {
-      Fluttertoast.showToast(
-          msg: "Succesfully Posted",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM);
-    } else if (postFeed == false) {
-      Fluttertoast.showToast(
-          msg: "Oops Something went wrong ",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM);
-    }
+    var postQuestion = jsonDecode(response.body);
+    print(postQuestion);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Feed Post'),
+          title: Text('Reply to a Question'),
           centerTitle: true,
         ),
         body: SingleChildScrollView(
@@ -49,12 +49,14 @@ class _FeedPostState extends State<FeedPost> {
           SizedBox(
             height: 40,
           ),
+          Text(widget.question),
           Row(
             children: [
               SizedBox(
-                width: 38,
+                height: 40,
+                width: 40,
               ),
-              Text("Posting as:  "),
+              Text("Replying as:  "),
               Text(CurrentUser.full_name),
             ],
           ),
@@ -79,13 +81,13 @@ class _FeedPostState extends State<FeedPost> {
                     ),
                     Expanded(
                       child: TextFormField(
-                          controller: content,
+                          controller: contentReply,
                           keyboardType: TextInputType.multiline,
                           minLines: 1,
                           maxLines: null,
                           decoration: InputDecoration(
                               border: InputBorder.none,
-                              hintText: ' Announce Something')),
+                              hintText: ' Express your thoughts')),
                     ),
                   ],
                 )),
@@ -95,7 +97,7 @@ class _FeedPostState extends State<FeedPost> {
           ),
           GestureDetector(
               onTap: () {
-                addPost();
+                addReply();
               },
               child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 100.0),

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:alumni_sandbox/back_end/feedlists.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
 class Feed extends StatefulWidget {
@@ -107,6 +108,10 @@ class _FeedState extends State<Feed> {
           PageRouteBuilder(
               pageBuilder: (a, b, c) => Feed(),
               transitionDuration: Duration(seconds: 2)));
+      Fluttertoast.showToast(
+          msg: "Refreshed",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM);
     });
   }
 }

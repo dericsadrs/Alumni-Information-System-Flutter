@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:alumni_sandbox/back_end/forumLists.dart';
 import 'package:alumni_sandbox/screens/forum/replies.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
 import '../../back_end/currentUser.dart';
@@ -30,48 +31,58 @@ class _ForumState extends State<Forum> {
     return body.map<ForumLists>(ForumLists.fromJson).toList();
   }
 
-  /* Future addPost() async {
-    final response = await http.post(
-        Uri.parse("https://192.168.0.110/backend_app/feed/postFeed.php"),
-        body: {
-          "user_id": CurrentUser.id;
-        });*/
+  Future<void> RefreshForum() async {
+    setState(() {
+      Navigator.pushReplacement(
+          context,
+          PageRouteBuilder(
+              pageBuilder: (a, b, c) => Forum(),
+              transitionDuration: Duration(seconds: 2)));
+      Fluttertoast.showToast(
+          msg: "Refreshed",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          Navigator.pushNamed(context, "/postquestion");
-        },
-        label: const Text('Post a Question'),
-        icon: const Icon(Icons.add_comment),
-      ),
-      appBar: AppBar(title: Text('Forum'), centerTitle: true),
-      body: Center(
-        child: FutureBuilder<List<ForumLists>>(
-          future: ForumFuture,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
-            } else if (snapshot.hasError) {
-              return Text("${snapshot.error}");
-            } else if (snapshot.hasData) {
-              final Forums = snapshot.data!;
-              return buildview(Forums);
-            } else {
-              return const Text("No User Data");
-            }
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+            Navigator.pushNamed(context, "/postquestion");
           },
+          label: const Text('Post a Question'),
+          icon: const Icon(Icons.add_comment),
         ),
-      ),
-    );
+        appBar: AppBar(title: Text('Forum'), centerTitle: true),
+        body: Center(
+          child: RefreshIndicator(
+            onRefresh: RefreshForum,
+            child: FutureBuilder<List<ForumLists>>(
+              future: ForumFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  return Text("${snapshot.error}");
+                } else if (snapshot.hasData) {
+                  final Forums = snapshot.data!;
+                  return buildview(Forums);
+                } else {
+                  return const Text("No User Data");
+                }
+              },
+            ),
+          ),
+        ));
   }
 
   Widget buildview(List<ForumLists> forumQuestions) => ListView.builder(
       itemCount: forumQuestions.length,
       itemBuilder: (context, index) {
-        final question = forumQuestions[index];
+        int reverseIndex = forumQuestions.length - 1 - index;
+        final question = forumQuestions[reverseIndex];
 
         return GestureDetector(
             onTap: () {
@@ -81,9 +92,8 @@ class _ForumState extends State<Forum> {
                   MaterialPageRoute(
                       builder: (context) => Replies(
                             question_id: question.id,
-                            user_id: question.user_id,
                             name: question.name,
-                            date_published: question.date_published,
+                            question: question.content,
                           )));
             },
             child: Card(

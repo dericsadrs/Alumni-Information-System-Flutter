@@ -6,6 +6,8 @@ import 'package:alumni_sandbox/screens/login.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+//import 'package:url_launcher/url_launcher.dart';
+
 class Job extends Login {
   const Job({Key? key}) : super(key: key);
 
@@ -38,7 +40,7 @@ class _JobState extends State<Job> {
             IconButton(
               icon: new Icon(Icons.edit_note),
               onPressed: () {
-                Navigator.pushNamed(context, "/findalumni");
+                Navigator.pushNamed(context, "/jobedit");
               },
             ),
           ],
@@ -93,6 +95,14 @@ class _JobState extends State<Job> {
                 child: ListTile(
                   trailing: TextButton(
                     onPressed: () {},
+                    /*async {
+                      final redirectUrl =
+                          "https://mail.google.com/mail/u/0/?fs=1&tf=cm&to=ais@gmail.com";
+                      if (await canLaunch(redirectUrl)) {
+                        await launch(redirectUrl,
+                            forceWebView: true, enableJavaScript: true);
+                      }*/
+
                     child: Text("Apply"),
                   ),
                   title: Text(

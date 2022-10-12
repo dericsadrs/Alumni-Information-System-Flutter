@@ -24,12 +24,8 @@ class _FindAlumniState extends State<FindAlumni> {
   Future<List<AlumniSearch>> FindAlumni() async {
     const url = 'https://192.168.0.110/backend_app/alumni/searchAlumni.php';
     final send = await http.post(Uri.parse(url), body: {"name": name.text});
-    final fetchAlumni = await http.get(
-      Uri.parse(url),
-    );
-    //final response = await http.post(Uri.parse(url), body: {"name": name.text});
-    final body = jsonDecode(fetchAlumni.body);
-    print(fetchAlumni.body);
+
+    final body = jsonDecode(send.body);
     return body.map<AlumniSearch>(AlumniSearch.fromJson).toList();
   }
 

@@ -54,6 +54,7 @@ class _AlumniState extends State<Alumni> {
               return Text("${snapshot.error}");
             } else if (snapshot.hasData) {
               final alumnis = snapshot.data!;
+
               return buildview(alumnis);
             } else {
               return const Text("No User Data");
@@ -93,6 +94,7 @@ class _AlumniState extends State<Alumni> {
                             college_batch: user.college_batch,
                             birthday: user.birthday,
                             nickname: user.nickname,
+                            image_path: user.image_path,
                           )));
             },
             child: Card(
@@ -103,7 +105,9 @@ class _AlumniState extends State<Alumni> {
                 child: Padding(
                     padding: EdgeInsets.all(12),
                     child: ListTile(
-                      leading: CircleAvatar(),
+                      leading: CircleAvatar(
+                        backgroundImage: AssetImage(user.image_path),
+                      ), //child: Image(image: AssetImage(user.image_path))),
                       trailing: Icon(Icons.keyboard_arrow_right_rounded),
                       title: Text(
                         user.full_name,

@@ -17,6 +17,7 @@ class AlumniUser {
   final String college_batch;
   final String birthday;
   final String nickname;
+  final String image_path;
 
   const AlumniUser({
     required this.title,
@@ -37,6 +38,7 @@ class AlumniUser {
     required this.college_batch,
     required this.birthday,
     required this.nickname,
+    required this.image_path,
   });
 
   static AlumniUser fromJson(json) => AlumniUser(
@@ -58,5 +60,6 @@ class AlumniUser {
         college_batch: json['college_batch'],
         birthday: json['birthday'],
         nickname: json['nickname'],
+        image_path: json['image_path'],
       );
 }

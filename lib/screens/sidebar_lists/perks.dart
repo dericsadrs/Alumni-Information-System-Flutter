@@ -70,7 +70,6 @@ class _PerksState extends State<Perks> {
                 child: Padding(
                     padding: EdgeInsets.all(12),
                     child: ListTile(
-                      leading: CircleAvatar(),
                       title: Text(
                         user.content,
                         style: TextStyle(

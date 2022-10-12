@@ -32,7 +32,20 @@ class _JobPostState extends State<JobPost> {
           title: Text('Job Post'),
           centerTitle: true,
         ),
-        body: Column(children: [
+        body: SingleChildScrollView(
+            child: Column(children: [
+          SizedBox(
+            height: 40,
+          ),
+          Row(
+            children: [
+              SizedBox(
+                width: 38,
+              ),
+              Text("Posting as:  "),
+              Text(CurrentUser.full_name),
+            ],
+          ),
           SizedBox(
             height: 25,
           ),
@@ -87,6 +100,6 @@ class _JobPostState extends State<JobPost> {
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18,
                               )))))),
-        ]));
+        ])));
   }
 }
