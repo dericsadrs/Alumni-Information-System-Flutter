@@ -7,6 +7,7 @@ import 'package:alumni_sandbox/screens/forum/forum.dart';
 import 'package:alumni_sandbox/screens/alumni/alumni.dart';
 import 'package:alumni_sandbox/screens/feed/feed.dart';
 import 'package:alumni_sandbox/screens/forum/post_question.dart';
+import 'package:alumni_sandbox/screens/gallery/gallery.dart';
 import 'package:alumni_sandbox/screens/job/jobuser_posts.dart';
 import 'package:alumni_sandbox/screens/menu.dart';
 import 'package:alumni_sandbox/screens/onboarding.dart';
@@ -46,6 +47,7 @@ void main() {
 
         "/menu": (context) => const Menu(),
         "/alumni": (context) => Alumni(),
+        "/gallery": (context) => Gallery(),
         "/findalumni": (context) => FindAlumni(),
         "/feed": (context) => Feed(),
         "/job": (context) => Job(),

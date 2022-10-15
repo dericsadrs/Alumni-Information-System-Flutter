@@ -78,21 +78,26 @@ class _MenuState extends State<Menu> {
                 child: Align(
                     alignment: Alignment(0.02, 0.70), child: Text("JOB"))),
           ),
-          Container(
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage("assets/images/logo_2.png")),
-                  borderRadius: BorderRadius.circular(10),
-                  color: Color.fromARGB(255, 255, 255, 255),
-                  boxShadow: [
-                    BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 5,
-                        blurRadius: 7,
-                        offset: Offset(7.0, 8.0))
-                  ]),
-              child: Align(
-                  alignment: Alignment(0.02, 0.70), child: Text("GALLERY"))),
+          GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, "/gallery");
+              },
+              child: Container(
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage("assets/images/logo_2.png")),
+                      borderRadius: BorderRadius.circular(10),
+                      color: Color.fromARGB(255, 255, 255, 255),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 5,
+                            blurRadius: 7,
+                            offset: Offset(7.0, 8.0))
+                      ]),
+                  child: Align(
+                      alignment: Alignment(0.02, 0.70),
+                      child: Text("GALLERY")))),
           GestureDetector(
               onTap: () {
                 Navigator.pushNamed(context, "/alumni");
