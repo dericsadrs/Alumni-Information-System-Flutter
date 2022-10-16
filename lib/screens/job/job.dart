@@ -5,6 +5,7 @@ import 'package:alumni_sandbox/screens/login.dart';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 //import 'package:url_launcher/url_launcher.dart';
 
@@ -94,15 +95,16 @@ class _JobState extends State<Job> {
                 padding: EdgeInsets.all(12),
                 child: ListTile(
                   trailing: TextButton(
-                    onPressed: () {},
-                    /*async {
-                      final redirectUrl =
+                    onPressed: () async {
+                      const redirectUrl =
                           "https://mail.google.com/mail/u/0/?fs=1&tf=cm&to=ais@gmail.com";
+                      // ignore: deprecated_member_use
                       if (await canLaunch(redirectUrl)) {
+                        // ignore: deprecated_member_use
                         await launch(redirectUrl,
                             forceWebView: true, enableJavaScript: true);
-                      }*/
-
+                      }
+                    },
                     child: Text("Apply"),
                   ),
                   title: Text(

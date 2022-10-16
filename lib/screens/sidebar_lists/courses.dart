@@ -33,12 +33,12 @@ class _CoursesState extends State<Courses> {
       appBar: AppBar(
         title: const Text('Courses'),
         centerTitle: true,
-        bottom: PreferredSize(
+        /* bottom: PreferredSize(
             preferredSize: Size.fromHeight(90),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
-            )),
+            )),*/
       ),
       body: Center(
         child: FutureBuilder<List<CoursesLists>>(

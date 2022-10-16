@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:alumni_sandbox/back_end/currentUser.dart';
 
@@ -23,8 +24,18 @@ class _JobPostState extends State<JobPost> {
             "id": CurrentUser.id,
             "jobContent": jobContent.text,
           });
-      var postData = jsonDecode(response.body);
-      print(postData);
+      var postJob = jsonDecode(response.body);
+      if (postJob == true) {
+        Fluttertoast.showToast(
+            msg: "Succesfully Posted",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM);
+      } else if (postJob == false) {
+        Fluttertoast.showToast(
+            msg: "Oops Something went wrong ",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM);
+      }
     }
 
     return Scaffold(

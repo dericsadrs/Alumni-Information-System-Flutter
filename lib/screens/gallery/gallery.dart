@@ -75,6 +75,6 @@ class _GalleryState extends State<Gallery> {
         );
       },
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
+        crossAxisCount: 2,
       ));
 }

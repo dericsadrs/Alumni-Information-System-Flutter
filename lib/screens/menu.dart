@@ -18,9 +18,10 @@ class _MenuState extends State<Menu> {
     return Scaffold(
       drawer: SideNavBar(),
       appBar: AppBar(
+        title: const Text('Menu'),
         centerTitle: true,
         backgroundColor: Colors.blue,
-        shape: RoundedRectangleBorder(
+        /*shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
                 bottomRight: Radius.circular(50),
                 bottomLeft: Radius.circular(50))),
@@ -29,7 +30,7 @@ class _MenuState extends State<Menu> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
-            )),
+            )),*/
       ),
       body: GridView.count(
         primary: false,
