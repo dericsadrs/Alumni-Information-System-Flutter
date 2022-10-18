@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:alumni_sandbox/back_end/currentUser.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
 class Question extends StatefulWidget {
@@ -16,10 +17,21 @@ class _QuestionState extends State<Question> {
 
   Future addPost() async {
     final response = await http.post(
-        Uri.parse("https://192.168.0.110/backend_app/forum/postQuestion.php"),
+        Uri.parse("https://10.0.2.2/backend_app/forum/postQuestion.php"),
         body: {"user_id": CurrentUser.id, "question": question.text});
     var postQuestion = jsonDecode(response.body);
-    print(postQuestion);
+
+    if (postQuestion == true) {
+      Fluttertoast.showToast(
+          msg: "Succesfully Posted",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM);
+    } else if (postQuestion == false) {
+      Fluttertoast.showToast(
+          msg: "Oops Something went wrong ",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM);
+    }
   }
 
   @override

@@ -23,7 +23,7 @@ class _FeedState extends State<Feed> {
   }
 
   static Future<List<FeedList>> getFeed() async {
-    const url = 'https://192.168.0.110/backend_app/Feed/getFeed.php';
+    const url = 'https://10.0.2.2/backend_app/Feed/getFeed.php';
     final response = await http.get(Uri.parse(url));
     final body = jsonDecode(response.body);
     return body.map<FeedList>(FeedList.fromJson).toList();
@@ -47,18 +47,32 @@ class _FeedState extends State<Feed> {
                 child: Padding(
                     padding: EdgeInsets.all(12),
                     child: ListTile(
-                      leading: CircleAvatar(),
-                      title: Text(
-                        user_feeds.name,
-                        style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Text(
-                        user_feeds.content,
-                        style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.bold),
-                      ),
-                    ))));
+                        leading: CircleAvatar(),
+                        title: Text(
+                          user_feeds.name,
+                          style: TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.bold),
+                        ),
+                        subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                user_feeds.content,
+                                style: TextStyle(
+                                    fontSize: 12, fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    user_feeds.date_published,
+                                    style: TextStyle(fontSize: 11),
+                                  )
+                                ],
+                              )
+                            ])))));
       });
 
   Widget build(BuildContext context) {

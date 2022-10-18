@@ -19,7 +19,7 @@ class _JobPostState extends State<JobPost> {
 
     Future addJob() async {
       final response = await http.post(
-          Uri.parse("https://192.168.0.110/backend_app/jobs/postJobs.php"),
+          Uri.parse("https://10.0.2.2/backend_app/jobs/postJobs.php"),
           body: {
             "id": CurrentUser.id,
             "jobContent": jobContent.text,

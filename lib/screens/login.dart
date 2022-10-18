@@ -21,7 +21,7 @@ class _LoginState extends State<Login> {
 
   Future _login() async {
     final response = await http.post(
-      Uri.parse("https://192.168.0.110/backend_app/user/userLogin.php"),
+      Uri.parse("https://10.0.2.2/backend_app/user/userLogin.php"),
       body: {
         "email_address": email_address.text,
         "password": password.text,

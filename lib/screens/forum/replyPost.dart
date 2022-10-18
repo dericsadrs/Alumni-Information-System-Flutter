@@ -27,14 +27,24 @@ class _ReplyPostState extends State<ReplyPost> {
 
   Future addReply() async {
     final response = await http.post(
-        Uri.parse("https://192.168.0.110/backend_app/forum/postReply.php"),
+        Uri.parse("https://10.0.2.2/backend_app/forum/postReply.php"),
         body: {
           "user_id": CurrentUser.id,
           "question_id": widget.question_id,
           "reply": contentReply.text,
         });
-    var postQuestion = jsonDecode(response.body);
-    print(postQuestion);
+    var replyPost = jsonDecode(response.body);
+    if (replyPost == true) {
+      Fluttertoast.showToast(
+          msg: "Succesfully Posted",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM);
+    } else if (replyPost == false) {
+      Fluttertoast.showToast(
+          msg: "Oops Something went wrong ",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM);
+    }
   }
 
   @override

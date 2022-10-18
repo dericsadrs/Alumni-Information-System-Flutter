@@ -26,12 +26,13 @@ class _JobState extends State<Job> {
   }
 
   static Future<List<JobsLists>> getJobs() async {
-    const url = 'https://192.168.0.110/backend_app/jobs/getJobs.php';
+    const url = 'https://10.0.2.2/backend_app/jobs/getJobs.php';
     final response = await http.get(Uri.parse(url));
     final body = jsonDecode(response.body);
     return body.map<JobsLists>(JobsLists.fromJson).toList();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -94,29 +95,44 @@ class _JobState extends State<Job> {
               child: Padding(
                 padding: EdgeInsets.all(12),
                 child: ListTile(
-                  trailing: TextButton(
-                    onPressed: () async {
-                      const redirectUrl =
-                          "https://mail.google.com/mail/u/0/?fs=1&tf=cm&to=ais@gmail.com";
-                      // ignore: deprecated_member_use
-                      if (await canLaunch(redirectUrl)) {
+                    trailing: TextButton(
+                      onPressed: () async {
+                        const redirectUrl =
+                            "https://mail.google.com/mail/u/0/?fs=1&tf=cm&to=ais@gmail.com";
                         // ignore: deprecated_member_use
-                        await launch(redirectUrl,
-                            forceWebView: true, enableJavaScript: true);
-                      }
-                    },
-                    child: Text("Apply"),
-                  ),
-                  title: Text(
-                    jobPost.name,
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                  ),
-                  subtitle: Text(
-                    jobPost.content,
-                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-                  ),
-                  dense: true,
-                ),
+                        if (await launch(redirectUrl)) {
+                          // ignore: deprecated_member_use
+                          await launch(redirectUrl,
+                              forceWebView: true, enableJavaScript: true);
+                        }
+                      },
+                      child: Text("Apply"),
+                    ),
+                    title: Text(
+                      jobPost.name,
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            jobPost.content,
+                            style: TextStyle(
+                                fontSize: 12, fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                jobPost.date_published,
+                                style: TextStyle(fontSize: 11),
+                              )
+                            ],
+                          )
+                        ])),
               ),
             ));
       });

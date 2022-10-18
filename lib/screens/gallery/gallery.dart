@@ -21,7 +21,7 @@ class _GalleryState extends State<Gallery> {
   }
 
   static Future<List<GalleryList>> getGallery() async {
-    const url = 'https://192.168.0.110/backend_app/gallery/getGallery.php';
+    const url = 'https://10.0.2.2/backend_app/gallery/getGallery.php';
     final response = await http.get(Uri.parse(url));
     final body = jsonDecode(response.body);
     return body.map<GalleryList>(GalleryList.fromJson).toList();
@@ -61,20 +61,13 @@ class _GalleryState extends State<Gallery> {
         final picture = pictures[index];
 
         return Container(
-          decoration: BoxDecoration(
-              image: DecorationImage(image: AssetImage(picture.image_path)),
-              borderRadius: BorderRadius.circular(10),
-              color: Color.fromARGB(255, 255, 255, 255),
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 5,
-                    blurRadius: 7,
-                    offset: Offset(7.0, 8.0))
-              ]),
-        );
+            padding: EdgeInsets.all(5),
+            child: FittedBox(
+              child: Image.asset(picture.image_path),
+              fit: BoxFit.fill,
+            ));
       },
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
+        crossAxisCount: 3,
       ));
 }

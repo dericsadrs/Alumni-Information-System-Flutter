@@ -22,7 +22,7 @@ class _CoursesState extends State<Courses> {
   }
 
   static Future<List<CoursesLists>> getCourses() async {
-    const url = 'https://192.168.0.110/backend_app/courses/getCourses.php';
+    const url = 'https://10.0.2.2/backend_app/courses/getCourses.php';
     final response = await http.get(Uri.parse(url));
     final body = jsonDecode(response.body);
     return body.map<CoursesLists>(CoursesLists.fromJson).toList();

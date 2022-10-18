@@ -25,7 +25,7 @@ class _ForumState extends State<Forum> {
   }
 
   static Future<List<ForumLists>> getForum() async {
-    const url = 'https://192.168.0.110/backend_app/Forum/getQuestions.php';
+    const url = 'https://10.0.2.2/backend_app/Forum/getQuestions.php';
     final response = await http.get(Uri.parse(url));
     final body = jsonDecode(response.body);
     return body.map<ForumLists>(ForumLists.fromJson).toList();
@@ -104,30 +104,50 @@ class _ForumState extends State<Forum> {
                 child: Padding(
                     padding: EdgeInsets.all(12),
                     child: ListTile(
-                      //isThreeLine: true,
-                      leading: CircleAvatar(),
-
-                      title: Row(children: [
-                        Text(
-                          question.name,
-                          style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.bold),
+                        //isThreeLine: true,
+                        trailing: TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Replies(
+                                        question_id: question.id,
+                                        name: question.name,
+                                        question: question.content)));
+                          },
+                          child: Text("Open"),
                         ),
-                        SizedBox(
-                          width: 110,
-                        ),
-                        Text(
-                          question.date_published,
-                          style: TextStyle(fontSize: 11),
-                        )
-                      ]),
-
-                      subtitle: Text(
-                        question.content,
-                        style: TextStyle(fontSize: 13),
-                      ),
-
-                      dense: true,
-                    ))));
+                        title: Row(children: [
+                          Text(
+                            question.name,
+                            style: TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(
+                            width: 110,
+                          ),
+                        ]),
+                        subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                question.content,
+                                style: TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    question.date_published,
+                                    style: TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.bold),
+                                  )
+                                ],
+                              )
+                            ])))));
       });
 }

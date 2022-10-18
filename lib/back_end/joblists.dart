@@ -1,17 +1,17 @@
 class JobsLists {
   final String name;
   final String content;
-  final String email_address;
+  final String date_published;
 
   const JobsLists({
     required this.name,
     required this.content,
-    required this.email_address,
+    required this.date_published,
   });
 
   static JobsLists fromJson(json) => JobsLists(
         name: json['name'],
         content: json['content'],
-        email_address: json['email_address'],
+        date_published: json['date_published'],
       );
 }
