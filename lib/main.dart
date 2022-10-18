@@ -9,9 +9,11 @@ import 'package:alumni_sandbox/screens/feed/feed.dart';
 import 'package:alumni_sandbox/screens/forum/post_question.dart';
 import 'package:alumni_sandbox/screens/gallery/gallery.dart';
 import 'package:alumni_sandbox/screens/job/jobuser_posts.dart';
+import 'package:alumni_sandbox/screens/login.dart';
 import 'package:alumni_sandbox/screens/menu.dart';
 import 'package:alumni_sandbox/screens/onboarding.dart';
 import 'package:alumni_sandbox/screens/job/job.dart';
+import 'package:alumni_sandbox/screens/sidebar_lists/about.dart';
 import 'package:alumni_sandbox/screens/sidebar_lists/courses.dart';
 import 'package:alumni_sandbox/screens/sidebar_lists/perks.dart';
 import 'package:alumni_sandbox/screens/sidebar_lists/your_profile.dart';
@@ -45,6 +47,7 @@ void main() {
 
         // Basic Functionalities
 
+        "/login": (context) => Login(),
         "/menu": (context) => const Menu(),
         "/alumni": (context) => Alumni(),
         "/gallery": (context) => Gallery(),
@@ -63,6 +66,7 @@ void main() {
         "/feededit": (context) => FeedEdit(),
         "/postquestion": (context) => Question(),
         "/jobedit": (context) => EditJob(),
+        "/about": (context) => About(),
       },
     ),
   );

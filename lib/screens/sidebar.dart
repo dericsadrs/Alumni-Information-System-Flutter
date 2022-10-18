@@ -60,13 +60,15 @@ class _SideNavBarState extends State<SideNavBar> {
           ListTile(
             leading: Icon(Icons.settings),
             title: Text('About'),
-            onTap: () => null,
+            onTap: () => Navigator.pushNamed(context, "/about"),
           ),
           ListTile(
-            title: Text('Logout'),
-            leading: Icon(Icons.exit_to_app),
-            onTap: () => null,
-          ),
+              title: Text('Logout'),
+              leading: Icon(Icons.exit_to_app),
+              onTap: () => {
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        "/login", (Route<dynamic> route) => true)
+                  }),
         ],
       ),
     );

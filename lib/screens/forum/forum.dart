@@ -55,7 +55,24 @@ class _ForumState extends State<Forum> {
           label: const Text('Post a Question'),
           icon: const Icon(Icons.add_comment),
         ),
-        appBar: AppBar(title: Text('Forum'), centerTitle: true),
+        appBar: AppBar(
+          title: Text('Forum'),
+          centerTitle: true,
+          actions: [
+            IconButton(
+              icon: new Icon(Icons.delete),
+              onPressed: () {
+                Navigator.pushNamed(context, "/feededit");
+              },
+            ),
+            IconButton(
+              icon: new Icon(Icons.question_answer),
+              onPressed: () {
+                Navigator.pushNamed(context, "/feededit");
+              },
+            ),
+          ],
+        ),
         body: Center(
           child: RefreshIndicator(
             onRefresh: RefreshForum,
@@ -133,7 +150,7 @@ class _ForumState extends State<Forum> {
                               Text(
                                 question.content,
                                 style: TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.bold),
+                                    fontSize: 15, fontWeight: FontWeight.bold),
                               ),
                               SizedBox(
                                 height: 10,

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:alumni_sandbox/back_end/coursesLists.dart';
+import 'package:alumni_sandbox/screens/sidebar_lists/courses_description.dart';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -66,7 +67,14 @@ class _CoursesState extends State<Courses> {
         final user = alumnis[index];
 
         return GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => CourseDescription(
+                          course: user.course_name,
+                          course_description: user.course_description)));
+            },
             child: Card(
               elevation: 3,
               shape: RoundedRectangleBorder(
