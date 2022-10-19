@@ -111,7 +111,7 @@ class _FeedEditState extends State<EditJob> {
                     ),
                   ),
                   subtitle: Text(
-                    jobUser.date_published,
+                    jobUser.created_at,
                   ),
                   dense: true,
                 ),

@@ -123,7 +123,7 @@ class _FeedEditState extends State<FeedEdit> {
                     ),
                   ),
                   subtitle: Text(
-                    userFeed.date_published,
+                    userFeed.created_at,
                   ),
                   dense: true,
                 ),
@@ -141,4 +141,3 @@ class _FeedEditState extends State<FeedEdit> {
     });
   }
 }
-

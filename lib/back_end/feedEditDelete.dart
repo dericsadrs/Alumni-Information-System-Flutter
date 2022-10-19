@@ -1,16 +1,18 @@
 class FeedEditDelete {
   final String id;
-
+  final String title;
   final String content;
-  final String date_published;
+  final String created_at;
   const FeedEditDelete({
     required this.id,
-    required this.date_published,
+    required this.title,
     required this.content,
+    required this.created_at,
   });
 
   static FeedEditDelete fromJson(json) => FeedEditDelete(
       id: json['id'],
+      title: json['title'],
       content: json['content'],
-      date_published: json['date_published']);
+      created_at: json['created_at']);
 }

@@ -13,6 +13,7 @@ class FeedPost extends StatefulWidget {
 }
 
 class _FeedPostState extends State<FeedPost> {
+  TextEditingController feedtitle = new TextEditingController();
   TextEditingController content = new TextEditingController();
 
   Future addPost() async {
@@ -20,6 +21,7 @@ class _FeedPostState extends State<FeedPost> {
         Uri.parse("https://10.0.2.2/backend_app/feed/postFeed.php"),
         body: {
           "id": CurrentUser.id,
+          "feedtitle": feedtitle.text,
           "content": content.text,
         });
     var postFeed = jsonDecode(response.body);
@@ -60,6 +62,40 @@ class _FeedPostState extends State<FeedPost> {
           ),
           SizedBox(
             height: 40,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 30.0,
+            ),
+            child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  border: Border.all(color: Colors.white),
+                  borderRadius: BorderRadius.circular(12),
+                ), // BoxDecoration
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Container(
+                        height: 70,
+                      ), // Container
+                    ),
+                    Expanded(
+                      child: TextFormField(
+                          controller: feedtitle,
+                          keyboardType: TextInputType.multiline,
+                          minLines: 1,
+                          maxLines: null,
+                          decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: 'Title Feed')),
+                    ),
+                  ],
+                )),
+          ),
+          SizedBox(
+            height: 25,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30.0),

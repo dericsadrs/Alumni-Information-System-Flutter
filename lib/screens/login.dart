@@ -16,18 +16,19 @@ class Login extends StatefulWidget {
 
 // Instance of the Stateful Widget
 class _LoginState extends State<Login> {
-  TextEditingController email_address = new TextEditingController();
+  TextEditingController email = new TextEditingController();
   TextEditingController password = new TextEditingController();
 
   Future _login() async {
     final response = await http.post(
       Uri.parse("https://10.0.2.2/backend_app/user/userLogin.php"),
       body: {
-        "email_address": email_address.text,
+        "email": email.text,
         "password": password.text,
       },
     );
     var data = json.decode(response.body);
+    print(data);
 
     if (data['loginStatus'] == true) {
       CurrentUser().getData(
@@ -35,7 +36,7 @@ class _LoginState extends State<Login> {
         data['title'],
         data['full_name'],
         data['university'],
-        data['course_name'],
+        data['course'],
         data['email_address'],
         data['gender'],
         data['address'],
@@ -118,7 +119,7 @@ class _LoginState extends State<Login> {
                         child: Padding(
                             padding: const EdgeInsets.only(left: 20.0),
                             child: TextField(
-                              controller: email_address,
+                              controller: email,
                               decoration: InputDecoration(
                                 prefixIcon: Icon(Icons.email),
                                 border: InputBorder.none,

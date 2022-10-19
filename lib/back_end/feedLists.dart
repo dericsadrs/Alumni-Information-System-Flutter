@@ -1,19 +1,21 @@
 class FeedList {
+  final String title;
   final String content;
   final String name;
-  final String date_published;
-  final String status;
+  final String created_at;
 
   const FeedList({
-    required this.date_published,
-    required this.status,
+    // ignore: non_constant_identifier_names
+    required this.title,
+    required this.created_at,
     required this.name,
     required this.content,
   });
 
   static FeedList fromJson(json) => FeedList(
-      content: json['content'],
-      name: json['name'],
-      date_published: json['date_published'],
-      status: json['status']);
+        title: json['title'],
+        content: json['content'],
+        name: json['name'],
+        created_at: json['created_at'],
+      );
 }

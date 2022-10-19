@@ -56,6 +56,13 @@ class _FeedState extends State<Feed> {
                         subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              SizedBox(height: 5),
+                              Text(
+                                user_feeds.title,
+                                style: TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(height: 5),
                               Text(
                                 user_feeds.content,
                                 style: TextStyle(
@@ -67,7 +74,7 @@ class _FeedState extends State<Feed> {
                               Row(
                                 children: [
                                   Text(
-                                    user_feeds.date_published,
+                                    user_feeds.created_at,
                                     style: TextStyle(fontSize: 11),
                                   )
                                 ],
