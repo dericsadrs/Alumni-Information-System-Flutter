@@ -2,7 +2,7 @@ class AlumniUser {
   final String title;
   final String full_name;
   final String university;
-  final String course_name;
+  final String course;
   final String email_address;
   final String gender;
   final String address;
@@ -23,7 +23,7 @@ class AlumniUser {
     required this.title,
     required this.full_name,
     required this.university,
-    required this.course_name,
+    required this.course,
     required this.email_address,
     required this.gender,
     required this.address,
@@ -45,7 +45,7 @@ class AlumniUser {
         title: json['title'],
         full_name: json['full_name'],
         university: json['university'],
-        course_name: json['course_name'],
+        course: json['course'],
         email_address: json['email_address'],
         gender: json['gender'],
         address: json['address'],

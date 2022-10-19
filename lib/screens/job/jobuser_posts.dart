@@ -105,13 +105,13 @@ class _FeedEditState extends State<EditJob> {
                     ),
                   ]),
                   title: Text(
-                    jobUser.content,
+                    jobUser.title,
                     style: TextStyle(
                       fontSize: 15,
                     ),
                   ),
                   subtitle: Text(
-                    jobUser.created_at,
+                    jobUser.content,
                   ),
                   dense: true,
                 ),

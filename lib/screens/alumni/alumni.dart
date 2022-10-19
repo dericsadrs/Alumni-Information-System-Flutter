@@ -79,7 +79,7 @@ class _AlumniState extends State<Alumni> {
                             title: user.title,
                             full_name: user.full_name,
                             university: user.university,
-                            course_name: user.course_name,
+                            course_name: user.course,
                             email_address: user.email_address,
                             gender: user.gender,
                             address: user.address,
@@ -114,7 +114,7 @@ class _AlumniState extends State<Alumni> {
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       subtitle: Text(
-                        user.course_name,
+                        user.course,
                       ),
                       dense: true,
                     ))));

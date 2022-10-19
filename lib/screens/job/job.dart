@@ -127,7 +127,7 @@ class _JobState extends State<Job> {
                           Row(
                             children: [
                               Text(
-                                jobPost.date_published,
+                                jobPost.created_at,
                                 style: TextStyle(fontSize: 11),
                               )
                             ],

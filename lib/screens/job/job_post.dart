@@ -15,13 +15,17 @@ class JobPost extends StatefulWidget {
 class _JobPostState extends State<JobPost> {
   @override
   Widget build(BuildContext context) {
+    TextEditingController jobTitle = new TextEditingController();
     TextEditingController jobContent = new TextEditingController();
+    TextEditingController jobAddress = new TextEditingController();
 
     Future addJob() async {
       final response = await http.post(
           Uri.parse("https://10.0.2.2/backend_app/jobs/postJobs.php"),
           body: {
             "id": CurrentUser.id,
+            "jobTitle": jobTitle.text,
+            "jobAddress": jobAddress.text,
             "jobContent": jobContent.text,
           });
       var postJob = jsonDecode(response.body);
@@ -56,6 +60,70 @@ class _JobPostState extends State<JobPost> {
               Text("Posting as:  "),
               Text(CurrentUser.full_name),
             ],
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 50.0),
+            child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  border: Border.all(color: Colors.white),
+                  borderRadius: BorderRadius.circular(12),
+                ), // BoxDecoration
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Container(
+                        height: 50,
+                      ), // Container
+                    ),
+                    Expanded(
+                      child: TextField(
+                          controller: jobTitle,
+                          keyboardType: TextInputType.multiline,
+                          minLines: 1,
+                          maxLines: 10,
+                          decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: ' Job Title')),
+                    ),
+                  ],
+                )),
+          ),
+          SizedBox(
+            height: 25,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 50.0),
+            child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  border: Border.all(color: Colors.white),
+                  borderRadius: BorderRadius.circular(12),
+                ), // BoxDecoration
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Container(
+                        height: 50,
+                      ), // Container
+                    ),
+                    Expanded(
+                      child: TextField(
+                          controller: jobAddress,
+                          keyboardType: TextInputType.multiline,
+                          minLines: 1,
+                          maxLines: 10,
+                          decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: ' Job Address')),
+                    ),
+                  ],
+                )),
           ),
           SizedBox(
             height: 25,
