@@ -25,8 +25,31 @@ class _CourseDescriptionState extends State<CourseDescription> {
         centerTitle: true,
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 16, top: 25, right: 16),
-      ),
+          padding: EdgeInsets.only(left: 16, top: 25, right: 16),
+          child: Card(
+            elevation: 3,
+            /* shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),*/
+            child: Padding(
+              padding: EdgeInsets.all(12),
+              child: ListTile(
+                title: Text(
+                  widget.course,
+                  style: TextStyle(
+                    fontSize: 15,
+                  ),
+                ),
+                subtitle: Text(
+                  widget.course_description,
+                  style: TextStyle(
+                    fontSize: 15,
+                  ),
+                ),
+                dense: true,
+              ),
+            ),
+          )),
     );
   }
 }

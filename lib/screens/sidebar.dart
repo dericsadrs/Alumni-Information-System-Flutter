@@ -22,12 +22,7 @@ class _SideNavBarState extends State<SideNavBar> {
             accountEmail: Text(CurrentUser.university),
             currentAccountPicture: CircleAvatar(
               child: ClipOval(
-                child: Image.asset(
-                  CurrentUser.image_path,
-                  fit: BoxFit.cover,
-                  width: 90,
-                  height: 90,
-                ),
+                child: Icon(Icons.person),
               ),
             ),
           ),

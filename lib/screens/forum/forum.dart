@@ -122,7 +122,7 @@ class _ForumState extends State<Forum> {
                     padding: EdgeInsets.all(12),
                     child: ListTile(
                         //isThreeLine: true,
-                        trailing: TextButton(
+                        /* trailing: TextButton(
                           onPressed: () {
                             Navigator.push(
                                 context,
@@ -131,9 +131,9 @@ class _ForumState extends State<Forum> {
                                         question_id: question.id,
                                         name: question.name,
                                         question: question.content)));
-                          },
+                          },*
                           child: Text("Open"),
-                        ),
+                        ),*/
                         title: Row(children: [
                           Text(
                             question.name,
@@ -147,6 +147,9 @@ class _ForumState extends State<Forum> {
                         subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              SizedBox(
+                                height: 10,
+                              ),
                               Text(
                                 question.content,
                                 style: TextStyle(
@@ -158,7 +161,7 @@ class _ForumState extends State<Forum> {
                               Row(
                                 children: [
                                   Text(
-                                    question.date_published,
+                                    question.created_at,
                                     style: TextStyle(
                                         fontSize: 11,
                                         fontWeight: FontWeight.bold),

@@ -63,10 +63,10 @@ class _PerksState extends State<Perks> {
         return GestureDetector(
             onTap: () {},
             child: Card(
-                elevation: 3,
+                /*elevation: 3,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
-                ),
+                ),*/
                 child: Padding(
                     padding: EdgeInsets.all(12),
                     child: ListTile(
@@ -76,7 +76,7 @@ class _PerksState extends State<Perks> {
                             fontWeight: FontWeight.bold, fontSize: 12),
                       ),
                       subtitle: Text(
-                        user.date_published,
+                        user.created_at,
                       ),
                       dense: true,
                     ))));

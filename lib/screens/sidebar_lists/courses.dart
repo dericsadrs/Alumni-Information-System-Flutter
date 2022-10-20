@@ -53,7 +53,7 @@ class _CoursesState extends State<Courses> {
               final alumnis = snapshot.data!;
               return buildview(alumnis);
             } else {
-              return const Text("No User Data");
+              return const Text("No Courses Data");
             }
           },
         ),
@@ -64,7 +64,7 @@ class _CoursesState extends State<Courses> {
   Widget buildview(List<CoursesLists> alumnis) => ListView.builder(
       itemCount: alumnis.length,
       itemBuilder: (context, index) {
-        final user = alumnis[index];
+        final course = alumnis[index];
 
         return GestureDetector(
             onTap: () {
@@ -72,19 +72,19 @@ class _CoursesState extends State<Courses> {
                   context,
                   MaterialPageRoute(
                       builder: (context) => CourseDescription(
-                          course: user.course_name,
-                          course_description: user.course_description)));
+                          course: course.course_name,
+                          course_description: course.course_description)));
             },
             child: Card(
               elevation: 3,
-              shape: RoundedRectangleBorder(
+              /* shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
-              ),
+              ),*/
               child: Padding(
                 padding: EdgeInsets.all(12),
                 child: ListTile(
                   title: Text(
-                    user.course_name,
+                    course.course_name,
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   ),
                   dense: true,

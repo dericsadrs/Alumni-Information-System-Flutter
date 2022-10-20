@@ -146,7 +146,7 @@ class _RepliesState extends State<Replies> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                reply.reply,
+                                reply.content,
                                 style: TextStyle(
                                     fontSize: 12, fontWeight: FontWeight.bold),
                               ),
@@ -156,7 +156,7 @@ class _RepliesState extends State<Replies> {
                               Row(
                                 children: [
                                   Text(
-                                    reply.date_published,
+                                    reply.created_at,
                                     style: TextStyle(
                                         fontSize: 10,
                                         fontWeight: FontWeight.bold),

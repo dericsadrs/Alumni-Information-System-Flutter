@@ -46,7 +46,7 @@ class AlumniSearch {
         title: json['title'],
         full_name: json['full_name'],
         university: json['university'],
-        course_name: json['course_name'],
+        course_name: json['course'],
         email_address: json['email_address'],
         gender: json['gender'],
         address: json['address'],

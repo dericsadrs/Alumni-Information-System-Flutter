@@ -88,10 +88,10 @@ class _JobState extends State<Job> {
         return GestureDetector(
             onTap: () {},
             child: Card(
-              elevation: 3,
+              /* elevation: 3,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
-              ),
+              ),*/
               child: Padding(
                 padding: EdgeInsets.all(12),
                 child: ListTile(
@@ -116,6 +116,13 @@ class _JobState extends State<Job> {
                     subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          SizedBox(height: 5),
+                          Text(
+                            jobPost.title,
+                            style: TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(height: 10),
                           Text(
                             jobPost.content,
                             style: TextStyle(

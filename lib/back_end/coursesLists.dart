@@ -11,6 +11,6 @@ class CoursesLists {
   });
 
   static CoursesLists fromJson(json) => CoursesLists(
-      course_name: json['course_name'],
+      course_name: json['course'],
       course_description: json['course_description']);
 }

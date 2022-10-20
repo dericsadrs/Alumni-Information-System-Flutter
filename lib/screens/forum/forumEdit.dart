@@ -1,39 +1,41 @@
 import 'dart:convert';
+import 'package:alumni_sandbox/back_end/userForums.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
-import 'package:alumni_sandbox/back_end/feedEditDelete.dart';
+
 import 'package:flutter/material.dart';
 
 import '../../back_end/currentUser.dart';
 
-class FeedEdit extends StatefulWidget {
-  const FeedEdit({Key? key}) : super(key: key);
+class EditForum extends StatefulWidget {
+  const EditForum({Key? key}) : super(key: key);
 
   @override
-  State<FeedEdit> createState() => _FeedEditState();
+  State<EditForum> createState() => _EditForumState();
 }
 
-class _FeedEditState extends State<FeedEdit> {
+class _EditForumState extends State<EditForum> {
   TextEditingController editContent = new TextEditingController();
-  late Future<List<FeedEditDelete>> futureUserFeed = getUserFeed();
+  late Future<List<userForumLists>> futureUserForum = getUserForum();
 
   @override
   void initState() {
     super.initState();
-    futureUserFeed = getUserFeed();
+    futureUserForum = getUserForum();
   }
 
-  static Future<List<FeedEditDelete>> getUserFeed() async {
-    const url = 'https://10.0.2.2/backend_app/feed/fetchUserFeed.php';
+  static Future<List<userForumLists>> getUserForum() async {
+    const url = 'https://10.0.2.2/backend_app/forum/fetchuserForum.php';
     final response =
         await http.post(Uri.parse(url), body: {"user_id": CurrentUser.id});
     final body = jsonDecode(response.body);
-    return body.map<FeedEditDelete>(FeedEditDelete.fromJson).toList();
+    return body.map<userForumLists>(userForumLists.fromJson).toList();
   }
 
   Future deletePost(String passID) async {
-    const url = 'https://10.0.2.2/backend_app/feed/deleteFeed.php';
-    final response = await http.post(Uri.parse(url), body: {"user_id": passID});
+    const url = 'https://10.0.2.2/backend_app/forum/deleteFeed.php';
+    final response =
+        await http.post(Uri.parse(url), body: {"forum_id": passID});
     final body = jsonDecode(response.body);
     Fluttertoast.showToast(
         msg: "Post Deleted",
@@ -58,7 +60,7 @@ class _FeedEditState extends State<FeedEdit> {
       Navigator.pushReplacement(
           context,
           PageRouteBuilder(
-              pageBuilder: (a, b, c) => FeedEdit(),
+              pageBuilder: (a, b, c) => EditForum(),
               transitionDuration: Duration(seconds: 2)));
     });
   }
@@ -66,22 +68,22 @@ class _FeedEditState extends State<FeedEdit> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Your Posts'),
+          title: const Text('Your Questions'),
           centerTitle: true,
         ),
         body: RefreshIndicator(
           onRefresh: RefreshJob,
           child: Center(
-            child: FutureBuilder<List<FeedEditDelete>>(
-              future: futureUserFeed,
+            child: FutureBuilder<List<userForumLists>>(
+              future: futureUserForum,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const CircularProgressIndicator();
                 } else if (snapshot.hasError) {
                   return Text("${snapshot.error}");
                 } else if (snapshot.hasData) {
-                  final userFeeds = snapshot.data!;
-                  return buildview(userFeeds);
+                  final userForums = snapshot.data!;
+                  return buildview(userForums);
                 } else {
                   return const Text("No User Data");
                 }
@@ -91,12 +93,12 @@ class _FeedEditState extends State<FeedEdit> {
         ));
   }
 
-  Widget buildview(List<FeedEditDelete> userFeeds) => ListView.builder(
-      itemCount: userFeeds.length,
+  Widget buildview(List<userForumLists> userForums) => ListView.builder(
+      itemCount: userForums.length,
       itemBuilder: (context, index) {
-        int reverseIndex = userFeeds.length - 1 - index;
+        int reverseIndex = userForums.length - 1 - index;
 
-        final userFeed = userFeeds[reverseIndex];
+        final userForum = userForums[reverseIndex];
 
         return GestureDetector(
             onTap: () {},
@@ -111,13 +113,13 @@ class _FeedEditState extends State<FeedEdit> {
                         trailing: Column(children: [
                           TextButton(
                             onPressed: () {
-                              deletePost(userFeed.id);
+                              deletePost(userForum.id);
                             },
                             child: Text("Delete"),
                           ),
                         ]),
                         title: Text(
-                          userFeed.title,
+                          userForum.name,
                           style: TextStyle(
                               fontSize: 14, fontWeight: FontWeight.bold),
                         ),
@@ -126,13 +128,13 @@ class _FeedEditState extends State<FeedEdit> {
                             children: [
                               SizedBox(height: 5),
                               Text(
-                                userFeed.content,
+                                userForum.content,
                                 style: TextStyle(
                                     fontSize: 14, fontWeight: FontWeight.bold),
                               ),
                               SizedBox(height: 5),
                               Text(
-                                userFeed.created_at,
+                                userForum.created_at,
                                 style: TextStyle(
                                     fontSize: 12, fontWeight: FontWeight.bold),
                               ),
@@ -147,7 +149,7 @@ class _FeedEditState extends State<FeedEdit> {
       Navigator.pushReplacement(
           context,
           PageRouteBuilder(
-              pageBuilder: (a, b, c) => FeedEdit(),
+              pageBuilder: (a, b, c) => EditForum(),
               transitionDuration: Duration(seconds: 2)));
     });
   }

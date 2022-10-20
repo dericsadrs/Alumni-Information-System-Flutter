@@ -113,7 +113,8 @@ class _FindAlumniState extends State<FindAlumni> {
                     padding: EdgeInsets.all(12),
                     child: ListTile(
                       leading: CircleAvatar(
-                        backgroundImage: AssetImage(user.image_path),
+                        backgroundImage:
+                            AssetImage("assets/images/profile.png"),
                       ), //child: Image(image: AssetImage(user.image_path))),
                       trailing: Icon(Icons.keyboard_arrow_right_rounded),
                       title: Text(

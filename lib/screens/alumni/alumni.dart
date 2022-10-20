@@ -106,7 +106,7 @@ class _AlumniState extends State<Alumni> {
                     padding: EdgeInsets.all(12),
                     child: ListTile(
                       leading: CircleAvatar(
-                        backgroundImage: AssetImage(user.image_path),
+                        child: Icon(Icons.person),
                       ), //child: Image(image: AssetImage(user.image_path))),
                       trailing: Icon(Icons.keyboard_arrow_right_rounded),
                       title: Text(

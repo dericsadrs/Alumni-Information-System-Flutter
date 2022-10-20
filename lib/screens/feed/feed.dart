@@ -40,14 +40,16 @@ class _FeedState extends State<Feed> {
         return GestureDetector(
             onTap: () {},
             child: Card(
-                elevation: 3,
+                /*elevation: 3,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
-                ),
+                ),*/
                 child: Padding(
                     padding: EdgeInsets.all(12),
                     child: ListTile(
-                        leading: CircleAvatar(),
+                        leading: CircleAvatar(
+                          child: Icon(Icons.person),
+                        ),
                         title: Text(
                           user_feeds.name,
                           style: TextStyle(

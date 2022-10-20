@@ -1,12 +1,12 @@
 class PerksList {
   final String content;
-  final String date_published;
+  final String created_at;
 
   const PerksList({
-    required this.date_published,
+    required this.created_at,
     required this.content,
   });
 
-  static PerksList fromJson(json) => PerksList(
-      content: json['content'], date_published: json['date_published']);
+  static PerksList fromJson(json) =>
+      PerksList(content: json['content'], created_at: json['created_at']);
 }

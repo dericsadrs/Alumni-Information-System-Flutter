@@ -40,7 +40,7 @@ class YourProfile extends StatelessWidget {
                           shape: BoxShape.circle,
                           image: DecorationImage(
                               fit: BoxFit.cover,
-                              image: AssetImage(CurrentUser.image_path))),
+                              image: AssetImage("assets/images/profile.png"))),
                     ),
                   ],
                 ),
@@ -74,10 +74,12 @@ class YourProfile extends StatelessWidget {
               ListTile(
                 leading: Icon(Icons.corporate_fare),
                 title: Text(CurrentUser.job_business),
+                subtitle: Text(CurrentUser.business_address),
               ),
               ListTile(
                 leading: Icon(Icons.pin_drop),
-                title: Text(CurrentUser.business_address),
+                title: Text(CurrentUser.civil_status),
+                subtitle: Text(CurrentUser.gender),
               ),
               ListTile(
                 leading: Icon(Icons.contact_mail),

@@ -89,7 +89,7 @@ class _AlumniProfileState extends State<AlumniProfile> {
                           shape: BoxShape.circle,
                           image: DecorationImage(
                               fit: BoxFit.cover,
-                              image: AssetImage(widget.image_path))),
+                              image: AssetImage("assets/images/profile.png"))),
                     ),
                   ],
                 ),
@@ -123,10 +123,12 @@ class _AlumniProfileState extends State<AlumniProfile> {
               ListTile(
                 leading: Icon(Icons.corporate_fare),
                 title: Text(widget.job_business),
+                subtitle: Text(widget.business_address),
               ),
               ListTile(
-                leading: Icon(Icons.pin_drop),
-                title: Text(widget.business_address),
+                leading: Icon(Icons.person),
+                title: Text(widget.civil_status),
+                subtitle: Text(widget.gender),
               ),
               ListTile(
                 leading: Icon(Icons.contact_mail),
