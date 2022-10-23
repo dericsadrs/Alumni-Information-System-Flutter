@@ -25,7 +25,7 @@ class _EditForumState extends State<EditForum> {
   }
 
   static Future<List<userForumLists>> getUserForum() async {
-    const url = 'https://10.0.2.2/backend_app/forum/fetchuserForum.php';
+    const url = 'https://10.0.2.2/backend_app/forum/fetchuserQuestions.php';
     final response =
         await http.post(Uri.parse(url), body: {"user_id": CurrentUser.id});
     final body = jsonDecode(response.body);
@@ -33,7 +33,7 @@ class _EditForumState extends State<EditForum> {
   }
 
   Future deletePost(String passID) async {
-    const url = 'https://10.0.2.2/backend_app/forum/deleteFeed.php';
+    const url = 'https://10.0.2.2/backend_app/forum/deleteQuestion.php';
     final response =
         await http.post(Uri.parse(url), body: {"forum_id": passID});
     final body = jsonDecode(response.body);

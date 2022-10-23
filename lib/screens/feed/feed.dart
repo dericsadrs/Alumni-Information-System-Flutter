@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:alumni_sandbox/back_end/feedlists.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
@@ -26,6 +27,7 @@ class _FeedState extends State<Feed> {
     const url = 'https://10.0.2.2/backend_app/Feed/getFeed.php';
     final response = await http.get(Uri.parse(url));
     final body = jsonDecode(response.body);
+
     return body.map<FeedList>(FeedList.fromJson).toList();
   }
 

@@ -6,6 +6,7 @@ import 'package:alumni_sandbox/screens/feed/feed_post.dart';
 import 'package:alumni_sandbox/screens/forum/forum.dart';
 import 'package:alumni_sandbox/screens/alumni/alumni.dart';
 import 'package:alumni_sandbox/screens/feed/feed.dart';
+import 'package:alumni_sandbox/screens/forum/forumEdit.dart';
 import 'package:alumni_sandbox/screens/forum/post_question.dart';
 import 'package:alumni_sandbox/screens/gallery/gallery.dart';
 import 'package:alumni_sandbox/screens/job/jobuser_posts.dart';
@@ -67,6 +68,7 @@ void main() {
         "/postquestion": (context) => Question(),
         "/jobedit": (context) => EditJob(),
         "/about": (context) => About(),
+        "/userforums": (context) => EditForum()
       },
     ),
   );

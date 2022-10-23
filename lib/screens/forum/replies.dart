@@ -118,10 +118,10 @@ class _RepliesState extends State<Replies> {
         return GestureDetector(
             onTap: () {},
             child: Card(
-                elevation: 3,
+                /* elevation: 3,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
-                ),
+                ),*/
                 child: Padding(
                     padding: EdgeInsets.all(12),
                     child: ListTile(

@@ -63,10 +63,32 @@ class _LoginState extends State<Login> {
       // ignore: use_build_context_synchronously
       Navigator.pushNamed(context, "/menu");
     } else if (data['loginStatus'] == false) {
-      Fluttertoast.showToast(
-          msg: "Wrong Credentials",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM);
+      if (data['message'] == "!pw") {
+        Fluttertoast.showToast(
+            msg: "Wrong Password",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM);
+      } else if (data['message'] == "!user") {
+        Fluttertoast.showToast(
+            msg: "User Not Found",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM);
+      } else if (data['message'] == "error_db") {
+        Fluttertoast.showToast(
+            msg: "Error Connecting to the Database",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM);
+      } else if (data['message'] == "fatal_error") {
+        Fluttertoast.showToast(
+            msg: "Fatal Error",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM);
+      } else {
+        Fluttertoast.showToast(
+            msg: "Eror Logging In",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM);
+      }
     } else {
       Fluttertoast.showToast(
           msg: "Error!",

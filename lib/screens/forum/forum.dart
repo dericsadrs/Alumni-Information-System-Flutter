@@ -62,13 +62,7 @@ class _ForumState extends State<Forum> {
             IconButton(
               icon: new Icon(Icons.delete),
               onPressed: () {
-                Navigator.pushNamed(context, "/feededit");
-              },
-            ),
-            IconButton(
-              icon: new Icon(Icons.question_answer),
-              onPressed: () {
-                Navigator.pushNamed(context, "/feededit");
+                Navigator.pushNamed(context, "/userforums");
               },
             ),
           ],

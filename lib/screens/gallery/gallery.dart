@@ -1,8 +1,7 @@
 import 'dart:convert';
 
-import 'package:alumni_sandbox/back_end/galleryList.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter/services.dart';
 
 class Gallery extends StatefulWidget {
   const Gallery({Key? key}) : super(key: key);
@@ -12,58 +11,49 @@ class Gallery extends StatefulWidget {
 }
 
 class _GalleryState extends State<Gallery> {
-  late Future<List<GalleryList>> galleryFuture = getGallery();
+  late List image_paths = [];
+  Future _initImages() async {
+    // >> To get paths you need these 2 lines
+    final manifestContent = await rootBundle.loadString('AssetManifest.json');
+    final Map<String, dynamic> manifestMap = json.decode(manifestContent);
+    // >> To get paths you need these 2 lines
 
-  @override
-  void initState() {
-    super.initState();
-    galleryFuture = getGallery();
-  }
+    final imagePaths = manifestMap.keys
+        .where((String key) => key.contains('images/gallery/'))
+        .where((String key) => key.contains('.jpg'))
+        .toList();
 
-  static Future<List<GalleryList>> getGallery() async {
-    const url = 'https://10.0.2.2/backend_app/gallery/getGallery.php';
-    final response = await http.get(Uri.parse(url));
-    final body = jsonDecode(response.body);
-    return body.map<GalleryList>(GalleryList.fromJson).toList();
+    setState(() {
+      image_paths = imagePaths;
+      print(image_paths);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Gallery'),
-        centerTitle: true,
-      ),
-      body: Center(
-        child: FutureBuilder<List<GalleryList>>(
-          future: galleryFuture,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
-            } else if (snapshot.hasError) {
-              return Text("${snapshot.error}");
-            } else if (snapshot.hasData) {
-              final pictures = snapshot.data!;
-
-              return buildview(pictures);
-            } else {
-              return const Text("No User Data");
-            }
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+            _initImages();
           },
+          label: const Text('Post a Question'),
+          icon: const Icon(Icons.add_comment),
         ),
-      ),
-    );
+        appBar: AppBar(
+          title: Text('Gallery'),
+        ),
+        body: buildview());
   }
 
-  Widget buildview(List<GalleryList> pictures) => GridView.builder(
-      itemCount: pictures.length,
+  Widget buildview() => GridView.builder(
+      itemCount: image_paths.length,
       itemBuilder: (context, index) {
-        final picture = pictures[index];
+        final picture = image_paths[index];
 
         return Container(
             padding: EdgeInsets.all(5),
             child: FittedBox(
-              child: Image.asset(picture.image_path),
+              child: Image.asset(picture),
               fit: BoxFit.fill,
             ));
       },
