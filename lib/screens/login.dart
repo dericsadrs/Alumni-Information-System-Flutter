@@ -78,6 +78,11 @@ class _LoginState extends State<Login> {
             msg: "Error Connecting to the Database",
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.BOTTOM);
+      } else if (data['message'] == "pending") {
+        Fluttertoast.showToast(
+            msg: "Pending for Approval",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM);
       } else if (data['message'] == "fatal_error") {
         Fluttertoast.showToast(
             msg: "Fatal Error",

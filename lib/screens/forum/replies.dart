@@ -89,6 +89,14 @@ class _RepliesState extends State<Replies> {
       appBar: AppBar(
         title: Text('Replies'),
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: new Icon(Icons.delete),
+            onPressed: () {
+              Navigator.pushNamed(context, "/userreplies");
+            },
+          ),
+        ],
       ),
       body: Center(
         child: FutureBuilder<List<ReplyLists>>(

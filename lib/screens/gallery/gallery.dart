@@ -12,13 +12,13 @@ class Gallery extends StatefulWidget {
 
 class _GalleryState extends State<Gallery> {
   late List image_paths = [];
-  Future _initImages() async {
+  Future fetchImages() async {
     // >> To get paths you need these 2 lines
-    final manifestContent = await rootBundle.loadString('AssetManifest.json');
-    final Map<String, dynamic> manifestMap = json.decode(manifestContent);
+    final manifestData = await rootBundle.loadString('AssetManifest.json');
+    final Map<String, dynamic> convertedManifest = json.decode(manifestData);
     // >> To get paths you need these 2 lines
 
-    final imagePaths = manifestMap.keys
+    final imagePaths = convertedManifest.keys
         .where((String key) => key.contains('images/gallery/'))
         .where((String key) => key.contains('.jpg'))
         .toList();
@@ -30,15 +30,14 @@ class _GalleryState extends State<Gallery> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    fetchImages();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            _initImages();
-          },
-          label: const Text('Post a Question'),
-          icon: const Icon(Icons.add_comment),
-        ),
         appBar: AppBar(
           title: Text('Gallery'),
         ),
