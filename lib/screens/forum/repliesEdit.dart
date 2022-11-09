@@ -26,7 +26,8 @@ class _repliesEditState extends State<repliesEdit> {
   }
 
   static Future<List<userReplies>> getUserReplies() async {
-    const url = 'https://10.0.2.2/backend_app/forum/fetchuserReplies.php';
+    const url =
+        'https://generic-ais.online/backend_app/forum/fetchuserReplies.php';
     final response =
         await http.post(Uri.parse(url), body: {"user_id": CurrentUser.id});
     final body = jsonDecode(response.body);

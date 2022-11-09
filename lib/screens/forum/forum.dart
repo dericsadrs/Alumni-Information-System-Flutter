@@ -25,7 +25,7 @@ class _ForumState extends State<Forum> {
   }
 
   static Future<List<ForumLists>> getForum() async {
-    const url = 'https://10.0.2.2/backend_app/Forum/getQuestions.php';
+    const url = 'https://generic-ais.online/backend_app/forum/getQuestions.php';
     final response = await http.get(Uri.parse(url));
     final body = jsonDecode(response.body);
     return body.map<ForumLists>(ForumLists.fromJson).toList();

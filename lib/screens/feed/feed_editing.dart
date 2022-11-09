@@ -24,7 +24,7 @@ class _FeedEditState extends State<FeedEdit> {
   }
 
   static Future<List<FeedEditDelete>> getUserFeed() async {
-    const url = 'https://10.0.2.2/backend_app/feed/fetchUserFeed.php';
+    const url = 'https://generic-ais.online/backend_app/feed/fetchUserFeed.php';
     final response =
         await http.post(Uri.parse(url), body: {"user_id": CurrentUser.id});
     final body = jsonDecode(response.body);
@@ -32,7 +32,7 @@ class _FeedEditState extends State<FeedEdit> {
   }
 
   Future deletePost(String passID) async {
-    const url = 'https://10.0.2.2/backend_app/feed/deleteFeed.php';
+    const url = 'https://generic-ais.online/backend_app/feed/deleteFeed.php';
     final response = await http.post(Uri.parse(url), body: {"user_id": passID});
     final body = jsonDecode(response.body);
     Fluttertoast.showToast(
@@ -43,7 +43,7 @@ class _FeedEditState extends State<FeedEdit> {
   }
 
   /*Future EditPost(String passID) async {
-    const url = 'https://10.0.2.2/backend_app/feed/deleteFeed.php';
+    const url = 'https://generic-ais.online/backend_app/feed/deleteFeed.php';
     final response = await http.post(Uri.parse(url), body: {"user_id": passID});
     final body = jsonDecode(response.body);
     Fluttertoast.showToast(

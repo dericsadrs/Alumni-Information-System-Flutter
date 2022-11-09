@@ -18,7 +18,7 @@ class _FeedPostState extends State<FeedPost> {
 
   Future addPost() async {
     final response = await http.post(
-        Uri.parse("https://10.0.2.2/backend_app/feed/postFeed.php"),
+        Uri.parse("https://generic-ais.online/backend_app/feed/postFeed.php"),
         body: {
           "id": CurrentUser.id,
           "feedtitle": feedtitle.text,

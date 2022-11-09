@@ -22,7 +22,7 @@ class _PerksState extends State<Perks> {
   }
 
   static Future<List<PerksList>> getPerks() async {
-    const url = 'https://10.0.2.2/backend_app/perks/getPerks.php';
+    const url = 'https://generic-ais.online/backend_app/perks/getPerks.php';
     final response = await http.get(Uri.parse(url));
     final body = jsonDecode(response.body);
     return body.map<PerksList>(PerksList.fromJson).toList();

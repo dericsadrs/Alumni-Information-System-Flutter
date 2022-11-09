@@ -24,7 +24,7 @@ class _FeedState extends State<Feed> {
   }
 
   static Future<List<FeedList>> getFeed() async {
-    const url = 'https://10.0.2.2/backend_app/Feed/getFeed.php';
+    const url = 'https://generic-ais.online/backend_app/feed/getFeed.php';
     final response = await http.get(Uri.parse(url));
     final body = jsonDecode(response.body);
 

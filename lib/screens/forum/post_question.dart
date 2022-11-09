@@ -17,7 +17,8 @@ class _QuestionState extends State<Question> {
 
   Future addPost() async {
     final response = await http.post(
-        Uri.parse("https://10.0.2.2/backend_app/forum/postQuestion.php"),
+        Uri.parse(
+            "https://generic-ais.online/backend_app/forum/postQuestion.php"),
         body: {"user_id": CurrentUser.id, "question": question.text});
     var postQuestion = jsonDecode(response.body);
 

@@ -27,7 +27,7 @@ class _ReplyPostState extends State<ReplyPost> {
 
   Future addReply() async {
     final response = await http.post(
-        Uri.parse("https://10.0.2.2/backend_app/forum/postReply.php"),
+        Uri.parse("https://generic-ais.online/backend_app/forum/postReply.php"),
         body: {
           "user_id": CurrentUser.id,
           "question_id": widget.question_id,

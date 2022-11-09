@@ -26,7 +26,7 @@ class _JobState extends State<Job> {
   }
 
   static Future<List<JobsLists>> getJobs() async {
-    const url = 'https://10.0.2.2/backend_app/jobs/getJobs.php';
+    const url = 'https://generic-ais.online/backend_app/jobs/getJobs.php';
     final response = await http.get(Uri.parse(url));
     final body = jsonDecode(response.body);
     return body.map<JobsLists>(JobsLists.fromJson).toList();
