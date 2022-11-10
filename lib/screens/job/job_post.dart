@@ -34,6 +34,7 @@ class _JobPostState extends State<JobPost> {
             msg: "Succesfully Posted",
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.BOTTOM);
+        Navigator.pushNamed(context, "/job");
       } else if (postJob == false) {
         Fluttertoast.showToast(
             msg: "Oops Something went wrong ",
