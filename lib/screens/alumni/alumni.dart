@@ -23,7 +23,7 @@ class _AlumniState extends State<Alumni> {
   }
 
   static Future<List<AlumniUser>> getAlumni() async {
-    const url = 'https://generic-ais.online//backend_app/alumni/getAlumni.php';
+    const url = 'https://generic-ais.online/backend_app/alumni/getAlumni.php';
     final response = await http.get(Uri.parse(url));
     final body = jsonDecode(response.body);
     return body.map<AlumniUser>(AlumniUser.fromJson).toList();

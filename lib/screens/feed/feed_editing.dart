@@ -14,6 +14,7 @@ class FeedEdit extends StatefulWidget {
 }
 
 class _FeedEditState extends State<FeedEdit> {
+    bool tappedYes = false;
   TextEditingController editContent = new TextEditingController();
   late Future<List<FeedEditDelete>> futureUserFeed = getUserFeed();
 
@@ -110,8 +111,16 @@ class _FeedEditState extends State<FeedEdit> {
                     child: ListTile(
                         trailing: Column(children: [
                           TextButton(
-                            onPressed: () {
+                            onPressed: () async{
+                            final action = 
+                              await Dialogs.yesAbortDialog(context, "Delete this post?", userFeed.content);
+                              if (action == DialogAction.yes) {setState(() => tappedYes = true );
                               deletePost(userFeed.id);
+                              }
+                              else {
+                                setState(() => tappedYes = false);
+                              }
+
                             },
                             child: Text("Delete"),
                           ),
@@ -150,5 +159,47 @@ class _FeedEditState extends State<FeedEdit> {
               pageBuilder: (a, b, c) => FeedEdit(),
               transitionDuration: Duration(seconds: 2)));
     });
+  }
+  
+}
+
+
+
+enum DialogAction { yes, abort }
+
+class Dialogs {
+
+  static Future<DialogAction> yesAbortDialog(
+    BuildContext context,
+    String title,
+    String body,
+  ) async {
+    final action = await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          title: Text(title),
+          content: Text(body),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(DialogAction.abort),
+              child: const Text('No'),
+            ),
+             TextButton (
+              onPressed: () => Navigator.of(context).pop(DialogAction.yes),
+              child: const Text(
+                'Yes',
+                
+              ),
+            ),
+          ],
+        );
+      },
+    );
+    return (action != null) ? action : DialogAction.abort;
   }
 }

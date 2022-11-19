@@ -15,6 +15,7 @@ class EditForum extends StatefulWidget {
 }
 
 class _EditForumState extends State<EditForum> {
+  bool tappedYes = false;
   TextEditingController editContent = new TextEditingController();
   late Future<List<userForumLists>> futureUserForum = getUserForum();
 
@@ -26,7 +27,7 @@ class _EditForumState extends State<EditForum> {
 
   static Future<List<userForumLists>> getUserForum() async {
     const url =
-        'https://generic-ais.online/backend_app/forum/fetchuserQuestions.php';
+        'https://generic-ais.online/backend_app/forum/fetchUserQuestions.php';
     final response =
         await http.post(Uri.parse(url), body: {"user_id": CurrentUser.id});
     final body = jsonDecode(response.body);
@@ -114,8 +115,15 @@ class _EditForumState extends State<EditForum> {
                     child: ListTile(
                         trailing: Column(children: [
                           TextButton(
-                            onPressed: () {
+                            onPressed: () async{
+                            final action = 
+                              await ForumDialog.yesAbortDialog(context, "Delete this post?", userForum.content);
+                              if (action == DialogAction.yes) {setState(() => tappedYes = true );
                               deletePost(userForum.id);
+                              }
+                              else {
+                                setState(() => tappedYes = false);
+                              }
                             },
                             child: Text("Delete"),
                           ),
@@ -156,3 +164,42 @@ class _EditForumState extends State<EditForum> {
     });
   }
 }
+enum DialogAction { yes, abort }
+
+class ForumDialog {
+
+  static Future<DialogAction> yesAbortDialog(
+    BuildContext context,
+    String title,
+    String body,
+  ) async {
+    final action = await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          title: Text(title),
+          content: Text(body),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(DialogAction.abort),
+              child: const Text('No'),
+            ),
+             TextButton (
+              onPressed: () => Navigator.of(context).pop(DialogAction.yes),
+              child: const Text(
+                'Yes',
+                
+              ),
+            ),
+          ],
+        );
+      },
+    );
+    return (action != null) ? action : DialogAction.abort;
+  }
+}
+

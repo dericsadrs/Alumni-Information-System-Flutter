@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:alumni_sandbox/back_end/currentUser.dart';
+import 'package:alumni_sandbox/screens/forum/replies.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
@@ -39,6 +40,12 @@ class _ReplyPostState extends State<ReplyPost> {
           msg: "Succesfully Posted",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM);
+          Navigator.pop(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Replies(question_id: widget.question_id, name: widget.name, question: widget.question,
+                          
+                          )));
     } else if (replyPost == false) {
       Fluttertoast.showToast(
           msg: "Oops Something went wrong ",

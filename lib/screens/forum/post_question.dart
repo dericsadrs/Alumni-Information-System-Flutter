@@ -27,7 +27,7 @@ class _QuestionState extends State<Question> {
           msg: "Succesfully Posted",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM);
-      Navigator.pushNamed(context, "/forum");
+            Navigator.pop(context, "/forum");
     } else if (postQuestion == false) {
       Fluttertoast.showToast(
           msg: "Oops Something went wrong ",

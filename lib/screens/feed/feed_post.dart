@@ -31,7 +31,7 @@ class _FeedPostState extends State<FeedPost> {
           msg: "Pending for Approval",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM);
-      Navigator.pushNamed(context, "/feed");
+            Navigator.pop(context, "/feed");
     } else if (postFeed == false) {
       Fluttertoast.showToast(
           msg: "Oops Something went wrong ",

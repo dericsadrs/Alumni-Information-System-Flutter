@@ -16,6 +16,7 @@ class repliesEdit extends StatefulWidget {
 }
 
 class _repliesEditState extends State<repliesEdit> {
+  bool tappedYes = true;
   TextEditingController editContent = new TextEditingController();
   late Future<List<userReplies>> futureUserReplies = getUserReplies();
 
@@ -27,7 +28,7 @@ class _repliesEditState extends State<repliesEdit> {
 
   static Future<List<userReplies>> getUserReplies() async {
     const url =
-        'https://generic-ais.online/backend_app/forum/fetchuserReplies.php';
+        'https://generic-ais.online/backend_app/forum/fetchUserReplies.php';
     final response =
         await http.post(Uri.parse(url), body: {"user_id": CurrentUser.id});
     final body = jsonDecode(response.body);
@@ -35,7 +36,7 @@ class _repliesEditState extends State<repliesEdit> {
   }
 
   Future deletePost(String passID) async {
-    const url = 'https://10.0.2.2/backend_app/forum/repliesDelete.php';
+    const url = 'https://generic-ais.online/backend_app/forum/repliesDelete.php';
     final response =
         await http.post(Uri.parse(url), body: {"reply_id": passID});
     final body = jsonDecode(response.body);
@@ -114,8 +115,16 @@ class _repliesEditState extends State<repliesEdit> {
                     child: ListTile(
                         trailing: Column(children: [
                           TextButton(
-                            onPressed: () {
+                            onPressed:() async{
+                            final action = 
+                              await ReplyDialogs.yesAbortDialog(context, "Delete this response?", replyUser.content);
+                              if (action == DialogAction.yes) {setState(() => tappedYes = true );
                               deletePost(replyUser.id);
+                              }
+                              else {
+                                setState(() => tappedYes = false);
+                              }
+
                             },
                             child: Text("Delete"),
                           ),
@@ -158,5 +167,46 @@ class _repliesEditState extends State<repliesEdit> {
               pageBuilder: (a, b, c) => repliesEdit(),
               transitionDuration: Duration(seconds: 2)));
     });
+  }
+
+  
+}
+
+enum DialogAction { yes, abort }
+
+class ReplyDialogs {
+
+  static Future<DialogAction> yesAbortDialog(
+    BuildContext context,
+    String title,
+    String body,
+  ) async {
+    final action = await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          title: Text(title),
+          content: Text(body),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(DialogAction.abort),
+              child: const Text('No'),
+            ),
+             TextButton (
+              onPressed: () => Navigator.of(context).pop(DialogAction.yes),
+              child: const Text(
+                'Yes',
+                
+              ),
+            ),
+          ],
+        );
+      },
+    );
+    return (action != null) ? action : DialogAction.abort;
   }
 }

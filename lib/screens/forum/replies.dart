@@ -98,7 +98,10 @@ class _RepliesState extends State<Replies> {
           ),
         ],
       ),
-      body: Center(
+      body:  RefreshIndicator(
+            onRefresh: RefreshFeed,
+      
+      child:Center(
         child: FutureBuilder<List<ReplyLists>>(
           future: replyFuture,
           builder: (context, snapshot) {
@@ -115,7 +118,7 @@ class _RepliesState extends State<Replies> {
           },
         ),
       ),
-    );
+    ));
   }
 
   Widget buildview(List<ReplyLists> repliesLists) => ListView.builder(
@@ -173,4 +176,18 @@ class _RepliesState extends State<Replies> {
                               )
                             ])))));
       });
+
+       Future<void> RefreshFeed() async {
+    setState(() {
+      Navigator.pushReplacement(
+          context,
+          PageRouteBuilder(
+              pageBuilder: (a, b, c) => Replies(question_id: widget.question_id, name: widget.name, question: widget.question),
+              transitionDuration: Duration(seconds: 2)));
+      Fluttertoast.showToast(
+          msg: "Refreshed",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM);
+    });
+  }
 }
