@@ -23,7 +23,7 @@ class _GalleryState extends State<Gallery> {
   }
 
   static Future<List<GalleryList>> getGallery() async {
-    const url = 'https://generic-ais.online/backend_app/gallery/getGallery.php';
+    const url = 'https://generic-ais.online/backend_app/gallery/postImagePath.php';
     final response = await http.get(Uri.parse(url));
     final body = jsonDecode(response.body);
 
@@ -68,7 +68,13 @@ class _GalleryState extends State<Gallery> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-        
+         floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+            Navigator.pushNamed(context, "/gallerypost");
+          },
+          label: const Text('Write'),
+          icon: const Icon(Icons.add_comment),
+        ),
         appBar:
             AppBar(title: Text('Gallery'), centerTitle: true, actions: <Widget>[
           IconButton(
