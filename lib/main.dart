@@ -49,7 +49,6 @@ void main() {
         "/": (context) => const Onboarding(),
 
         // Basic Functionalities
-
         "/login": (context) => Login(),
         "/menu": (context) => const Menu(),
         "/alumni": (context) => Alumni(),
@@ -65,14 +64,13 @@ void main() {
 
         //Sidebar
         "/yourprofile": (context) => YourProfile(),
-
         "/feededit": (context) => FeedEdit(),
         "/postquestion": (context) => Question(),
         "/jobedit": (context) => EditJob(),
         "/about": (context) => About(),
         "/userforums": (context) => EditForum(),
         "/userreplies": (context) => repliesEdit(),
-        "/gallerypost": (context) => GalleryPost(),
+        "/gallerypost": (context) => UploadImage(),
       },
     ),
   );

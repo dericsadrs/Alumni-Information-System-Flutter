@@ -81,7 +81,7 @@ class _MenuState extends State<Menu> {
           ),
           GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, "/gallery");
+                Navigator.pushNamed(context, "/gallerypost");
               },
               child: Container(
                   decoration: BoxDecoration(

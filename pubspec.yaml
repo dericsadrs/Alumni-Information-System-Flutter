@@ -41,6 +41,7 @@ dependencies:
   animated_text_kit: ^4.2.2
   fluttertoast: ^8.1.1
   url_launcher: ^6.1.6
+  image_picker: ^0.8.6
 
 
   

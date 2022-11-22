@@ -1,44 +1,52 @@
 import 'dart:convert';
-
+import 'dart:io';
 import 'package:alumni_sandbox/back_end/currentUser.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 
-class GalleryPost extends StatefulWidget {
-  const GalleryPost({Key? key}) : super(key: key);
+
+class UploadImage extends StatefulWidget {
+  const UploadImage({Key? key}) : super(key: key);
 
   @override
-  State<GalleryPost> createState() => _GalleryPostState();
+  State<UploadImage> createState() => _UploadImageState();
 }
 
-class _GalleryPostState extends State<GalleryPost> {
-  TextEditingController path = new TextEditingController();
-  TextEditingController description = new TextEditingController();
-
-  Future addPost() async {
-    final response = await http.post(
-        Uri.parse("https://generic-ais.online/backend_app/gallery/postImagePath.php"),
-        body: {
-          "id": CurrentUser.id,
-          "path": "image/ph",
-          "description": description.text,
-        });
-    var postFeed = jsonDecode(response.body);
-
-    if (postFeed == true) {
-      Fluttertoast.showToast(
-          msg: "Pending for Approval",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM);
-            Navigator.pop(context, "/feed");
-    } else if (postFeed == false) {
-      Fluttertoast.showToast(
-          msg: "Oops Something went wrong ",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM);
+class _UploadImageState extends State<UploadImage> {
+    File? imageFile;
+   _getFromGallery() async {
+    PickedFile? pickedFile = await ImagePicker().getImage(
+      source: ImageSource.gallery,
+      maxWidth: 800,
+      maxHeight: 800,
+    );
+    if (pickedFile != null) {
+      setState(() {
+        imageFile = File(pickedFile.path);
+      });
     }
   }
+
+  /// Get from Camera
+  _getFromCamera() async {
+    PickedFile? pickedFile = await ImagePicker().getImage(
+      source: ImageSource.camera,
+      maxWidth: 800,
+      maxHeight: 800,
+    );
+    if (pickedFile != null) {
+      setState(() {
+        imageFile = File(pickedFile.path);
+      });
+    }
+  }
+ 
+  final picker = ImagePicker();
+  TextEditingController feedtitle = new TextEditingController();
+  TextEditingController content = new TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +60,7 @@ class _GalleryPostState extends State<GalleryPost> {
           SizedBox(
             height: 40,
           ),
+         
           Row(
             children: [
               SizedBox(
@@ -61,10 +70,7 @@ class _GalleryPostState extends State<GalleryPost> {
               Text(CurrentUser.full_name),
             ],
           ),
-          SizedBox(
-            height: 40,
-          ),
-          
+       
           SizedBox(
             height: 25,
           ),
@@ -81,28 +87,76 @@ class _GalleryPostState extends State<GalleryPost> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: Container(
-                        height: 100,
+                        height: 50,
                       ), // Container
                     ),
                     Expanded(
                       child: TextFormField(
-                          controller: description,
+                          controller: content,
                           keyboardType: TextInputType.multiline,
                           minLines: 1,
                           maxLines: null,
                           decoration: InputDecoration(
                               border: InputBorder.none,
-                              hintText: 'Description')),
+                              hintText: 'Image Description')),
                     ),
                   ],
+                  
                 )),
           ),
+            SizedBox(
+            height: 10,
+          ),
+       
+          Container(
+            child:    
+          Container(
+              alignment: Alignment.center,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  OutlinedButton(
+                  
+                    onPressed: () {
+                      _getFromGallery();
+                    },
+                    child: Text("PICK FROM GALLERY"),
+                  ),
+                  Container(
+                    height: 10.0,
+                  ),
+                  OutlinedButton(
+                    
+                    onPressed: () {
+                      _getFromCamera();
+                    },
+                    child: Text("PICK FROM CAMERA"),
+                  )
+                ],
+              ),
+            )),
+
+            Container(
+              child:  imageFile == null
+                ? 
+              
+              Text("Select an Image"):
+               Image.file(
+                imageFile!,
+                width: 450.0,
+                height:450.0,
+              )
+              
+            ),
+
+
+
+
           SizedBox(
             height: 25,
           ),
           GestureDetector(
               onTap: () {
-                addPost();
               },
               child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 100.0),
