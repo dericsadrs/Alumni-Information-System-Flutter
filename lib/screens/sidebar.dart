@@ -70,15 +70,21 @@ class _SideNavBarState extends State<SideNavBar> {
             onTap: () => Navigator.pushNamed(context, "/about"),
           ),
           ListTile(
+            //https://icons8.com/license
+            leading: SizedBox(
+                height: 30.0,
+                width: 55.0, // fixed width and height
+                child: Image.asset("assets/images/gift.png")),
+            title: Text('Attiributions'),
+            onTap: () => Navigator.pushNamed(context, "/perks"),
+          ),
+          ListTile(
               title: Text('Logout'),
               leading: SizedBox(
                   height: 30.0,
                   width: 55.0, // fixed width and height
                   child: Image.asset("assets/images/shutdown.png")),
-              onTap: () => {
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                        "/login", (Route<dynamic> route) => true)
-                  }),
+              onTap: () => {Navigator.of(context).popAndPushNamed("/login")}),
         ],
       ),
     );
