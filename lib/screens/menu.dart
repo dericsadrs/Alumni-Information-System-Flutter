@@ -137,7 +137,7 @@ class _MenuState extends State<Menu> {
                           offset: Offset(7.0, 8.0))
                     ]),
                 child: Align(
-                    alignment: Alignment(0.02, 0.70), child: Text("FORUM"))),
+                    alignment: Alignment(0.02, 0.90), child: Text("FORUM"))),
           )
         ],
       ),

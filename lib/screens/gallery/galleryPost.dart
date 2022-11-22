@@ -6,7 +6,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 
-
 class UploadImage extends StatefulWidget {
   const UploadImage({Key? key}) : super(key: key);
 
@@ -15,8 +14,8 @@ class UploadImage extends StatefulWidget {
 }
 
 class _UploadImageState extends State<UploadImage> {
-    File? imageFile;
-   _getFromGallery() async {
+  File? imageFile;
+  _getFromGallery() async {
     PickedFile? pickedFile = await ImagePicker().getImage(
       source: ImageSource.gallery,
       maxWidth: 800,
@@ -42,17 +41,16 @@ class _UploadImageState extends State<UploadImage> {
       });
     }
   }
- 
+
   final picker = ImagePicker();
   TextEditingController feedtitle = new TextEditingController();
   TextEditingController content = new TextEditingController();
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Feed Post'),
+          title: Text('Gallery'),
           centerTitle: true,
         ),
         body: SingleChildScrollView(
@@ -60,7 +58,6 @@ class _UploadImageState extends State<UploadImage> {
           SizedBox(
             height: 40,
           ),
-         
           Row(
             children: [
               SizedBox(
@@ -70,7 +67,6 @@ class _UploadImageState extends State<UploadImage> {
               Text(CurrentUser.full_name),
             ],
           ),
-       
           SizedBox(
             height: 25,
           ),
@@ -101,63 +97,48 @@ class _UploadImageState extends State<UploadImage> {
                               hintText: 'Image Description')),
                     ),
                   ],
-                  
                 )),
           ),
-            SizedBox(
+          SizedBox(
             height: 10,
           ),
-       
           Container(
-            child:    
-          Container(
-              alignment: Alignment.center,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  OutlinedButton(
-                  
-                    onPressed: () {
-                      _getFromGallery();
-                    },
-                    child: Text("PICK FROM GALLERY"),
-                  ),
-                  Container(
-                    height: 10.0,
-                  ),
-                  OutlinedButton(
-                    
-                    onPressed: () {
-                      _getFromCamera();
-                    },
-                    child: Text("PICK FROM CAMERA"),
-                  )
-                ],
-              ),
-            )),
-
-            Container(
-              child:  imageFile == null
-                ? 
-              
-              Text("Select an Image"):
-               Image.file(
-                imageFile!,
-                width: 450.0,
-                height:450.0,
-              )
-              
+              child: Container(
+            alignment: Alignment.center,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                OutlinedButton(
+                  onPressed: () {
+                    _getFromGallery();
+                  },
+                  child: Text("PICK FROM GALLERY"),
+                ),
+                Container(
+                  height: 10.0,
+                ),
+                OutlinedButton(
+                  onPressed: () {
+                    _getFromCamera();
+                  },
+                  child: Text("PICK FROM CAMERA"),
+                )
+              ],
             ),
-
-
-
-
+          )),
+          Container(
+              child: imageFile == null
+                  ? Text("Select an Image")
+                  : Image.file(
+                      imageFile!,
+                      width: 450.0,
+                      height: 450.0,
+                    )),
           SizedBox(
             height: 25,
           ),
           GestureDetector(
-              onTap: () {
-              },
+              onTap: () {},
               child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 100.0),
                   child: Container(

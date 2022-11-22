@@ -70,9 +70,25 @@ class _EditForumState extends State<EditForum> {
 
   Widget build(BuildContext context) {
     return Scaffold(
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+            Navigator.pushNamed(context, "/userreplies");
+          },
+          label: const Text('View Replies'),
+        ),
         appBar: AppBar(
           title: const Text('Your Questions'),
           centerTitle: true,
+          /*actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, "/userreplies");
+                },
+                child: Text(
+                  "Replies",
+                  style: TextStyle(backgroundColor: Colors.white),
+                )),
+          ],*/
         ),
         body: RefreshIndicator(
           onRefresh: RefreshJob,
@@ -115,13 +131,15 @@ class _EditForumState extends State<EditForum> {
                     child: ListTile(
                         trailing: Column(children: [
                           TextButton(
-                            onPressed: () async{
-                            final action = 
-                              await ForumDialog.yesAbortDialog(context, "Delete this post?", userForum.content);
-                              if (action == DialogAction.yes) {setState(() => tappedYes = true );
-                              deletePost(userForum.id);
-                              }
-                              else {
+                            onPressed: () async {
+                              final action = await ForumDialog.yesAbortDialog(
+                                  context,
+                                  "Delete this post?",
+                                  userForum.content);
+                              if (action == DialogAction.yes) {
+                                setState(() => tappedYes = true);
+                                deletePost(userForum.id);
+                              } else {
                                 setState(() => tappedYes = false);
                               }
                             },
@@ -164,10 +182,10 @@ class _EditForumState extends State<EditForum> {
     });
   }
 }
+
 enum DialogAction { yes, abort }
 
 class ForumDialog {
-
   static Future<DialogAction> yesAbortDialog(
     BuildContext context,
     String title,
@@ -188,11 +206,10 @@ class ForumDialog {
               onPressed: () => Navigator.of(context).pop(DialogAction.abort),
               child: const Text('No'),
             ),
-             TextButton (
+            TextButton(
               onPressed: () => Navigator.of(context).pop(DialogAction.yes),
               child: const Text(
                 'Yes',
-                
               ),
             ),
           ],
@@ -202,4 +219,3 @@ class ForumDialog {
     return (action != null) ? action : DialogAction.abort;
   }
 }
-
