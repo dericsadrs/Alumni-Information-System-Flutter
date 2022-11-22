@@ -38,32 +38,53 @@ class _SideNavBarState extends State<SideNavBar> {
           ),*/
           Divider(),
           ListTile(
-            leading: Icon(Icons.card_giftcard),
+            leading: SizedBox(
+                height: 30.0,
+                width: 55.0, // fixed width and height
+                child: Image.asset("assets/images/gift.png")),
             title: Text('Perks & Benefits '),
             onTap: () => Navigator.pushNamed(context, "/perks"),
           ),
           ListTile(
-            leading: Icon(Icons.school),
+            leading: SizedBox(
+                height: 30.0,
+                width: 55.0, // fixed width and height
+                child: Image.asset("assets/images/online-course.png")),
             title: Text('List of Courses'),
             onTap: () => Navigator.pushNamed(context, "/courses"),
           ),
           ListTile(
-            leading: Icon(Icons.person),
+            leading: SizedBox(
+                height: 30.0,
+                width: 55.0, // fixed width and height
+                child: Image.asset("assets/images/profile.png")),
             title: Text('Your Profile'),
             onTap: () => Navigator.pushNamed(context, "/yourprofile"),
           ),
           ListTile(
-            leading: Icon(Icons.settings),
+            leading: SizedBox(
+                height: 30.0,
+                width: 55.0, // fixed width and height
+                child: Image.asset("assets/images/info.png")),
             title: Text('About'),
             onTap: () => Navigator.pushNamed(context, "/about"),
           ),
           ListTile(
+            //https://icons8.com/license
+            leading: SizedBox(
+                height: 30.0,
+                width: 55.0, // fixed width and height
+                child: Image.asset("assets/images/gift.png")),
+            title: Text('Attiributions'),
+            onTap: () => Navigator.pushNamed(context, "/perks"),
+          ),
+          ListTile(
               title: Text('Logout'),
-              leading: Icon(Icons.exit_to_app),
-              onTap: () => {
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                        "/login", (Route<dynamic> route) => true)
-                  }),
+              leading: SizedBox(
+                  height: 30.0,
+                  width: 55.0, // fixed width and height
+                  child: Image.asset("assets/images/shutdown.png")),
+              onTap: () => {Navigator.of(context).popAndPushNamed("/login")}),
         ],
       ),
     );

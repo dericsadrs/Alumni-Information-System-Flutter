@@ -6,7 +6,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 
-
 class UploadImage extends StatefulWidget {
   const UploadImage({Key? key}) : super(key: key);
 
@@ -15,8 +14,8 @@ class UploadImage extends StatefulWidget {
 }
 
 class _UploadImageState extends State<UploadImage> {
-    File? imageFile;
-   _getFromGallery() async {
+  File? imageFile;
+  _getFromGallery() async {
     PickedFile? pickedFile = await ImagePicker().getImage(
       source: ImageSource.gallery,
       maxWidth: 800,
@@ -30,6 +29,29 @@ class _UploadImageState extends State<UploadImage> {
   }
 
   /// Get from Camera
+
+/*Future _uploadImage(File imageFile) async{
+// ignore: deprecated_member_use
+var stream= new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+var length= await imageFile.length();
+var uri = Uri.parse("http://10.0.2.2/foodsystem/uploadg.php");
+
+var request = new http.MultipartRequest("POST", uri);
+
+var multipartFile = new http.MultipartFile("image", stream, length, filename: basename(imageFile.path));
+
+request.files.add(multipartFile);
+request.fields['productname'] = controllerName.text;
+request.fields['productprice'] = controllerPrice.text;
+request.fields['producttype'] = controllerType.text;
+request.fields['product_owner'] = globals.restaurantId;
+
+var respond = await request.send();
+if(respond.statusCode==200){
+  print("Image Uploaded");
+}else{
+  print("Upload Failed");
+}*/
   _getFromCamera() async {
     PickedFile? pickedFile = await ImagePicker().getImage(
       source: ImageSource.camera,
@@ -42,17 +64,16 @@ class _UploadImageState extends State<UploadImage> {
       });
     }
   }
- 
+
   final picker = ImagePicker();
   TextEditingController feedtitle = new TextEditingController();
   TextEditingController content = new TextEditingController();
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Feed Post'),
+          title: Text('Gallery'),
           centerTitle: true,
         ),
         body: SingleChildScrollView(
@@ -60,7 +81,6 @@ class _UploadImageState extends State<UploadImage> {
           SizedBox(
             height: 40,
           ),
-         
           Row(
             children: [
               SizedBox(
@@ -70,7 +90,6 @@ class _UploadImageState extends State<UploadImage> {
               Text(CurrentUser.full_name),
             ],
           ),
-       
           SizedBox(
             height: 25,
           ),
@@ -103,47 +122,47 @@ class _UploadImageState extends State<UploadImage> {
                   ],
                 )),
           ),
-          
+          SizedBox(
+            height: 10,
+          ),
           Container(
-            child: imageFile == null
-                ? 
-                
+              child: Container(
+            alignment: Alignment.center,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                OutlinedButton(
+                  onPressed: () {
+                    _getFromGallery();
+                  },
+                  child: Text("PICK FROM GALLERY"),
+                ),
+                Container(
+                  height: 10.0,
+                ),
+                OutlinedButton(
+                  onPressed: () {
+                    _getFromCamera();
+                  },
+                  child: Text("PICK FROM CAMERA"),
+                )
+              ],
+            ),
+          )),
           Container(
-              alignment: Alignment.center,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  OutlinedButton(
-                  
-                    onPressed: () {
-                      _getFromGallery();
-                    },
-                    child: Text("PICK FROM GALLERY"),
-                  ),
-                  Container(
-                    height: 10.0,
-                  ),
-                  OutlinedButton(
-                    
-                    onPressed: () {
-                      _getFromCamera();
-                    },
-                    child: Text("PICK FROM CAMERA"),
-                  )
-                ],
-              ),
-            ): Container(
-              child: Image.file(
-                imageFile!,
-                width: 100.0,
-                height:100.0,
-              ),
-            )),
+              child: imageFile == null
+                  ? Text("Select an Image")
+                  : Image.file(
+                      imageFile!,
+                      width: 450.0,
+                      height: 450.0,
+                    )),
           SizedBox(
             height: 25,
           ),
           GestureDetector(
               onTap: () {
+                print(imageFile!.path);
               },
               child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 100.0),
