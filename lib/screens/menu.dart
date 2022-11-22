@@ -46,7 +46,7 @@ class _MenuState extends State<Menu> {
               child: Container(
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage("assets/images/logo_4.png")),
+                          image: AssetImage("assets/images/feed.png")),
                       borderRadius: BorderRadius.circular(10),
                       color: Color.fromARGB(255, 255, 255, 255),
                       boxShadow: [
@@ -57,7 +57,7 @@ class _MenuState extends State<Menu> {
                             offset: Offset(7.0, 8.0))
                       ]),
                   child: Align(
-                      alignment: Alignment(0.02, 0.70), child: Text("FEED")))),
+                      alignment: Alignment(0.02, 0.90), child: Text("FEED")))),
           GestureDetector(
             onTap: () {
               Navigator.pushNamed(context, "/job");
@@ -66,7 +66,7 @@ class _MenuState extends State<Menu> {
             child: Container(
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage("assets/images/logo_5.png")),
+                        image: AssetImage("assets/images/job.png")),
                     borderRadius: BorderRadius.circular(10),
                     color: Color.fromARGB(255, 255, 255, 255),
                     boxShadow: [
@@ -77,7 +77,7 @@ class _MenuState extends State<Menu> {
                           offset: Offset(7.0, 8.0))
                     ]),
                 child: Align(
-                    alignment: Alignment(0.02, 0.70), child: Text("JOB"))),
+                    alignment: Alignment(0.02, 0.90), child: Text("JOB"))),
           ),
           GestureDetector(
               onTap: () {
@@ -86,7 +86,7 @@ class _MenuState extends State<Menu> {
               child: Container(
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage("assets/images/logo_2.png")),
+                          image: AssetImage("assets/images/gallery.png")),
                       borderRadius: BorderRadius.circular(10),
                       color: Color.fromARGB(255, 255, 255, 255),
                       boxShadow: [
@@ -97,7 +97,7 @@ class _MenuState extends State<Menu> {
                             offset: Offset(7.0, 8.0))
                       ]),
                   child: Align(
-                      alignment: Alignment(0.02, 0.70),
+                      alignment: Alignment(0.02, 0.90),
                       child: Text("GALLERY")))),
           GestureDetector(
               onTap: () {
@@ -106,7 +106,7 @@ class _MenuState extends State<Menu> {
               child: Container(
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage("assets/images/logo_6.png")),
+                          image: AssetImage("assets/images/list_alumni.png")),
                       borderRadius: BorderRadius.circular(10),
                       color: Color.fromARGB(255, 255, 255, 255),
                       boxShadow: [
@@ -117,7 +117,7 @@ class _MenuState extends State<Menu> {
                             offset: Offset(7.0, 8.0))
                       ]),
                   child: Align(
-                      alignment: Alignment(0.02, 0.70),
+                      alignment: Alignment(0.02, 0.90),
                       child: Text("ALUMNI")))),
           GestureDetector(
             onTap: () {
@@ -126,7 +126,7 @@ class _MenuState extends State<Menu> {
             child: Container(
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage("assets/images/logo_3.png")),
+                        image: AssetImage("assets/images/forum.png")),
                     borderRadius: BorderRadius.circular(10),
                     color: Color.fromARGB(255, 255, 255, 255),
                     boxShadow: [

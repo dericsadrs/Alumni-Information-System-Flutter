@@ -204,26 +204,27 @@ class _LoginState extends State<Login> {
 
             // Forgot Password
             GestureDetector(
-                /* onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => DashBoard()));*/
-
+                onTap: () async {
+                  const redirectUrl = "https://generic-ais.online/register";
+                  // ignore: deprecated_member_use
+                  if (await launch(redirectUrl)) {
+                    // ignore: deprecated_member_use
+                    await launch(redirectUrl,
+                        forceWebView: true, enableJavaScript: true);
+                  }
+                },
                 child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Register",
-                  style: TextStyle(
-                      color: Color.fromARGB(255, 0, 138, 251),
-                      fontWeight: FontWeight.bold),
-                )
-              ],
-            )),
-            SizedBox(height: 5
-            
-            
-            
-            0),
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Register",
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 0, 138, 251),
+                          fontWeight: FontWeight.bold),
+                    )
+                  ],
+                )),
+            SizedBox(height: 50),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
