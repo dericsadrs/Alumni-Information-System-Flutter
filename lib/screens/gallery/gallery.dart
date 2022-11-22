@@ -52,14 +52,15 @@ class _GalleryState extends State<Gallery> {
                          crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                         SizedBox(height: 10),
-                        Text( "Posted By:  ${user_Gallerys.name}",
+                        Text( user_Gallerys.name,
                           style: TextStyle(
                             
                               fontSize: 14, fontWeight: FontWeight.bold),
                         ),
                             SizedBox(height: 10),
-                        Text(user_Gallerys.description)
-                        ]),
+                        Text(user_Gallerys.description),
+                         SizedBox(height: 10),
+                        ],),
                       
                       subtitle: Image(image: NetworkImage("https://generic-ais.online/storage/${user_Gallerys.image_path}")),
                      // Container(decoration: BoxDecoration(image: DecorationImage(image: NetworkImage(user_Gallerys.image_path)))),
@@ -68,7 +69,13 @@ class _GalleryState extends State<Gallery> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-        
+         floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+            Navigator.pushNamed(context, "/gallerypost");
+          },
+          label: const Text('Upload'),
+          icon: const Icon(Icons.image),
+        ),
         appBar:
             AppBar(title: Text('Gallery'), centerTitle: true, actions: <Widget>[
           IconButton(

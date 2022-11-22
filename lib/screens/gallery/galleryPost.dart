@@ -101,16 +101,18 @@ class _UploadImageState extends State<UploadImage> {
                               hintText: 'Image Description')),
                     ),
                   ],
+                  
                 )),
           ),
-          
+            SizedBox(
+            height: 10,
+          ),
+       
           Container(
-            child: imageFile == null
-                ? 
-                
+            child:    
           Container(
               alignment: Alignment.center,
-              child: Column(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   OutlinedButton(
@@ -132,13 +134,24 @@ class _UploadImageState extends State<UploadImage> {
                   )
                 ],
               ),
-            ): Container(
-              child: Image.file(
-                imageFile!,
-                width: 100.0,
-                height:100.0,
-              ),
             )),
+
+            Container(
+              child:  imageFile == null
+                ? 
+              
+              Text("Select an Image"):
+               Image.file(
+                imageFile!,
+                width: 450.0,
+                height:450.0,
+              )
+              
+            ),
+
+
+
+
           SizedBox(
             height: 25,
           ),
