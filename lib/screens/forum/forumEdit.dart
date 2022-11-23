@@ -79,16 +79,6 @@ class _EditForumState extends State<EditForum> {
         appBar: AppBar(
           title: const Text('Your Questions'),
           centerTitle: true,
-          /*actions: [
-            TextButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, "/userreplies");
-                },
-                child: Text(
-                  "Replies",
-                  style: TextStyle(backgroundColor: Colors.white),
-                )),
-          ],*/
         ),
         body: RefreshIndicator(
           onRefresh: RefreshJob,

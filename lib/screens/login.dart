@@ -111,9 +111,12 @@ class _LoginState extends State<Login> {
             child: SingleChildScrollView(
           reverse: true,
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            SizedBox(
+              height: 5,
+            ),
             Lottie.asset("assets/json/28893-book-loading.json", width: 250),
             SizedBox(
-              height: 25,
+              height: 35,
             ),
             Text(
               "WELCOME",
@@ -122,7 +125,7 @@ class _LoginState extends State<Login> {
                 fontSize: 20,
               ),
             ),
-            SizedBox(height: 5),
+            SizedBox(height: 15),
             Text(
               "Sign in to your account",
               style: TextStyle(
@@ -201,7 +204,7 @@ class _LoginState extends State<Login> {
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18,
                                 )))))),
-            SizedBox(height: 10),
+            SizedBox(height: 25),
 
             // Forgot Password
             GestureDetector(
@@ -220,12 +223,13 @@ class _LoginState extends State<Login> {
                     Text(
                       "Register",
                       style: TextStyle(
+                          fontSize: 15,
                           color: Color.fromARGB(255, 0, 138, 251),
                           fontWeight: FontWeight.bold),
                     )
                   ],
                 )),
-            SizedBox(height: 50),
+            SizedBox(height: 70),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
