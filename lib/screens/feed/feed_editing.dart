@@ -14,7 +14,7 @@ class FeedEdit extends StatefulWidget {
 }
 
 class _FeedEditState extends State<FeedEdit> {
-    bool tappedYes = false;
+  bool tappedYes = false;
   TextEditingController editContent = new TextEditingController();
   late Future<List<FeedEditDelete>> futureUserFeed = getUserFeed();
 
@@ -109,27 +109,20 @@ class _FeedEditState extends State<FeedEdit> {
                 child: Padding(
                     padding: EdgeInsets.all(12),
                     child: ListTile(
-                        trailing: Column(children: [
-                          TextButton(
-                            onPressed: () async{
-                            final action = 
-                              await Dialogs.yesAbortDialog(context, "Delete this post?", userFeed.content);
-                              if (action == DialogAction.yes) {setState(() => tappedYes = true );
-                              deletePost(userFeed.id);
-                              }
-                              else {
-                                setState(() => tappedYes = false);
-                              }
-
-                            },
-                            child: Text("Delete"),
+                        title: Column(children: [
+                          Row(
+                            children: [
+                              Text(
+                                userFeed.title,
+                                style: TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.bold),
+                              ),
+                            ],
                           ),
+                          SizedBox(
+                            height: 8,
+                          )
                         ]),
-                        title: Text(
-                          userFeed.title,
-                          style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.bold),
-                        ),
                         subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -137,17 +130,40 @@ class _FeedEditState extends State<FeedEdit> {
                               Text(
                                 userFeed.content,
                                 style: TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(height: 5),
-                              Text(
-                                userFeed.created_at,
-                                style: TextStyle(
-                                    fontSize: 12, fontWeight: FontWeight.bold),
+                                    fontSize: 15, fontWeight: FontWeight.bold),
                               ),
                               SizedBox(
                                 height: 10,
                               ),
+                              Row(
+                                children: [
+                                  TextButton(
+                                      onPressed: null,
+                                      child: Text(
+                                        "Edit",
+                                        style: TextStyle(
+                                            fontSize: 15, color: Colors.blue),
+                                      )),
+                                  SizedBox(
+                                    width: 20,
+                                  ),
+                                  TextButton(
+                                      onPressed: null,
+                                      child: Text(
+                                        "Delete",
+                                        style: TextStyle(
+                                            fontSize: 15, color: Colors.blue),
+                                      ))
+                                ],
+                              ),
+                              Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: Text(
+                                    userFeed.created_at,
+                                    style: TextStyle(
+                                        fontSize: 8,
+                                        fontWeight: FontWeight.bold),
+                                  )),
                             ])))));
       });
 
@@ -160,15 +176,11 @@ class _FeedEditState extends State<FeedEdit> {
               transitionDuration: Duration(seconds: 2)));
     });
   }
-  
 }
-
-
 
 enum DialogAction { yes, abort }
 
 class Dialogs {
-
   static Future<DialogAction> yesAbortDialog(
     BuildContext context,
     String title,
@@ -189,11 +201,10 @@ class Dialogs {
               onPressed: () => Navigator.of(context).pop(DialogAction.abort),
               child: const Text('No'),
             ),
-             TextButton (
+            TextButton(
               onPressed: () => Navigator.of(context).pop(DialogAction.yes),
               child: const Text(
                 'Yes',
-                
               ),
             ),
           ],

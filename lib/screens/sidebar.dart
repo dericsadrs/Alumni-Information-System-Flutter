@@ -8,6 +8,7 @@ class SideNavBar extends StatefulWidget {
 
 class _SideNavBarState extends State<SideNavBar> {
   @override
+  bool tappedYes = false;
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
@@ -17,25 +18,20 @@ class _SideNavBarState extends State<SideNavBar> {
           UserAccountsDrawerHeader(
             accountName: Text(
               CurrentUser.full_name,
-              style: TextStyle(),
+              style: TextStyle(fontSize: 18),
             ),
-            accountEmail: Text(CurrentUser.university),
+            accountEmail: Text(
+              CurrentUser.university,
+              style: TextStyle(fontSize: 15),
+            ),
             currentAccountPicture: CircleAvatar(
               child: ClipOval(
-                child: Icon(Icons.person),
+                child: Image(
+                    image: NetworkImage(
+                        "https://generic-ais.online/storage/${CurrentUser.image_path}")),
               ),
             ),
           ),
-
-          //<a href="https://www.freepik.com/free-vector/college-building-educational-institution-banner_5581911.htm#query=university&position=33&from_view=keyword">Image by vectorpocket</a> on Freepik
-          /* decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Colors.blue,
-              image: DecorationImage(
-                  fit: BoxFit.fill,
-                  image: AssetImage("assets/images/3616.jpg")),
-            ),
-          ),*/
           Divider(),
           ListTile(
             leading: SizedBox(
@@ -84,9 +80,53 @@ class _SideNavBarState extends State<SideNavBar> {
                   height: 30.0,
                   width: 55.0, // fixed width and height
                   child: Image.asset("assets/images/shutdown.png")),
-              onTap: () => {Navigator.of(context).popAndPushNamed("/login")}),
+              onTap: () async {
+                final action =
+                    await DialogLogOut.yesAbortDialog(context, "Logout?");
+                if (action == DialogAction.yes) {
+                  setState(() => tappedYes = true);
+                  Navigator.of(context).popAndPushNamed("/login");
+                } else {
+                  setState(() => tappedYes = false);
+                }
+              }),
         ],
       ),
     );
+  }
+}
+
+enum DialogAction { yes, abort }
+
+class DialogLogOut {
+  static Future<DialogAction> yesAbortDialog(
+    BuildContext context,
+    String title,
+  ) async {
+    final action = await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          title: Text(title),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(DialogAction.abort),
+              child: const Text('No'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(DialogAction.yes),
+              child: const Text(
+                'Yes',
+              ),
+            ),
+          ],
+        );
+      },
+    );
+    return (action != null) ? action : DialogAction.abort;
   }
 }

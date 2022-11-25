@@ -105,9 +105,11 @@ class _AlumniState extends State<Alumni> {
                 child: Padding(
                     padding: EdgeInsets.all(12),
                     child: ListTile(
-                      leading: CircleAvatar(
-                        child: Icon(Icons.person),
-                      ), //child: Image(image: AssetImage(user.image_path))),
+                      leading: ClipOval(
+                          child: Image(
+                        image: NetworkImage(
+                            "https://generic-ais.online/storage/${user.image_path}"),
+                      )), //child: Image(image: AssetImage(user.image_path))),
                       trailing: Icon(Icons.keyboard_arrow_right_rounded),
                       title: Text(
                         user.full_name,

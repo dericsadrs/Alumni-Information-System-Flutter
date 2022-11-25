@@ -40,7 +40,8 @@ class YourProfile extends StatelessWidget {
                           shape: BoxShape.circle,
                           image: DecorationImage(
                               fit: BoxFit.cover,
-                              image: AssetImage("assets/images/profile.png"))),
+                              image: NetworkImage(
+                                  "https://generic-ais.online/storage/${CurrentUser.image_path}"))),
                     ),
                   ],
                 ),

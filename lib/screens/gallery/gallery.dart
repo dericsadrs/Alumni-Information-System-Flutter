@@ -48,28 +48,57 @@ class _GalleryState extends State<Gallery> {
                 child: Padding(
                     padding: EdgeInsets.all(12),
                     child: ListTile(
-                      title: Column(
-                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                        SizedBox(height: 10),
-                        Text( user_Gallerys.name,
-                          style: TextStyle(
-                            
-                              fontSize: 14, fontWeight: FontWeight.bold),
-                        ),
-                            SizedBox(height: 10),
-                        Text(user_Gallerys.description),
-                         SizedBox(height: 10),
-                        ],),
-                      
-                      subtitle: Image(image: NetworkImage("https://generic-ais.online/storage/${user_Gallerys.image_path}")),
-                     // Container(decoration: BoxDecoration(image: DecorationImage(image: NetworkImage(user_Gallerys.image_path)))),
-                      ))));
+                        /*leading: ClipOval(
+                          child: Image(
+                              image: NetworkImage(
+                                  "https://generic-ais.online/storage/${user_Gallerys.image}"))),
+                     */
+                        title: Column(children: [
+                          Row(
+                            children: [
+                              Text(
+                                user_Gallerys.name,
+                                style: TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          )
+                        ]),
+                        /*SizedBox(height: 10),
+                          Text(
+                            user_Gallerys.description,
+                            style: TextStyle(fontSize: 13),
+                          ),*/
+
+                        subtitle: Column(
+                          children: [
+                            Image(
+                                image: NetworkImage(
+                                    "https://generic-ais.online/storage/${user_Gallerys.image_path}")),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Align(
+                                alignment: Alignment.bottomLeft,
+                                child: Text(
+                                  user_Gallerys.description,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 13),
+                                ))
+                          ],
+                        )
+
+                        // Container(decoration: BoxDecoration(image: DecorationImage(image: NetworkImage(user_Gallerys.image_path)))),
+                        ))));
       });
 
   Widget build(BuildContext context) {
     return Scaffold(
-         floatingActionButton: FloatingActionButton.extended(
+        floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
             Navigator.pushNamed(context, "/gallerypost");
           },

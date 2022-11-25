@@ -55,7 +55,7 @@ class _FeedEditState extends State<EditJob> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Your Posts'),
+          title: const Text('Your Job Posts'),
           centerTitle: true,
         ),
         body: RefreshIndicator(
@@ -90,41 +90,69 @@ class _FeedEditState extends State<EditJob> {
         return GestureDetector(
             onTap: () {},
             child: Card(
-              /* elevation: 3,
+                /* elevation: 3,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
               ),*/
-              child: Padding(
-                padding: EdgeInsets.all(12),
-                child: ListTile(
-                  trailing: Column(children: [
-                    TextButton(
-                      onPressed: () async{
-                            final action = 
-                              await JobDialogs.yesAbortDialog(context, "Delete this post?", jobUser.content);
-                              if (action == DialogAction.yes) {setState(() => tappedYes = true );
-                              deletePost(jobUser.id);
-                              }
-                              else {
-                                setState(() => tappedYes = false);
-                              }
-                      },
-                      child: Text("Delete"),
+                child: Padding(
+              padding: EdgeInsets.all(12),
+              child: ListTile(
+                  title: Column(children: [
+                    Row(
+                      children: [
+                        Text(
+                          jobUser.title,
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.bold),
+                        ),
+                      ],
                     ),
+                    SizedBox(
+                      height: 8,
+                    )
                   ]),
-                  title: Text(
-                    jobUser.title,
-                    style: TextStyle(
-                      fontSize: 15,
-                    ),
-                  ),
-                  subtitle: Text(
-                    jobUser.content,
-                  ),
-                  dense: true,
-                ),
-              ),
-            ));
+                  subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 5),
+                        Text(
+                          jobUser.content,
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: [
+                            TextButton(
+                                onPressed: null,
+                                child: Text(
+                                  "Edit",
+                                  style: TextStyle(
+                                      fontSize: 15, color: Colors.blue),
+                                )),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            TextButton(
+                                onPressed: null,
+                                child: Text(
+                                  "Delete",
+                                  style: TextStyle(
+                                      fontSize: 15, color: Colors.blue),
+                                ))
+                          ],
+                        ),
+                        Align(
+                            alignment: Alignment.bottomRight,
+                            child: Text(
+                              jobUser.created_at,
+                              style: TextStyle(
+                                  fontSize: 8, fontWeight: FontWeight.bold),
+                            )),
+                      ])),
+            )));
       });
 
   Future<void> RefreshJob() async {
@@ -141,7 +169,6 @@ class _FeedEditState extends State<EditJob> {
 enum DialogAction { yes, abort }
 
 class JobDialogs {
-
   static Future<DialogAction> yesAbortDialog(
     BuildContext context,
     String title,
@@ -162,11 +189,10 @@ class JobDialogs {
               onPressed: () => Navigator.of(context).pop(DialogAction.abort),
               child: const Text('No'),
             ),
-             TextButton (
+            TextButton(
               onPressed: () => Navigator.of(context).pop(DialogAction.yes),
               child: const Text(
                 'Yes',
-                
               ),
             ),
           ],

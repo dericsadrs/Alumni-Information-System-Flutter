@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:alumni_sandbox/back_end/feedlists.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
@@ -49,14 +48,20 @@ class _FeedState extends State<Feed> {
                 child: Padding(
                     padding: EdgeInsets.all(12),
                     child: ListTile(
-                        leading: CircleAvatar(
-                          child: Icon(Icons.person),
-                        ),
-                        title: Text(
-                          user_feeds.name,
-                          style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.bold),
-                        ),
+                        title: Column(children: [
+                          Row(
+                            children: [
+                              Text(
+                                user_feeds.name,
+                                style: TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 8,
+                          )
+                        ]),
                         subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -64,25 +69,28 @@ class _FeedState extends State<Feed> {
                               Text(
                                 user_feeds.title,
                                 style: TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.bold),
+                                    fontSize: 15, fontWeight: FontWeight.bold),
                               ),
                               SizedBox(height: 5),
-                              Text(
-                                user_feeds.content,
-                                style: TextStyle(
-                                    fontSize: 12, fontWeight: FontWeight.bold),
-                              ),
+                              Align(
+                                  alignment: Alignment.bottomLeft,
+                                  child: Text(
+                                    user_feeds.content,
+                                    style: TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.bold),
+                                  )),
                               SizedBox(
                                 height: 10,
                               ),
-                              Row(
-                                children: [
-                                  Text(
+                              Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: Text(
                                     user_feeds.created_at,
-                                    style: TextStyle(fontSize: 11),
-                                  )
-                                ],
-                              )
+                                    style: TextStyle(
+                                        fontSize: 8,
+                                        fontWeight: FontWeight.bold),
+                                  )),
                             ])))));
       });
 

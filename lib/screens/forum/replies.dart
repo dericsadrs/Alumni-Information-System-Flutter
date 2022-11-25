@@ -72,53 +72,52 @@ class _RepliesState extends State<Replies> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => ReplyPost(
-                        question_id: widget.question_id,
-                        name: widget.name,
-                        question: widget.question,
-                      )));
-        },
-        label: const Text('Write'),
-        icon: const Icon(Icons.add_comment),
-      ),
-      appBar: AppBar(
-        title: Text('Replies'),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            icon: new Icon(Icons.delete),
-            onPressed: () {
-              Navigator.pushNamed(context, "/userreplies");
-            },
-          ),
-        ],
-      ),
-      body:  RefreshIndicator(
-            onRefresh: RefreshFeed,
-      
-      child:Center(
-        child: FutureBuilder<List<ReplyLists>>(
-          future: replyFuture,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
-            } else if (snapshot.hasError) {
-              return Text("${snapshot.error}");
-            } else if (snapshot.hasData) {
-              final repliesLists = snapshot.data!;
-              return buildview(repliesLists);
-            } else {
-              return const Text("No User Data");
-            }
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ReplyPost(
+                          question_id: widget.question_id,
+                          name: widget.name,
+                          question: widget.question,
+                        )));
           },
+          label: const Text('Write a Reply'),
+          icon: const Icon(Icons.add_comment),
         ),
-      ),
-    ));
+        appBar: AppBar(
+          title: Text('Replies'),
+          centerTitle: true,
+          actions: [
+            IconButton(
+              icon: new Icon(Icons.delete),
+              onPressed: () {
+                Navigator.pushNamed(context, "/userreplies");
+              },
+            ),
+          ],
+        ),
+        body: RefreshIndicator(
+          onRefresh: RefreshFeed,
+          child: Center(
+            child: FutureBuilder<List<ReplyLists>>(
+              future: replyFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  return Text("${snapshot.error}");
+                } else if (snapshot.hasData) {
+                  final repliesLists = snapshot.data!;
+                  return buildview(repliesLists);
+                } else {
+                  return const Text("No User Data");
+                }
+              },
+            ),
+          ),
+        ));
   }
 
   Widget buildview(List<ReplyLists> repliesLists) => ListView.builder(
@@ -177,12 +176,15 @@ class _RepliesState extends State<Replies> {
                             ])))));
       });
 
-       Future<void> RefreshFeed() async {
+  Future<void> RefreshFeed() async {
     setState(() {
       Navigator.pushReplacement(
           context,
           PageRouteBuilder(
-              pageBuilder: (a, b, c) => Replies(question_id: widget.question_id, name: widget.name, question: widget.question),
+              pageBuilder: (a, b, c) => Replies(
+                  question_id: widget.question_id,
+                  name: widget.name,
+                  question: widget.question),
               transitionDuration: Duration(seconds: 2)));
       Fluttertoast.showToast(
           msg: "Refreshed",

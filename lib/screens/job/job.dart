@@ -95,7 +95,7 @@ class _JobState extends State<Job> {
               child: Padding(
                 padding: EdgeInsets.all(12),
                 child: ListTile(
-                    trailing: TextButton(
+                    /*trailing: TextButton(
                       onPressed: () async {
                         const redirectUrl =
                             "https://mail.google.com/mail/u/0/?fs=1&tf=cm&to=ais@gmail.com";
@@ -107,7 +107,7 @@ class _JobState extends State<Job> {
                         }
                       },
                       child: Text("Apply"),
-                    ),
+                    ),*/
                     title: Text(
                       jobPost.name,
                       style:
@@ -137,6 +137,28 @@ class _JobState extends State<Job> {
                                 jobPost.created_at,
                                 style: TextStyle(fontSize: 11),
                               )
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              TextButton(
+                                  onPressed: () async {
+                                    const redirectUrl =
+                                        "https://mail.google.com/mail/u/0/?fs=1&tf=cm&to=ais@gmail.com";
+                                    // ignore: deprecated_member_use
+                                    if (await launch(redirectUrl)) {
+                                      // ignore: deprecated_member_use
+                                      await launch(redirectUrl,
+                                          forceWebView: true,
+                                          enableJavaScript: true);
+                                    }
+                                  },
+                                  child: Text(
+                                    "Apply",
+                                    style: TextStyle(
+                                        fontSize: 14, color: Colors.blue),
+                                  ))
                             ],
                           )
                         ])),

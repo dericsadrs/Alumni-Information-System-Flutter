@@ -53,7 +53,7 @@ class _ForumState extends State<Forum> {
             Navigator.pushNamed(context, "/postquestion");
           },
           label: const Text('Post a Question'),
-          icon: const Icon(Icons.add_comment),
+          icon: const Icon(Icons.question_mark),
         ),
         appBar: AppBar(
           title: Text('Forum'),

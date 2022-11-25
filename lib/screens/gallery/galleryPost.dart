@@ -28,30 +28,27 @@ class _UploadImageState extends State<UploadImage> {
     }
   }
 
-  /// Get from Camera
+  Future<bool> _uploadImage(String user_id, File user_image) async {
+    final bytes = user_image.readAsBytesSync();
+    final data = {
+      "user_image": base64Encode(bytes),
+      "user_id": user_id,
+    };
+    final url =
+        "http://192.168.1.39/techathon.net/uploading_image_to_server/upload_image.php";
+    final response = await http.post(
+      Uri.parse(url),
+      body: jsonEncode(data),
+    );
+    final message = jsonDecode(response.body);
 
-/*Future _uploadImage(File imageFile) async{
-// ignore: deprecated_member_use
-var stream= new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
-var length= await imageFile.length();
-var uri = Uri.parse("http://10.0.2.2/foodsystem/uploadg.php");
+    if (message['status'] == 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
-var request = new http.MultipartRequest("POST", uri);
-
-var multipartFile = new http.MultipartFile("image", stream, length, filename: basename(imageFile.path));
-
-request.files.add(multipartFile);
-request.fields['productname'] = controllerName.text;
-request.fields['productprice'] = controllerPrice.text;
-request.fields['producttype'] = controllerType.text;
-request.fields['product_owner'] = globals.restaurantId;
-
-var respond = await request.send();
-if(respond.statusCode==200){
-  print("Image Uploaded");
-}else{
-  print("Upload Failed");
-}*/
   _getFromCamera() async {
     PickedFile? pickedFile = await ImagePicker().getImage(
       source: ImageSource.camera,
@@ -162,7 +159,12 @@ if(respond.statusCode==200){
           ),
           GestureDetector(
               onTap: () {
-                print(imageFile!.path);
+                if (imageFile == null) {
+                  Fluttertoast.showToast(
+                      msg: "No Image Selected",
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.BOTTOM);
+                } else {}
               },
               child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 100.0),

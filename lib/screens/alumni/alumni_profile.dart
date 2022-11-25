@@ -87,7 +87,8 @@ class _AlumniProfileState extends State<AlumniProfile> {
                           shape: BoxShape.circle,
                           image: DecorationImage(
                               fit: BoxFit.cover,
-                              image: AssetImage("assets/images/profile.png"))),
+                              image: NetworkImage(
+                                  "https://generic-ais.online/storage/${widget.image_path}"))),
                     ),
                   ],
                 ),
