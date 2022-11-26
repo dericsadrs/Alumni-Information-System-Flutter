@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
 
 class UploadImage extends StatefulWidget {
   const UploadImage({Key? key}) : super(key: key);
@@ -28,24 +29,27 @@ class _UploadImageState extends State<UploadImage> {
     }
   }
 
-  Future<bool> _uploadImage(String user_id, File user_image) async {
-    final bytes = user_image.readAsBytesSync();
-    final data = {
-      "user_image": base64Encode(bytes),
-      "user_id": user_id,
-    };
-    final url =
-        "http://192.168.1.39/techathon.net/uploading_image_to_server/upload_image.php";
-    final response = await http.post(
-      Uri.parse(url),
-      body: jsonEncode(data),
-    );
-    final message = jsonDecode(response.body);
+  Future upload(File? image) async {
+    //var stream = http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+    //var length = await imageFile.length();
+    var uri =
+        Uri.parse("https://generic-ais.online/backend_app/gallery/upload.php");
 
-    if (message['status'] == 1) {
-      return true;
+    var request = http.MultipartRequest("POST", uri);
+    request.fields['user_id'] = CurrentUser.id;
+    request.fields['image_name'] = basename(image!.path);
+    request.fields['description'] = "Selfie!";
+    var pic = await http.MultipartFile.fromPath("image", image!.path);
+    print(request.fields);
+    //var pic = http.MultipartFile("image",stream,length,filename: basename(imageFile.path));
+
+    request.files.add(pic);
+    var response = await request.send();
+
+    if (response.statusCode == 200) {
+      print("image uploaded");
     } else {
-      return false;
+      print("uploaded faild");
     }
   }
 
@@ -164,7 +168,9 @@ class _UploadImageState extends State<UploadImage> {
                       msg: "No Image Selected",
                       toastLength: Toast.LENGTH_SHORT,
                       gravity: ToastGravity.BOTTOM);
-                } else {}
+                } else {
+                  upload(imageFile!);
+                }
               },
               child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 100.0),
