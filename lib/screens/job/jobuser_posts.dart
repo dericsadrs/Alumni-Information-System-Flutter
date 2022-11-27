@@ -136,7 +136,19 @@ class _FeedEditState extends State<EditJob> {
                               width: 20,
                             ),
                             TextButton(
-                                onPressed: null,
+                                onPressed: () async {
+                                  final action =
+                                      await JobDialogs.yesAbortDialog(
+                                          context,
+                                          "Delete this job posting?",
+                                          jobUser.content);
+                                  if (action == DialogAction.yes) {
+                                    setState(() => tappedYes = true);
+                                    deletePost(jobUser.id);
+                                  } else {
+                                    setState(() => tappedYes = false);
+                                  }
+                                },
                                 child: Text(
                                   "Delete",
                                   style: TextStyle(

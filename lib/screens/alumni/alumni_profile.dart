@@ -111,32 +111,44 @@ class _AlumniProfileState extends State<AlumniProfile> {
                 height: 25,
               ),
               ListTile(
-                leading: Icon(Icons.account_balance_sharp),
+                leading: SizedBox(
+                    height: 30.0,
+                    width: 55.0, // fixed width and height
+                    child: Image.asset("assets/images/uni.png")),
                 title: Text(widget.university),
               ),
               ListTile(
-                leading: Icon(Icons.school),
+                leading: SizedBox(
+                    height: 30.0,
+                    width: 55.0, // fixed width and height
+                    child: Image.asset("assets/images/graduation.png")),
                 title: Text(widget.course_name),
                 subtitle: Text("Year Graduated: " + widget.college_batch),
               ),
               ListTile(
-                leading: Icon(Icons.corporate_fare),
+                leading: SizedBox(
+                    height: 30.0,
+                    width: 55.0, // fixed width and height
+                    child: Image.asset("assets/images/job.png")),
                 title: Text(widget.job_business),
                 subtitle: Text(widget.business_address),
               ),
               ListTile(
-                leading: Icon(Icons.person),
+                leading: SizedBox(
+                    height: 30.0,
+                    width: 55.0, // fixed width and height
+                    child: Image.asset("assets/images/gender.png")),
                 title: Text(widget.civil_status),
                 subtitle: Text(widget.gender),
               ),
-              ListTile(
+              /*ListTile(
                 leading: Icon(Icons.contact_mail),
                 title: Text(
                   widget.address,
                 ),
                 subtitle: Text(widget.contact_number),
-              ),
-              Divider(
+              ),*/
+              /* Divider(
                 height: 40,
               ),
               Text("Education: "),
@@ -150,7 +162,7 @@ class _AlumniProfileState extends State<AlumniProfile> {
                 leading: Icon(Icons.school),
                 title: Text("Junior High: " + widget.high_school),
                 subtitle: Text("Year Graduated: " + widget.high_school_yg),
-              ),
+              ),*/
             ],
           ),
         ),

@@ -148,7 +148,19 @@ class _FeedEditState extends State<FeedEdit> {
                                     width: 20,
                                   ),
                                   TextButton(
-                                      onPressed: null,
+                                      onPressed: () async {
+                                        final action =
+                                            await Dialogs.yesAbortDialog(
+                                                context,
+                                                "Delete this post?",
+                                                userFeed.content);
+                                        if (action == DialogAction.yes) {
+                                          setState(() => tappedYes = true);
+                                          deletePost(userFeed.id);
+                                        } else {
+                                          setState(() => tappedYes = false);
+                                        }
+                                      },
                                       child: Text(
                                         "Delete",
                                         style: TextStyle(

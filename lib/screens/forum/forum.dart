@@ -109,12 +109,10 @@ class _ForumState extends State<Forum> {
             },
             child: Card(
                 elevation: 3,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
                 child: Padding(
                     padding: EdgeInsets.all(12),
                     child: ListTile(
+
                         //isThreeLine: true,
                         /* trailing: TextButton(
                           onPressed: () {
@@ -128,16 +126,20 @@ class _ForumState extends State<Forum> {
                           },*
                           child: Text("Open"),
                         ),*/
-                        title: Row(children: [
-                          Text(
-                            question.name,
-                            style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(
-                            width: 110,
-                          ),
-                        ]),
+                        title: Column(
+                          children: [
+                            Row(children: [
+                              Text(
+                                question.name,
+                                style: TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(
+                                width: 110,
+                              ),
+                            ]),
+                          ],
+                        ),
                         subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -153,6 +155,7 @@ class _ForumState extends State<Forum> {
                                 height: 10,
                               ),
                               Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   Text(
                                     question.created_at,

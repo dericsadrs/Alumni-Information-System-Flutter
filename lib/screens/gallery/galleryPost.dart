@@ -15,6 +15,7 @@ class UploadImage extends StatefulWidget {
 }
 
 class _UploadImageState extends State<UploadImage> {
+  TextEditingController description = TextEditingController();
   File? imageFile;
   _getFromGallery() async {
     PickedFile? pickedFile = await ImagePicker().getImage(
@@ -38,8 +39,8 @@ class _UploadImageState extends State<UploadImage> {
     var request = http.MultipartRequest("POST", uri);
     request.fields['user_id'] = CurrentUser.id;
     request.fields['image_name'] = basename(image!.path);
-    request.fields['description'] = "Selfie!";
-    var pic = await http.MultipartFile.fromPath("image", image!.path);
+    request.fields['description'] = description.text;
+    var pic = await http.MultipartFile.fromPath("image", image.path);
     print(request.fields);
     //var pic = http.MultipartFile("image",stream,length,filename: basename(imageFile.path));
 
@@ -67,9 +68,6 @@ class _UploadImageState extends State<UploadImage> {
   }
 
   final picker = ImagePicker();
-  TextEditingController feedtitle = new TextEditingController();
-  TextEditingController content = new TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -112,7 +110,7 @@ class _UploadImageState extends State<UploadImage> {
                     ),
                     Expanded(
                       child: TextFormField(
-                          controller: content,
+                          controller: description,
                           keyboardType: TextInputType.multiline,
                           minLines: 1,
                           maxLines: null,
@@ -170,6 +168,12 @@ class _UploadImageState extends State<UploadImage> {
                       gravity: ToastGravity.BOTTOM);
                 } else {
                   upload(imageFile!);
+
+                  Fluttertoast.showToast(
+                      msg: "Pending for Approval",
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.BOTTOM);
+                  Navigator.pop(context, "/gallery");
                 }
               },
               child: Padding(
