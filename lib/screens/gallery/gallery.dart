@@ -110,7 +110,7 @@ class _GalleryState extends State<Gallery> {
           IconButton(
             icon: new Icon(Icons.edit_note),
             onPressed: () {
-              Navigator.pushNamed(context, "/Galleryedit");
+              Navigator.pushNamed(context, "/galleryedit");
             },
           ),
         ]),

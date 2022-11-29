@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:alumni_sandbox/screens/alumni/alumni_search.dart';
 import 'package:alumni_sandbox/screens/feed/feed_editing.dart';
 import 'package:alumni_sandbox/screens/feed/feed_post.dart';
@@ -10,6 +9,7 @@ import 'package:alumni_sandbox/screens/forum/forumEdit.dart';
 import 'package:alumni_sandbox/screens/forum/post_question.dart';
 import 'package:alumni_sandbox/screens/forum/repliesEdit.dart';
 import 'package:alumni_sandbox/screens/gallery/gallery.dart';
+import 'package:alumni_sandbox/screens/gallery/galleryEdit.dart';
 import 'package:alumni_sandbox/screens/gallery/galleryPost.dart';
 import 'package:alumni_sandbox/screens/job/jobuser_posts.dart';
 import 'package:alumni_sandbox/screens/login.dart';
@@ -71,6 +71,7 @@ void main() {
         "/userforums": (context) => EditForum(),
         "/userreplies": (context) => repliesEdit(),
         "/gallerypost": (context) => UploadImage(),
+        "/galleryedit": (context) => GalleryEdit(),
       },
     ),
   );

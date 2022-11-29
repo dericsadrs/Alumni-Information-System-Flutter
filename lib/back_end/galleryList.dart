@@ -18,3 +18,24 @@ class GalleryList {
         //image: json['image_path']
       ); //description: json['description']);
 }
+
+class UserGallery {
+  final String image_path;
+  final String description;
+  final String id;
+  //final String image;
+
+  const UserGallery({
+    required this.image_path,
+    required this.description,
+    required this.id,
+    //required this.image
+  });
+
+  static UserGallery fromJson(json) => UserGallery(
+        image_path: json['image'],
+        description: json['description'],
+        id: json['id'],
+        //image: json['image_path']
+      ); //description: json['description']);
+}
