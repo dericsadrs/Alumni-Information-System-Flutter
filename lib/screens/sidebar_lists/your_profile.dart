@@ -64,26 +64,41 @@ class YourProfile extends StatelessWidget {
                 height: 25,
               ),
               ListTile(
-                leading: Icon(Icons.account_balance_sharp),
+                leading: SizedBox(
+                    height: 30.0,
+                    width: 55.0, // fixed width and height
+                    child: Image.asset("assets/images/uni.png")),
                 title: Text(CurrentUser.university),
               ),
               ListTile(
-                leading: Icon(Icons.school),
+                leading: SizedBox(
+                    height: 30.0,
+                    width: 55.0, // fixed width and height
+                    child: Image.asset("assets/images/graduation.png")),
                 title: Text(CurrentUser.course_name),
                 subtitle: Text("Year Graduated: " + CurrentUser.college_batch),
               ),
               ListTile(
-                leading: Icon(Icons.corporate_fare),
+                leading: SizedBox(
+                    height: 30.0,
+                    width: 55.0, // fixed width and height
+                    child: Image.asset("assets/images/job.png")),
                 title: Text(CurrentUser.job_business),
                 subtitle: Text(CurrentUser.business_address),
               ),
               ListTile(
-                leading: Icon(Icons.pin_drop),
+                leading: SizedBox(
+                    height: 30.0,
+                    width: 55.0, // fixed width and height
+                    child: Image.asset("assets/images/gender.png")),
                 title: Text(CurrentUser.civil_status),
                 subtitle: Text(CurrentUser.gender),
               ),
               ListTile(
-                leading: Icon(Icons.contact_mail),
+                leading: SizedBox(
+                    height: 30.0,
+                    width: 55.0, // fixed width and height
+                    child: Image.asset("assets/images/location.png")),
                 title: Text(
                   CurrentUser.address,
                 ),
@@ -94,13 +109,19 @@ class YourProfile extends StatelessWidget {
               ),
               Text("Education: "),
               ListTile(
-                leading: Icon(Icons.school),
+                leading: SizedBox(
+                    height: 30.0,
+                    width: 55.0, // fixed width and height
+                    child: Image.asset("assets/images/uni.png")),
                 title: Text("Senior High: " + CurrentUser.senior_highschool),
                 subtitle:
                     Text("Year Graduated: " + CurrentUser.senior_highschool_yg),
               ),
               ListTile(
-                leading: Icon(Icons.school),
+                leading: SizedBox(
+                    height: 30.0,
+                    width: 55.0, // fixed width and height
+                    child: Image.asset("assets/images/uni.png")),
                 title: Text("Junior High: " + CurrentUser.high_school),
                 subtitle: Text("Year Graduated: " + CurrentUser.high_school_yg),
               ),

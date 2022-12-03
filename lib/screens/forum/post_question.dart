@@ -27,7 +27,7 @@ class _QuestionState extends State<Question> {
           msg: "Succesfully Posted",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM);
-            Navigator.pop(context, "/forum");
+      Navigator.pop(context, "/forum");
     } else if (postQuestion == false) {
       Fluttertoast.showToast(
           msg: "Oops Something went wrong ",
@@ -84,7 +84,7 @@ class _QuestionState extends State<Question> {
                           maxLines: null,
                           decoration: InputDecoration(
                               border: InputBorder.none,
-                              hintText: ' Announce Something')),
+                              hintText: 'Ask a Question')),
                     ),
                   ],
                 )),

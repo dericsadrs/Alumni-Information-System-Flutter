@@ -14,6 +14,7 @@ class FeedEdit extends StatefulWidget {
 }
 
 class _FeedEditState extends State<FeedEdit> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool tappedYes = false;
   TextEditingController editContent = new TextEditingController();
   late Future<List<FeedEditDelete>> futureUserFeed = getUserFeed();
@@ -41,6 +42,58 @@ class _FeedEditState extends State<FeedEdit> {
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM);
     RefreshFeed();
+  }
+
+  Future updatePost(String passID) async {
+    const url = 'https://generic-ais.online/backend_app/feed/deleteFeed.php';
+    final response = await http.post(Uri.parse(url), body: {"user_id": passID});
+    final body = jsonDecode(response.body);
+    Fluttertoast.showToast(
+        msg: "Post Deleted",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM);
+    RefreshFeed();
+  }
+
+  Future<void> showInformationDialog(BuildContext context) async {
+    return await showDialog(
+        context: context,
+        builder: (context) {
+          final TextEditingController _textEditingController =
+              TextEditingController();
+          return StatefulBuilder(builder: (context, setState) {
+            return AlertDialog(
+              content: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      TextFormField(
+                        controller: _textEditingController,
+                        keyboardType: TextInputType.multiline,
+                        minLines: 1,
+                        maxLines: null,
+                        validator: (value) {
+                          return value!.isNotEmpty ? null : "Invalid Field";
+                        },
+                        decoration: InputDecoration(hintText: "Edit"),
+                      ),
+                    ],
+                  )),
+              actions: <Widget>[
+                TextButton(
+                  child: Text('Save'),
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      // Do something like updating SharedPreferences or User Settings etc.
+                      Navigator.of(context).pop();
+                    }
+                  },
+                ),
+              ],
+            );
+          });
+        });
   }
 
   /*Future EditPost(String passID) async {
@@ -138,7 +191,9 @@ class _FeedEditState extends State<FeedEdit> {
                               Row(
                                 children: [
                                   TextButton(
-                                      onPressed: null,
+                                      onPressed: () async {
+                                        await showInformationDialog(context);
+                                      },
                                       child: Text(
                                         "Edit",
                                         style: TextStyle(

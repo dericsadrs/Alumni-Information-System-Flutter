@@ -17,6 +17,7 @@ import 'package:alumni_sandbox/screens/menu.dart';
 import 'package:alumni_sandbox/screens/onboarding.dart';
 import 'package:alumni_sandbox/screens/job/job.dart';
 import 'package:alumni_sandbox/screens/sidebar_lists/about.dart';
+import 'package:alumni_sandbox/screens/sidebar_lists/attirubtions.dart';
 import 'package:alumni_sandbox/screens/sidebar_lists/courses.dart';
 import 'package:alumni_sandbox/screens/sidebar_lists/perks.dart';
 import 'package:alumni_sandbox/screens/sidebar_lists/your_profile.dart';
@@ -25,6 +26,8 @@ import 'package:flutter/material.dart';
 
 import 'screens/job/job_post.dart';
 
+// https://stackoverflow.com/questions/54285172/how-to-solve-flutter-certificate-verify-failed-error-while-performing-a-post-req
+// Bypass SSL certificate
 class MyHttpOverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext? context) {
@@ -72,6 +75,7 @@ void main() {
         "/userreplies": (context) => repliesEdit(),
         "/gallerypost": (context) => UploadImage(),
         "/galleryedit": (context) => GalleryEdit(),
+        "/attributions": (context) => Attributions(),
       },
     ),
   );

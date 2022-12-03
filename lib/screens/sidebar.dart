@@ -72,7 +72,7 @@ class _SideNavBarState extends State<SideNavBar> {
                 width: 55.0, // fixed width and height
                 child: Image.asset("assets/images/gift.png")),
             title: Text('Attiributions'),
-            onTap: () => Navigator.pushNamed(context, "/perks"),
+            onTap: () => Navigator.pushNamed(context, "/attributions"),
           ),
           ListTile(
               title: Text('Logout'),

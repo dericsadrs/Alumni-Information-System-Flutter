@@ -16,7 +16,8 @@ class _FindAlumniState extends State<FindAlumni> {
   TextEditingController name = new TextEditingController();
 
   Future<List<AlumniSearch>> searchAlumni() async {
-    const url = 'https://10.0.2.2/backend_app/alumni/searchAlumni.php';
+    const url =
+        'https://generic-ais.online/backend_app/alumni/searchAlumni.php';
     final response = await http.post(Uri.parse(url), body: {"name": name.text});
     final body = jsonDecode(response.body);
     print(body);
