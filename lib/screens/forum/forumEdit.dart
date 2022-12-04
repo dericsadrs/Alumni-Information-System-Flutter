@@ -119,23 +119,6 @@ class _EditForumState extends State<EditForum> {
                 child: Padding(
                     padding: EdgeInsets.all(12),
                     child: ListTile(
-                        trailing: Column(children: [
-                          TextButton(
-                            onPressed: () async {
-                              final action = await ForumDialog.yesAbortDialog(
-                                  context,
-                                  "Delete this post?",
-                                  userForum.content);
-                              if (action == DialogAction.yes) {
-                                setState(() => tappedYes = true);
-                                deletePost(userForum.id);
-                              } else {
-                                setState(() => tappedYes = false);
-                              }
-                            },
-                            child: Text("Delete"),
-                          ),
-                        ]),
                         title: Text(
                           userForum.name,
                           style: TextStyle(
@@ -148,17 +131,52 @@ class _EditForumState extends State<EditForum> {
                               Text(
                                 userForum.content,
                                 style: TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(height: 5),
-                              Text(
-                                userForum.created_at,
-                                style: TextStyle(
-                                    fontSize: 12, fontWeight: FontWeight.bold),
+                                    fontSize: 15, fontWeight: FontWeight.bold),
                               ),
                               SizedBox(
                                 height: 10,
                               ),
+                              Row(
+                                children: [
+                                  TextButton(
+                                      onPressed: null,
+                                      child: Text(
+                                        "Edit",
+                                        style: TextStyle(
+                                            fontSize: 15, color: Colors.blue),
+                                      )),
+                                  SizedBox(
+                                    width: 20,
+                                  ),
+                                  TextButton(
+                                      onPressed: () async {
+                                        final action =
+                                            await ForumDialog.yesAbortDialog(
+                                                context,
+                                                "Delete this post?",
+                                                userForum.content);
+                                        if (action == DialogAction.yes) {
+                                          setState(() => tappedYes = true);
+                                          deletePost(userForum.id);
+                                        } else {
+                                          setState(() => tappedYes = false);
+                                        }
+                                      },
+                                      child: Text(
+                                        "Delete",
+                                        style: TextStyle(
+                                            fontSize: 15, color: Colors.blue),
+                                      ))
+                                ],
+                              ),
+                              Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: Text(
+                                    userForum.created_at,
+                                    style: TextStyle(
+                                        fontSize: 8,
+                                        fontWeight: FontWeight.bold),
+                                  )),
                             ])))));
       });
 

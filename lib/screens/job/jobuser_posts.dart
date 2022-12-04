@@ -15,6 +15,7 @@ class EditJob extends StatefulWidget {
 
 class _FeedEditState extends State<EditJob> {
   bool tappedYes = false;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late Future<List<FeedEditDelete>> futureUserJobs = getUserJob();
 
   @override
@@ -40,6 +41,89 @@ class _FeedEditState extends State<EditJob> {
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM);
     RefreshFeed();
+  }
+
+  Future updateJob(
+      String passID, String updatedTitle, String updatedContent) async {
+    const url = 'https://generic-ais.online/backend_app/jobs/editJobs.php';
+    final response = await http.post(Uri.parse(url), body: {
+      "job_id": passID,
+      "title": updatedTitle,
+      "update": updatedContent
+    });
+
+    final body = jsonDecode(response.body);
+    Fluttertoast.showToast(
+        msg: "Job Post Updated",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM);
+    RefreshFeed();
+  }
+
+  Future editFeed(
+      String feedID, String prefilledTitle, String prefilledBody) async {
+    return await showDialog(
+        context: context,
+        builder: (context) {
+          TextEditingController passPrefilledTitle =
+              TextEditingController(text: prefilledTitle);
+          TextEditingController passPrefilledBody =
+              TextEditingController(text: prefilledBody);
+          return StatefulBuilder(builder: (context, setState) {
+            return AlertDialog(
+              content: SingleChildScrollView(
+                  child: Form(
+                      key: _formKey,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          TextFormField(
+                            controller: passPrefilledTitle,
+                            keyboardType: TextInputType.multiline,
+                            minLines: 1,
+                            maxLines: null,
+                            validator: (value) {
+                              return value!.isNotEmpty ? null : "Invalid Field";
+                            },
+                            decoration: InputDecoration(hintText: "Edit Title"),
+                          ),
+                          TextFormField(
+                            controller: passPrefilledBody,
+                            keyboardType: TextInputType.multiline,
+                            minLines: 1,
+                            maxLines: null,
+                            validator: (value) {
+                              return value!.isNotEmpty ? null : "Invalid Field";
+                            },
+                            decoration: InputDecoration(hintText: "Edit"),
+                          ),
+                        ],
+                      ))),
+              actions: <Widget>[
+                TextButton(
+                  child: Text('Save'),
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      // Do something like updating SharedPreferences or User Settings etc.
+                      updateJob(feedID, passPrefilledTitle.text,
+                          passPrefilledBody.text);
+                      Navigator.of(context).pop();
+                    }
+                  },
+                ),
+                TextButton(
+                  child: Text('Cancel'),
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      // Do something like updating SharedPreferences or User Settings etc.
+                      Navigator.of(context).pop();
+                    }
+                  },
+                ),
+              ],
+            );
+          });
+        });
   }
 
   Future<void> RefreshFeed() async {
@@ -126,7 +210,10 @@ class _FeedEditState extends State<EditJob> {
                         Row(
                           children: [
                             TextButton(
-                                onPressed: null,
+                                onPressed: () async {
+                                  await editFeed(jobUser.id, jobUser.title,
+                                      jobUser.content);
+                                },
                                 child: Text(
                                   "Edit",
                                   style: TextStyle(

@@ -16,7 +16,6 @@ class FeedEdit extends StatefulWidget {
 class _FeedEditState extends State<FeedEdit> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool tappedYes = false;
-  TextEditingController editContent = new TextEditingController();
   late Future<List<FeedEditDelete>> futureUserFeed = getUserFeed();
 
   @override
@@ -44,45 +43,76 @@ class _FeedEditState extends State<FeedEdit> {
     RefreshFeed();
   }
 
-  Future updatePost(String passID) async {
-    const url = 'https://generic-ais.online/backend_app/feed/deleteFeed.php';
-    final response = await http.post(Uri.parse(url), body: {"user_id": passID});
+  Future updateFeed(
+      String passID, String updatedTitle, String updatedContent) async {
+    const url = 'https://generic-ais.online/backend_app/feed/editFeed.php';
+    final response = await http.post(Uri.parse(url), body: {
+      "feed_id": passID,
+      "title": updatedTitle,
+      "update": updatedContent
+    });
+
     final body = jsonDecode(response.body);
     Fluttertoast.showToast(
-        msg: "Post Deleted",
+        msg: "Post Updated Pending for Approval",
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM);
     RefreshFeed();
   }
 
-  Future<void> showInformationDialog(BuildContext context) async {
+  Future editFeed(
+      String feedID, String prefilledTitle, String prefilledBody) async {
     return await showDialog(
         context: context,
         builder: (context) {
-          final TextEditingController _textEditingController =
-              TextEditingController();
+          TextEditingController passPrefilledTitle =
+              TextEditingController(text: prefilledTitle);
+          TextEditingController passPrefilledBody =
+              TextEditingController(text: prefilledBody);
           return StatefulBuilder(builder: (context, setState) {
             return AlertDialog(
-              content: Form(
-                  key: _formKey,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      TextFormField(
-                        controller: _textEditingController,
-                        keyboardType: TextInputType.multiline,
-                        minLines: 1,
-                        maxLines: null,
-                        validator: (value) {
-                          return value!.isNotEmpty ? null : "Invalid Field";
-                        },
-                        decoration: InputDecoration(hintText: "Edit"),
-                      ),
-                    ],
-                  )),
+              content: SingleChildScrollView(
+                  child: Form(
+                      key: _formKey,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          TextFormField(
+                            controller: passPrefilledTitle,
+                            keyboardType: TextInputType.multiline,
+                            minLines: 1,
+                            maxLines: null,
+                            validator: (value) {
+                              return value!.isNotEmpty ? null : "Invalid Field";
+                            },
+                            decoration: InputDecoration(hintText: "Edit Title"),
+                          ),
+                          TextFormField(
+                            controller: passPrefilledBody,
+                            keyboardType: TextInputType.multiline,
+                            minLines: 1,
+                            maxLines: null,
+                            validator: (value) {
+                              return value!.isNotEmpty ? null : "Invalid Field";
+                            },
+                            decoration: InputDecoration(hintText: "Edit"),
+                          ),
+                        ],
+                      ))),
               actions: <Widget>[
                 TextButton(
                   child: Text('Save'),
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      // Do something like updating SharedPreferences or User Settings etc.
+                      updateFeed(feedID, passPrefilledTitle.text,
+                          passPrefilledBody.text);
+                      Navigator.of(context).pop();
+                    }
+                  },
+                ),
+                TextButton(
+                  child: Text('Cancel'),
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       // Do something like updating SharedPreferences or User Settings etc.
@@ -95,17 +125,6 @@ class _FeedEditState extends State<FeedEdit> {
           });
         });
   }
-
-  /*Future EditPost(String passID) async {
-    const url = 'https://generic-ais.online/backend_app/feed/deleteFeed.php';
-    final response = await http.post(Uri.parse(url), body: {"user_id": passID});
-    final body = jsonDecode(response.body);
-    Fluttertoast.showToast(
-        msg: "Post Deleted",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM);
-    RefreshFeed();
-  }*/
 
   Future<void> RefreshFeed() async {
     setState(() {
@@ -124,7 +143,7 @@ class _FeedEditState extends State<FeedEdit> {
           centerTitle: true,
         ),
         body: RefreshIndicator(
-          onRefresh: RefreshJob,
+          onRefresh: RefreshFeed,
           child: Center(
             child: FutureBuilder<List<FeedEditDelete>>(
               future: futureUserFeed,
@@ -192,7 +211,8 @@ class _FeedEditState extends State<FeedEdit> {
                                 children: [
                                   TextButton(
                                       onPressed: () async {
-                                        await showInformationDialog(context);
+                                        await editFeed(userFeed.id,
+                                            userFeed.title, userFeed.content);
                                       },
                                       child: Text(
                                         "Edit",
