@@ -15,6 +15,7 @@ class EditForum extends StatefulWidget {
 }
 
 class _EditForumState extends State<EditForum> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool tappedYes = false;
   TextEditingController editContent = new TextEditingController();
   late Future<List<userForumLists>> futureUserForum = getUserForum();
@@ -47,16 +48,70 @@ class _EditForumState extends State<EditForum> {
     RefreshFeed();
   }
 
-  /*Future EditPost(String passID) async {
-    const url = 'https://generic-ais.online/backend_app/feed/deleteFeed.php';
-    final response = await http.post(Uri.parse(url), body: {"user_id": passID});
+  Future updateForum(String passID, String updatedContent) async {
+    const url = 'https://generic-ais.online/backend_app/forum/editForum.php';
+    final response = await http.post(Uri.parse(url),
+        body: {"forum_id": passID, "update": updatedContent});
+
     final body = jsonDecode(response.body);
     Fluttertoast.showToast(
-        msg: "Post Deleted",
+        msg: "Question Updated",
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM);
     RefreshFeed();
-  }*/
+  }
+
+  Future editFeed(String forumID, String prefilledBody) async {
+    return await showDialog(
+        context: context,
+        builder: (context) {
+          TextEditingController passPrefilledBody =
+              TextEditingController(text: prefilledBody);
+          return StatefulBuilder(builder: (context, setState) {
+            return AlertDialog(
+              content: SingleChildScrollView(
+                  child: Form(
+                      key: _formKey,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          TextFormField(
+                            controller: passPrefilledBody,
+                            keyboardType: TextInputType.multiline,
+                            minLines: 1,
+                            maxLines: null,
+                            validator: (value) {
+                              return value!.isNotEmpty ? null : "Invalid Field";
+                            },
+                            decoration: InputDecoration(hintText: "Edit"),
+                          ),
+                        ],
+                      ))),
+              actions: <Widget>[
+                TextButton(
+                  child: Text('Save'),
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      // Do something like updating SharedPreferences or User Settings etc.
+                      updateForum(forumID, passPrefilledBody.text);
+                      Navigator.of(context).pop();
+                    }
+                  },
+                ),
+                TextButton(
+                  child: Text('Cancel'),
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      // Do something like updating SharedPreferences or User Settings etc.
+                      Navigator.of(context).pop();
+                    }
+                  },
+                ),
+              ],
+            );
+          });
+        });
+  }
 
   Future<void> RefreshFeed() async {
     setState(() {
@@ -139,7 +194,10 @@ class _EditForumState extends State<EditForum> {
                               Row(
                                 children: [
                                   TextButton(
-                                      onPressed: null,
+                                      onPressed: () async {
+                                        await editFeed(
+                                            userForum.id, userForum.content);
+                                      },
                                       child: Text(
                                         "Edit",
                                         style: TextStyle(

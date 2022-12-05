@@ -17,6 +17,7 @@ class repliesEdit extends StatefulWidget {
 
 class _repliesEditState extends State<repliesEdit> {
   bool tappedYes = true;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController editContent = new TextEditingController();
   late Future<List<userReplies>> futureUserReplies = getUserReplies();
 
@@ -36,7 +37,8 @@ class _repliesEditState extends State<repliesEdit> {
   }
 
   Future deletePost(String passID) async {
-    const url = 'https://generic-ais.online/backend_app/forum/repliesDelete.php';
+    const url =
+        'https://generic-ais.online/backend_app/forum/repliesDelete.php';
     final response =
         await http.post(Uri.parse(url), body: {"reply_id": passID});
     final body = jsonDecode(response.body);
@@ -66,6 +68,71 @@ class _repliesEditState extends State<repliesEdit> {
               pageBuilder: (a, b, c) => repliesEdit(),
               transitionDuration: Duration(seconds: 2)));
     });
+  }
+
+  Future updateReply(String passID, String updatedContent) async {
+    const url = 'https://generic-ais.online/backend_app/forum/editReplies.php';
+    final response = await http.post(Uri.parse(url),
+        body: {"reply_id": passID, "update": updatedContent});
+
+    final body = jsonDecode(response.body);
+    Fluttertoast.showToast(
+        msg: "Reply Updated",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM);
+    RefreshFeed();
+  }
+
+  Future editReply(String replyID, String prefilledBody) async {
+    return await showDialog(
+        context: context,
+        builder: (context) {
+          TextEditingController passPrefilledBody =
+              TextEditingController(text: prefilledBody);
+          return StatefulBuilder(builder: (context, setState) {
+            return AlertDialog(
+              content: SingleChildScrollView(
+                  child: Form(
+                      key: _formKey,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          TextFormField(
+                            controller: passPrefilledBody,
+                            keyboardType: TextInputType.multiline,
+                            minLines: 1,
+                            maxLines: null,
+                            validator: (value) {
+                              return value!.isNotEmpty ? null : "Invalid Field";
+                            },
+                            decoration: InputDecoration(hintText: "Edit"),
+                          ),
+                        ],
+                      ))),
+              actions: <Widget>[
+                TextButton(
+                  child: Text('Save'),
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      // Do something like updating SharedPreferences or User Settings etc.
+                      updateReply(replyID, passPrefilledBody.text);
+                      Navigator.of(context).pop();
+                    }
+                  },
+                ),
+                TextButton(
+                  child: Text('Cancel'),
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      // Do something like updating SharedPreferences or User Settings etc.
+                      Navigator.of(context).pop();
+                    }
+                  },
+                ),
+              ],
+            );
+          });
+        });
   }
 
   Widget build(BuildContext context) {
@@ -113,22 +180,6 @@ class _repliesEditState extends State<repliesEdit> {
                 child: Padding(
                     padding: EdgeInsets.all(12),
                     child: ListTile(
-                        trailing: Column(children: [
-                          TextButton(
-                            onPressed:() async{
-                            final action = 
-                              await ReplyDialogs.yesAbortDialog(context, "Delete this response?", replyUser.content);
-                              if (action == DialogAction.yes) {setState(() => tappedYes = true );
-                              deletePost(replyUser.id);
-                              }
-                              else {
-                                setState(() => tappedYes = false);
-                              }
-
-                            },
-                            child: Text("Delete"),
-                          ),
-                        ]),
                         title: Text(
                           replyUser.forum_content,
                           style: TextStyle(
@@ -137,25 +188,59 @@ class _repliesEditState extends State<repliesEdit> {
                         subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text("Your Reply:"),
-                              SizedBox(height: 5),
+                              SizedBox(height: 40),
                               Text(
-                                replyUser.content,
+                                "You Replied:" + replyUser.content,
                                 style: TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(height: 5),
-                              Text(
-                                replyUser.created_at,
-                                style: TextStyle(
-                                    fontSize: 12, fontWeight: FontWeight.bold),
+                                    fontSize: 15, fontWeight: FontWeight.bold),
                               ),
                               SizedBox(
                                 height: 10,
                               ),
+                              Row(
+                                children: [
+                                  TextButton(
+                                      onPressed: () async {
+                                        await editReply(
+                                            replyUser.id, replyUser.content);
+                                      },
+                                      child: Text(
+                                        "Edit",
+                                        style: TextStyle(
+                                            fontSize: 15, color: Colors.blue),
+                                      )),
+                                  SizedBox(
+                                    width: 20,
+                                  ),
+                                  TextButton(
+                                      onPressed: () async {
+                                        final action =
+                                            await ReplyDialogs.yesAbortDialog(
+                                                context,
+                                                "Delete this post?",
+                                                replyUser.content);
+                                        if (action == DialogAction.yes) {
+                                          setState(() => tappedYes = true);
+                                          deletePost(replyUser.id);
+                                        } else {
+                                          setState(() => tappedYes = false);
+                                        }
+                                      },
+                                      child: Text(
+                                        "Delete",
+                                        style: TextStyle(
+                                            fontSize: 15, color: Colors.blue),
+                                      ))
+                                ],
+                              ),
+                              Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: Text(
+                                    replyUser.created_at,
+                                    style: TextStyle(
+                                        fontSize: 8,
+                                        fontWeight: FontWeight.bold),
+                                  )),
                             ])))));
       });
 
@@ -168,14 +253,11 @@ class _repliesEditState extends State<repliesEdit> {
               transitionDuration: Duration(seconds: 2)));
     });
   }
-
-  
 }
 
 enum DialogAction { yes, abort }
 
 class ReplyDialogs {
-
   static Future<DialogAction> yesAbortDialog(
     BuildContext context,
     String title,
@@ -196,11 +278,10 @@ class ReplyDialogs {
               onPressed: () => Navigator.of(context).pop(DialogAction.abort),
               child: const Text('No'),
             ),
-             TextButton (
+            TextButton(
               onPressed: () => Navigator.of(context).pop(DialogAction.yes),
               child: const Text(
                 'Yes',
-                
               ),
             ),
           ],

@@ -177,7 +177,7 @@ class _LoginState extends State<Login> {
                           prefixIcon: SizedBox(
                               child: Image.asset("assets/images/password.png")),
                           border: InputBorder.none,
-                          hintText: "Enter your Email",
+                          hintText: "Enter your Password",
                         ),
                       ))),
             ),
