@@ -122,14 +122,14 @@ class _LoginState extends State<Login> {
               "WELCOME",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 20,
+                fontSize: 35,
               ),
             ),
             SizedBox(height: 15),
             Text(
               "Sign in to your account",
               style: TextStyle(
-                fontSize: 15,
+                fontSize: 20,
               ),
             ),
             SizedBox(height: 30),
@@ -223,7 +223,7 @@ class _LoginState extends State<Login> {
                     Text(
                       "Register",
                       style: TextStyle(
-                          fontSize: 15,
+                          fontSize: 20,
                           color: Color.fromARGB(255, 0, 138, 251),
                           fontWeight: FontWeight.bold),
                     )
@@ -246,12 +246,13 @@ class _LoginState extends State<Login> {
                   child: Text(
                     "Icons by ICONS8",
                     style: TextStyle(
+                        fontSize: 20,
                         color: Color.fromARGB(255, 0, 138, 251),
                         fontWeight: FontWeight.bold),
                   ),
                 ),
                 SizedBox(
-                  width: 30,
+                  width: 40,
                 ),
                 GestureDetector(
                   onTap: () async {
@@ -266,7 +267,9 @@ class _LoginState extends State<Login> {
                   child: Text(
                     "Animations by Lottie",
                     style: TextStyle(
+                      
                         color: Color.fromARGB(255, 0, 138, 251),
+                        fontSize: 20,
                         fontWeight: FontWeight.bold),
                   ),
                 )

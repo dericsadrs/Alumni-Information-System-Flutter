@@ -18,11 +18,11 @@ class _SideNavBarState extends State<SideNavBar> {
           UserAccountsDrawerHeader(
             accountName: Text(
               CurrentUser.full_name,
-              style: TextStyle(fontSize: 18),
+              style: TextStyle(fontSize: 15),
             ),
             accountEmail: Text(
               CurrentUser.university,
-              style: TextStyle(fontSize: 15),
+              style: TextStyle( fontSize: 20),
             ),
             currentAccountPicture: CircleAvatar(
               child: ClipOval(
@@ -38,7 +38,7 @@ class _SideNavBarState extends State<SideNavBar> {
                 height: 30.0,
                 width: 55.0, // fixed width and height
                 child: Image.asset("assets/images/gift.png")),
-            title: Text('Perks & Benefits '),
+            title: Text('Perks & Benefits',style: TextStyle( fontSize: 20)),
             onTap: () => Navigator.pushNamed(context, "/perks"),
           ),
           ListTile(
@@ -46,7 +46,7 @@ class _SideNavBarState extends State<SideNavBar> {
                 height: 30.0,
                 width: 55.0, // fixed width and height
                 child: Image.asset("assets/images/online-course.png")),
-            title: Text('List of Courses'),
+            title: Text('List of Courses',style: TextStyle( fontSize: 20)),
             onTap: () => Navigator.pushNamed(context, "/courses"),
           ),
           ListTile(
@@ -54,7 +54,7 @@ class _SideNavBarState extends State<SideNavBar> {
                 height: 30.0,
                 width: 55.0, // fixed width and height
                 child: Image.asset("assets/images/profile.png")),
-            title: Text('Your Profile'),
+            title: Text('Your Profile',style: TextStyle( fontSize: 20)),
             onTap: () => Navigator.pushNamed(context, "/yourprofile"),
           ),
           ListTile(
@@ -62,7 +62,7 @@ class _SideNavBarState extends State<SideNavBar> {
                 height: 30.0,
                 width: 55.0, // fixed width and height
                 child: Image.asset("assets/images/info.png")),
-            title: Text('About'),
+            title: Text('About',style: TextStyle( fontSize: 20)),
             onTap: () => Navigator.pushNamed(context, "/about"),
           ),
           ListTile(
@@ -71,11 +71,11 @@ class _SideNavBarState extends State<SideNavBar> {
                 height: 30.0,
                 width: 55.0, // fixed width and height
                 child: Image.asset("assets/images/gift.png")),
-            title: Text('Attiributions'),
+            title: Text('Attiributions',style: TextStyle( fontSize: 20)),
             onTap: () => Navigator.pushNamed(context, "/attributions"),
           ),
           ListTile(
-              title: Text('Logout'),
+              title: Text('Logout',style: TextStyle( fontSize: 20)),
               leading: SizedBox(
                   height: 30.0,
                   width: 55.0, // fixed width and height

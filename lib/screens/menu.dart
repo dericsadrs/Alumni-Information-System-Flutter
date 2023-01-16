@@ -18,7 +18,7 @@ class _MenuState extends State<Menu> {
     return Scaffold(
       drawer: SideNavBar(),
       appBar: AppBar(
-        title: const Text('Menu'),
+        title: const Text('Menu',style: TextStyle( fontSize: 20)),
         centerTitle: true,
         backgroundColor: Colors.blue,
         /*shape: RoundedRectangleBorder(
@@ -46,7 +46,7 @@ class _MenuState extends State<Menu> {
               child: Container(
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          scale: 1.3,
+                          scale: 1.6,
                           image: AssetImage("assets/images/feed.png")),
                       borderRadius: BorderRadius.circular(10),
                       color: Color.fromARGB(255, 255, 255, 255),
@@ -58,7 +58,7 @@ class _MenuState extends State<Menu> {
                             offset: Offset(7.0, 8.0))
                       ]),
                   child: Align(
-                      alignment: Alignment(0.02, 0.93), child: Text("FEED")))),
+                      alignment: Alignment(0.02, 0.96), child: Text("FEED",style: TextStyle( fontSize: 20),)))),
           GestureDetector(
             onTap: () {
               Navigator.pushNamed(context, "/job");
@@ -67,7 +67,7 @@ class _MenuState extends State<Menu> {
             child: Container(
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                        scale: 1.3, image: AssetImage("assets/images/job.png")),
+                        scale: 1.6, image: AssetImage("assets/images/job.png")),
                     borderRadius: BorderRadius.circular(10),
                     color: Color.fromARGB(255, 255, 255, 255),
                     boxShadow: [
@@ -78,7 +78,7 @@ class _MenuState extends State<Menu> {
                           offset: Offset(7.0, 8.0))
                     ]),
                 child: Align(
-                    alignment: Alignment(0.02, 0.93), child: Text("JOB"))),
+                    alignment: Alignment(0.02, 0.93), child: Text("JOB",style: TextStyle( fontSize: 20)))),
           ),
           GestureDetector(
               onTap: () {
@@ -87,7 +87,7 @@ class _MenuState extends State<Menu> {
               child: Container(
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          scale: 1.3,
+                          scale: 1.6,
                           image: AssetImage("assets/images/gallery.png")),
                       borderRadius: BorderRadius.circular(10),
                       color: Color.fromARGB(255, 255, 255, 255),
@@ -100,7 +100,7 @@ class _MenuState extends State<Menu> {
                       ]),
                   child: Align(
                       alignment: Alignment(0.02, 0.93),
-                      child: Text("GALLERY")))),
+                      child: Text("GALLERY",style: TextStyle( fontSize: 20))))),
           GestureDetector(
               onTap: () {
                 Navigator.pushNamed(context, "/alumni");
@@ -108,7 +108,7 @@ class _MenuState extends State<Menu> {
               child: Container(
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          scale: 1.3,
+                          scale: 1.6,
                           image: AssetImage("assets/images/list_alumni.png")),
                       borderRadius: BorderRadius.circular(10),
                       color: Color.fromARGB(255, 255, 255, 255),
@@ -121,7 +121,7 @@ class _MenuState extends State<Menu> {
                       ]),
                   child: Align(
                       alignment: Alignment(0.02, 0.93),
-                      child: Text("ALUMNI")))),
+                      child: Text("ALUMNI",style: TextStyle( fontSize: 20))))),
           GestureDetector(
             onTap: () {
               Navigator.pushNamed(context, "/forum");
@@ -129,7 +129,7 @@ class _MenuState extends State<Menu> {
             child: Container(
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                        scale: 1.3,
+                        scale: 1.6,
                         image: AssetImage("assets/images/forum.png")),
                     borderRadius: BorderRadius.circular(10),
                     color: Color.fromARGB(255, 255, 255, 255),
@@ -141,7 +141,7 @@ class _MenuState extends State<Menu> {
                           offset: Offset(7.0, 8.0))
                     ]),
                 child: Align(
-                    alignment: Alignment(0.02, 0.93), child: Text("FORUM"))),
+                    alignment: Alignment(0.2, 0.93), child: Text("FORUM",style: TextStyle( fontSize: 20)))),
           )
         ],
       ),
